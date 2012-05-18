@@ -1,0 +1,1306 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Text;
+using System.Linq;
+using System.Runtime.InteropServices;
+using System.Windows.Forms;
+using ESRI.ArcGIS.Desktop.AddIns;
+using ESRI.ArcGIS.esriSystem;
+using ESRI.ArcGIS.Framework;
+using ESRI.ArcGIS.Editor;
+using ESRI.ArcGIS.Geodatabase;
+using ESRI.ArcGIS.DataSourcesGDB;
+using ESRI.ArcGIS.CatalogUI;
+using ESRI.ArcGIS.Catalog;
+using ESRI.ArcGIS.Carto;
+using ESRI.ArcGIS.Display;
+using ncgmpToolbar.Utilities;
+using ncgmpToolbar.Utilities.DataAccess;
+using ncgmpToolbar.Forms;
+
+namespace ncgmpToolbar
+{
+    /// <summary>
+    /// Designer class of the dockable window add-in. It contains user interfaces that
+    /// make up the dockable window.
+    /// </summary>
+    ///     
+
+    public partial class dwnMapUnitLegendEditor : UserControl
+    {
+        IWorkspace m_theWorkspace;
+        bool m_ThisIsAnUpdate = true;
+        string m_theOldMapUnitName;
+
+        // Some logic here which tries to adjust depending on the edit state/ncgmp validity
+        public dwnMapUnitLegendEditor(object hook)
+        {
+            InitializeComponent();
+            this.Hook = hook;
+
+            // Check for edit state
+            // -------------------------------------------------------------------
+            // -------------------------------------------------------------------
+            // Note: This seems to be getting called at wierd times, like the first time you save some edits
+            // -------------------------------------------------------------------
+            // -------------------------------------------------------------------
+            IEditor theEditor = ArcMap.Editor;
+            if (theEditor.EditState == esriEditState.esriStateEditing)
+            {
+                m_theWorkspace = theEditor.EditWorkspace;
+                if (ncgmpChecks.IsWorkspaceMinNCGMPCompliant(m_theWorkspace) == true) 
+                {
+                    sysInfo SysInfoTable = new sysInfo(m_theWorkspace);
+                    this.tlslblLegendName.Text = SysInfoTable.ProjName;
+                    PopulateMainLegendTree(); 
+                }
+                else
+                {
+                    this.tlslblLegendName.Text = "Not Editing.";
+                    ClearMainLegendTree();
+                }
+            }
+            else
+            {
+                this.tlslblLegendName.Text = "Not Editing.";
+                ClearMainLegendTree();
+            }
+        }
+
+        /// <summary>
+        /// Host object of the dockable window
+        /// </summary>
+        private object Hook
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Implementation class of the dockable window add-in. It is responsible for 
+        /// creating and disposing the user interface class of the dockable window.
+        /// </summary>
+        public class AddinImpl : ESRI.ArcGIS.Desktop.AddIns.DockableWindow
+        {
+            private dwnMapUnitLegendEditor m_windowUI;
+
+            public AddinImpl()
+            {         
+                
+            }
+
+            protected override IntPtr OnCreateChild()
+            {
+                m_windowUI = new dwnMapUnitLegendEditor(this.Hook);
+                return m_windowUI.Handle;
+            }
+
+            protected override void Dispose(bool disposing)
+            {
+                if (m_windowUI != null)
+                    m_windowUI.Dispose(disposing);
+
+                base.Dispose(disposing);
+            }
+        }
+
+    #region "Copying from existing legends"
+
+        private void tlsbtnShowCopyPanel_Click(object sender, EventArgs e)
+        {
+            #region "Open the Database to Copy From"
+            // Ask the user to browse to another NCGMP Database
+            string getSqlDatabase = "False";
+        findDatabase:
+            // Check the registry
+            string regValue = commonFunctions.ReadReg("Software\\NCGMPTools", "getSqlDatabase");
+            if (regValue == null)
+            {
+                // There is no registry entry, open the chooser form
+                sqlOrFileChooser chooserForm = new sqlOrFileChooser();
+                chooserForm.ShowDialog();
+
+                // After the form is closed, use the selected method and write the registry if applicable
+                getSqlDatabase = chooserForm.m_getSqlDatabase;
+                if (chooserForm.m_writeReg == true)
+                {
+                    commonFunctions.WriteReg("Software\\NCGMPTools", "getSqlDatabase", getSqlDatabase);
+                }
+            }
+            else
+            {
+                // There is a registry entry, lead the user in the appropriate direction
+                if (regValue == "True")
+                {
+                    getSqlDatabase = "True";
+                }
+            }
+
+            // Find a Database
+            IWorkspaceFactory wsFact = null;
+            IWorkspace openedWorkspace = null;
+
+            if (getSqlDatabase == "True")
+            {
+                // Open the form listing AZGS SQL Databases
+                azgsSqlDatabaseChooser chooseDbForm = new azgsSqlDatabaseChooser();
+                chooseDbForm.ShowDialog();
+                if (chooseDbForm.databaseName == null) { return; }
+                if (chooseDbForm.versionName == null) { return; }
+
+                wsFact = new SdeWorkspaceFactoryClass();
+
+                // Setup connection properties for the selected database
+                IPropertySet connectionProperties = new PropertySetClass();
+                connectionProperties.SetProperty("SERVER", "malachite\\azgsgeodatabases");
+                connectionProperties.SetProperty("INSTANCE", "sde:sqlserver:malachite\\azgsgeodatabases");
+                connectionProperties.SetProperty("DATABASE", chooseDbForm.databaseName);
+                connectionProperties.SetProperty("AUTHENTICATION_MODE", "OSA");
+                connectionProperties.SetProperty("VERSION", "DBO." + chooseDbForm.versionName);
+
+                openedWorkspace = wsFact.Open(connectionProperties, 0);
+            }
+            else
+            {
+                // Browse for a file, personal or SDE geodatabase
+                IGxObjectFilter objectFilter = new GxFilterWorkspaces();
+                IGxObject openedObject = commonFunctions.OpenArcFile(objectFilter, "Please select an NCGMP database");
+                if (openedObject == null) { return; }
+
+                // Check to see if it is a File, Personal or SDE database, create appropriate workspace factory
+                string pathToOpen = null;
+
+                switch (openedObject.Category)
+                {
+                    case "Personal Geodatabase":
+                        wsFact = new AccessWorkspaceFactoryClass();
+                        pathToOpen = openedObject.FullName;
+                        break;
+                    case "File Geodatabase":
+                        wsFact = new FileGDBWorkspaceFactoryClass();
+                        pathToOpen = openedObject.FullName;
+                        break;
+                    case "Spatial Database Connection":
+                        wsFact = new SdeWorkspaceFactoryClass();
+                        IGxRemoteDatabaseFolder remoteDatabaseFolder = (IGxRemoteDatabaseFolder)openedObject.Parent;
+                        pathToOpen = remoteDatabaseFolder.Path + openedObject.Name;
+                        break;
+                    default:
+                        break;
+                }
+                // This doesn't seem to be working for SDE databases.
+                openedWorkspace = wsFact.OpenFromFile(pathToOpen, 0);
+            }
+
+            // Check to see if the database is valid NCGMP
+            bool isValid = ncgmpChecks.IsWorkspaceMinNCGMPCompliant(openedWorkspace);
+            if (isValid == false)
+            {
+                MessageBox.Show("The selected database is not a valid NCGMP database.", "NCGMP Toolbar");
+                goto findDatabase;
+            }
+            else
+            {
+                isValid = ncgmpChecks.IsSysInfoPresent(openedWorkspace);
+                if (isValid == false)
+                {
+                    MessageBox.Show("In order to use these tools, the NCGMP database must contain a SysInfo table.", "NCGMP Toolbar");
+                    goto findDatabase;
+                }
+            }
+            #endregion
+            
+            // Show the copy form
+            sourceLegendItemSelection sourceForm = new sourceLegendItemSelection(openedWorkspace);
+            sourceForm.ShowDialog();
+
+            // Bail if they canceled
+            if (sourceForm.Canceled == true) { return; }
+
+            // Get the Ids from the form, then close it
+            if (sourceForm.idsToCopy.Count == 0) { sourceForm.Close(); return; }
+            List<string> idsToCopy = sourceForm.idsToCopy;
+            sourceForm.Close();
+
+            // Build the Query to get the records to copy
+            string sqlWhereClause = "DescriptionOfMapUnits_ID = '";
+            foreach (string idValue in idsToCopy) { sqlWhereClause += idValue + "' OR DescriptionOfMapUnits_ID = '"; }
+
+            // Get the records
+            if (sqlWhereClause == "DescriptionOfMapUnits_ID = '") { return; }
+            DescriptionOfMapUnitsAccess sourceDmu = new DescriptionOfMapUnitsAccess(openedWorkspace);
+            sourceDmu.AddDescriptionOfMapUnits(sqlWhereClause.Remove(sqlWhereClause.Length - 32));
+
+            // Get the next new Hierarchy Key 
+            string newHierarchy = GetNewHierarchyKey();
+            int newValue = int.Parse(newHierarchy.Substring(newHierarchy.Length - 4));
+
+            // Loop through the source records, add them to the target legend after adjusting the Hierarchy
+            DescriptionOfMapUnitsAccess targetDmu = new DescriptionOfMapUnitsAccess(m_theWorkspace);
+            foreach (KeyValuePair<string, DescriptionOfMapUnitsAccess.DescriptionOfMapUnit> sourceEntry in sourceDmu.DescriptionOfMapUnitsDictionary)
+            {
+                DescriptionOfMapUnitsAccess.DescriptionOfMapUnit sourceDmuEntry = sourceEntry.Value;
+                string thisHierachyKey = newValue.ToString().PadLeft(4, '0');
+
+                targetDmu.NewDescriptionOfMapUnit(sourceDmuEntry.MapUnit, sourceDmuEntry.Name, sourceDmuEntry.FullName, sourceDmuEntry.Label, 
+                    sourceDmuEntry.Age, sourceDmuEntry.Description, thisHierachyKey, 
+                    sourceDmuEntry.ParagraphStyle, sourceDmuEntry.AreaFillRGB, sourceDmuEntry.AreaFillPatternDescription, 
+                    commonFunctions.GetCurrentDataSourceID(), sourceDmuEntry.GeneralLithologyTerm, sourceDmuEntry.GeneralLithologyConfidence);
+
+                newValue++;
+            }
+
+            // Save the target Dmu
+            targetDmu.SaveDescriptionOfMapUnits();
+
+            // Refresh the tree
+            ClearMapUnitInput();
+            PopulateMainLegendTree();
+        }
+
+        private void tlsbtnCloseCopy_Click(object sender, EventArgs e) {}
+     
+    #endregion
+
+    #region "Main Legend Treeview"
+
+        public void PopulateMainLegendTree()
+        {
+            // Checks to see if form knows what workspace to edit.
+            // *** THIS IS A PROBLEM. UNIT LEGEND EDITOR GETS WIRED TO ONE DATABASE ***
+            if (m_theWorkspace == null) { m_theWorkspace = ArcMap.Editor.EditWorkspace; }
+            if (m_theWorkspace == null) { return; }
+
+            // Clear the tree first
+            trvLegendItems.Nodes.Clear();
+
+            // Get Sorted DmuEntries
+            var sortedDmuEntries = GetDmuSortedByHierarchy();
+
+            // Build ID lookup Dictionary
+            var hierarchyDmuDictionary = BuildIDLookupFromHierarchy(sortedDmuEntries);
+            
+            // Setup variables that will be needed during legend population
+            System.Drawing.Font BoldFont = new System.Drawing.Font("FGDCGeoAge", 8, FontStyle.Bold, GraphicsUnit.Point);
+            TreeNode thisNode;
+            TreeNode[] nodeArray;
+
+            // Loop through each Dictionary Entry, add as a node to the Treeview
+            trvLegendItems.BeginUpdate();
+
+            foreach (KeyValuePair<string, DescriptionOfMapUnitsAccess.DescriptionOfMapUnit> aDictionaryEntry in sortedDmuEntries)
+            {                
+                // Grab the DMU object itself
+                DescriptionOfMapUnitsAccess.DescriptionOfMapUnit aDescription = aDictionaryEntry.Value;
+
+                // The node's label will be different if it is a heading or not
+                string nodeLabel;
+                bool isHeading = aDescription.ParagraphStyle.Contains("Heading");
+
+                if (isHeading == true) { nodeLabel = aDescription.Name; }
+                else { nodeLabel = aDescription.Label + " - " + aDescription.Name; }
+
+                // HierarchyKey will tell me if this is a top-level node or not.
+                string thisHierarchyKey = aDescription.HierarchyKey;
+                if (thisHierarchyKey.Length <= 4) 
+                {
+                    // Add this node to the top level
+                    trvLegendItems.Nodes.Add(aDescription.DescriptionOfMapUnits_ID, nodeLabel);
+                }
+                else
+                {
+                    // Lookup the parent's ID given it's hierarchy key. Parent's Hierarchy Key can be determined by stripping characters off the child
+                    string parentHierarchyKey = thisHierarchyKey.Remove(thisHierarchyKey.Length - 5);
+                    string parentID = hierarchyDmuDictionary[parentHierarchyKey];    
+                
+                    // Find the parent node in the tree, add this node as a child to it
+                    nodeArray = trvLegendItems.Nodes.Find(parentID, true);
+                    nodeArray[0].Nodes.Add(aDescription.DescriptionOfMapUnits_ID, nodeLabel);
+                }              
+
+                // Change the Font if it is a heading
+                if (isHeading == true)
+                {
+                    thisNode = trvLegendItems.Nodes.Find(aDescription.DescriptionOfMapUnits_ID, true)[0];
+                    thisNode.NodeFont = BoldFont;
+                }     
+            }
+
+            // Expand all nodes - this calls a self-iterating function that expands all children
+            foreach (TreeNode aNode in trvLegendItems.Nodes)
+            {
+                if (aNode.IsExpanded == false) { aNode.Expand(); }
+                ExpandAllNodes(aNode.Nodes);
+            }
+
+            trvLegendItems.EndUpdate();
+
+            // Update the renderer
+            commonFunctions.UpdateMapUnitPolysRenderer(m_theWorkspace);
+
+            // Update FeatureTemplates
+            commonFunctions.UpdateMapUnitPolysFeatureTemplates(m_theWorkspace);
+        }
+
+        private void ExpandAllNodes(TreeNodeCollection NodeToExpand)
+        {
+            foreach (TreeNode aNode in NodeToExpand)
+            {
+                if (aNode.IsExpanded == false) { aNode.Expand(); }
+                ExpandAllNodes(aNode.Nodes);
+            }
+        }
+
+        private void ClearMainLegendTree()
+        {
+            trvLegendItems.Nodes.Clear();
+        }
+
+        private void trvLegendItems_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            // -----------------------------------------------------------------------------
+            // -----------------------------------------------------------------------------
+            //  Populate the input controls based on the selected node
+            // -----------------------------------------------------------------------------
+            // -----------------------------------------------------------------------------
+
+            // Make sure that something is selected
+            if (e.Node == null) { return; }
+            
+            // Get the selected DMU entry
+            DescriptionOfMapUnitsAccess dmuAccess = new DescriptionOfMapUnitsAccess(m_theWorkspace);
+            dmuAccess.AddDescriptionOfMapUnits("DescriptionOfMapUnits_ID = '" + e.Node.Name + "'");
+            DescriptionOfMapUnitsAccess.DescriptionOfMapUnit thisDmuEntry = dmuAccess.DescriptionOfMapUnitsDictionary[e.Node.Name];
+
+            // Populate controls
+            PopulateInputControls(thisDmuEntry);
+
+        }
+
+        private void tlsbtnRefreshLegend_Click(object sender, EventArgs e)
+        {
+            // Clear Inputs and refresh the Legend Tree
+            ClearMapUnitInput();
+            PopulateMainLegendTree();
+
+            // Update the Legend title
+            sysInfo sysInfoForm = new sysInfo(m_theWorkspace);
+            tlslblLegendName.Text = sysInfoForm.ProjName;
+        }
+
+    #region "Drag and Drop Stuff"
+
+        private void trvLegendItems_ItemDrag(object sender, System.Windows.Forms.ItemDragEventArgs e)
+        {
+            // Start the drag-drop routine
+            trvLegendItems.DoDragDrop(e.Item, DragDropEffects.All);
+        }
+
+        private void trvLegendItems_DragOver(object sender, System.Windows.Forms.DragEventArgs e)
+        {
+            // Cast the cursor's location into Treeview-coordinates
+            System.Drawing.Point dragLocation = (sender as TreeView).PointToClient(new System.Drawing.Point(e.X, e.Y));
+
+            // Find out what the drag is over
+            TreeNode hoverNode = trvLegendItems.GetNodeAt(dragLocation);
+
+            // Scroll if we're near the edges
+            if (dragLocation.Y <= (trvLegendItems.Font.Height / 2)) { ScrollTree(0); }
+            else if (dragLocation.Y >= (trvLegendItems.ClientSize.Height - (trvLegendItems.Font.Height / 2))) { ScrollTree(1); }
+
+            // If dragged item is over another node, highlight it, unhighlight others, and allow for a move
+            if (hoverNode != null)
+            {
+                e.Effect = DragDropEffects.Move;
+                ClearHighlights(trvLegendItems.Nodes);
+                hoverNode.BackColor = Color.DarkBlue;
+                hoverNode.ForeColor = Color.White;
+            }
+        }
+
+        private void trvLegendItems_DragDrop(object sender, System.Windows.Forms.DragEventArgs e)
+        {
+            // Get the dragged node, and the associated DMU entry
+            TreeNode draggedNode = e.Data.GetData((new TreeNode()).GetType()) as TreeNode;
+            DescriptionOfMapUnitsAccess dmuFinder = new DescriptionOfMapUnitsAccess(m_theWorkspace);
+            dmuFinder.AddDescriptionOfMapUnits("DescriptionOfMapUnits_ID = '" + draggedNode.Name + "'");
+            DescriptionOfMapUnitsAccess.DescriptionOfMapUnit draggedDmuEntry = dmuFinder.DescriptionOfMapUnitsDictionary[draggedNode.Name];
+
+            // Cast the cursor's location into Treeview-coordinates
+            System.Drawing.Point dragLocation = (sender as TreeView).PointToClient(new System.Drawing.Point(e.X, e.Y));
+
+            // Find out what the drag is over
+            TreeNode destinationNode = trvLegendItems.GetNodeAt(dragLocation);
+            if (destinationNode == null) { return; }
+
+            // Ask the user how to perform the drop
+            dropChooser dropChoiceForm = new dropChooser();
+            dropChoiceForm.ShowDialog();
+
+            // Bail if they canceled
+            if (dropChoiceForm.Canceled == true) { return; }
+
+            // Before making changes, gather the children of the dragged node
+            var draggedChildren = GetSortedChildren(draggedDmuEntry.HierarchyKey);
+
+            // First, remove the dragged node from the hierarchy
+            RemoveItemFromHierarchy(draggedDmuEntry.HierarchyKey);
+
+            // Get the dropped item's DMU entry
+            dmuFinder.AddDescriptionOfMapUnits("DescriptionOfMapUnits_ID = '" + destinationNode.Name + "'");
+            DescriptionOfMapUnitsAccess.DescriptionOfMapUnit destinationDmuEntry = dmuFinder.DescriptionOfMapUnitsDictionary[destinationNode.Name];                        
+
+            // Next, insert the node in the new location
+            string newHierarchyKey = "";
+            int newKeyValue = 0;
+
+            // Depending on the user's choice, drop appropriately
+            switch (dropChoiceForm.DropAsChild)
+            {
+                case true:
+                    // Child drop, put it at the end of the block
+                    newHierarchyKey = GetNewHierarchyKey(destinationDmuEntry.HierarchyKey);
+                    break;
+
+                case false:
+                    // Sibling drop - above or below?
+                    switch (dropChoiceForm.DropBelow)
+                    {
+                        case true:
+                            // Drop below
+                            newKeyValue = int.Parse(destinationDmuEntry.HierarchyKey.Substring(destinationDmuEntry.HierarchyKey.Length - 4)) + 1;                            
+                            break;
+
+                        case false:
+                            // Drop above
+                            newKeyValue = int.Parse(destinationDmuEntry.HierarchyKey.Substring(destinationDmuEntry.HierarchyKey.Length - 4));
+                            break;
+                    }
+
+                    // Build the new Hierarchy Key
+                    if (destinationDmuEntry.HierarchyKey.Length == 4) { newHierarchyKey = newKeyValue.ToString().PadLeft(4, '0'); }
+                    else { newHierarchyKey = destinationDmuEntry.HierarchyKey.Remove(destinationDmuEntry.HierarchyKey.Length - 5) + "." + newKeyValue.ToString().PadLeft(4, '0'); }
+                    break;
+            }
+                        
+            // Take care of rebuilding the hierarchy due to the insert
+            //  I need to pass in these children because after making any adjustments to the hierarchy
+            //  (RemoveFromHierarchy call above), I cannot rely on hierarchy keys to be truthful as to
+            //  who was the initial parent. That is, at this point trying to find the inital children
+            //  of the dragged node is impossible.
+            InsertItemIntoHierarchy(draggedDmuEntry, newHierarchyKey, draggedChildren);
+
+            // Lastly, clear all highlighted nodes, repopulate the tree
+            ClearHighlights(trvLegendItems.Nodes);
+            ClearMapUnitInput();
+            PopulateMainLegendTree();
+        }
+
+        private void ClearHighlights(TreeNodeCollection  theNodeCollection)
+        {
+            // Cycle through the tree, set colors appropriately - recursive.
+            foreach (TreeNode thisNode in theNodeCollection)
+            {
+                thisNode.BackColor = Color.White;
+                thisNode.ForeColor = Color.Black;
+
+                ClearHighlights(thisNode.Nodes);
+            }
+        }
+
+        private void ScrollTree(int scrollDirection)
+        {
+            // scrollDirection = 0 means scroll up, 1 means scroll down
+            const int WM_SCROLL = 276; // This integer means horizontal scroll please!
+            SendMessage(trvLegendItems.Handle, WM_SCROLL, (IntPtr)scrollDirection, IntPtr.Zero);
+        }
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        private static extern int SendMessage(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam);
+
+    #endregion
+
+    #endregion
+
+    #region "Input Controls"
+
+        private void PopulateInputControls(DescriptionOfMapUnitsAccess.DescriptionOfMapUnit thisDmuEntry)
+        {
+            // Determine if the FullName should be amalgamated from Name/Age
+            bool buildFullName = false;
+            if (thisDmuEntry.FullName == thisDmuEntry.Name + " (" + thisDmuEntry.Age + ")") { buildFullName = true; }
+
+            // Determine if the unit is a heading
+            bool isHeading = thisDmuEntry.ParagraphStyle.Contains("Heading");
+
+            // Clear inputs
+            ClearMapUnitInput();
+
+            // Enable/Disable appropriate controls
+            EnableControls(isHeading, buildFullName);
+
+            // Set update flag
+            m_ThisIsAnUpdate = true;
+            
+            if (isHeading == true)
+            {
+                // This is a heading
+                chkIsHeading.Checked = true;
+                txtUnitName.Text = thisDmuEntry.Name;
+                txtMapUnitDescription.Text = thisDmuEntry.Description;                
+                pnlColor.BackColor = Color.White;
+            }
+            else
+            {
+                // This is a MapUnit
+                chkIsHeading.Checked = false;
+                txtUnitName.Text = thisDmuEntry.Name;                
+                txtMapUnitAbbreviation.Text = thisDmuEntry.MapUnit;
+                txtMapUnitAge.Text = thisDmuEntry.Age;
+                txtMapUnitFullName.Text = thisDmuEntry.FullName;
+                txtMapUnitDescription.Text = thisDmuEntry.Description;                
+
+                // This variable will hang onto the old MapUnitName in case it gets changed
+                m_theOldMapUnitName = thisDmuEntry.MapUnit;
+
+                // Color the panel from RGB values - this is currently dependant on ; being used as a delimiter
+                string rgbString = thisDmuEntry.AreaFillRGB;
+                string[] rgbValues = rgbString.Split(';');
+
+                if (rgbValues.Length < 3) 
+                { 
+                    pnlColor.BackColor = Color.White;
+                    colorDialog.Color = Color.White;
+                }
+                else 
+                { 
+                    pnlColor.BackColor = Color.FromArgb(int.Parse(rgbValues[0]), int.Parse(rgbValues[1]), int.Parse(rgbValues[2]));
+                    colorDialog.Color = pnlColor.BackColor;
+                }
+            }
+        }
+
+        private void EnableControls(bool isHeading, bool buildFullName)
+        {
+            switch (isHeading)
+            {
+                case true:
+                    txtUnitName.Enabled = true;
+                    txtMapUnitAbbreviation.Enabled = false;
+                    txtMapUnitAge.Enabled = false;
+                    txtMapUnitFullName.Enabled = false;
+                    txtMapUnitFullName.ReadOnly = true;                    
+                    txtMapUnitDescription.Enabled = true;
+                    btnColorChooser.Enabled = false;
+                    tlsbtnAssignUnit.Enabled = false;
+                    tlsbtnRemoveLegendItem.Enabled = true;
+                    btnEditFullName.Enabled = false;
+                    tlsbtnCancel.Enabled = true;
+                    break;
+
+                case false:
+                    txtUnitName.Enabled = true;
+                    txtMapUnitAbbreviation.Enabled = true;
+                    txtMapUnitAge.Enabled = true;
+                    txtMapUnitFullName.Enabled = true;                                   
+                    txtMapUnitDescription.Enabled = true;
+                    btnColorChooser.Enabled = true;
+                    tlsbtnAssignUnit.Enabled = true;
+                    tlsbtnRemoveLegendItem.Enabled = true;
+                    tlsbtnCancel.Enabled = true;
+
+                    switch (buildFullName)
+                    {
+                        case true:
+                            btnEditFullName.Enabled = true;
+                            txtMapUnitFullName.ReadOnly = true;
+                            break;
+                        case false:
+                            btnEditFullName.Enabled = false;
+                            txtMapUnitFullName.ReadOnly = false;
+                            break;
+                    }                         
+                    break;
+            }
+        }    
+
+        private void ClearMapUnitInput()
+        {
+            // Clear values
+            txtUnitName.Text = null;
+            txtMapUnitAbbreviation.Text = null;
+            txtMapUnitAge.Text = null;
+            txtMapUnitFullName.Text = null;
+            txtMapUnitDescription.Text = null;
+            chkIsHeading.Checked = false;
+            pnlColor.BackColor = Color.White;
+
+            //Disable controls
+            txtUnitName.Enabled = false;
+            txtMapUnitAbbreviation.Enabled = false;
+            txtMapUnitAge.Enabled = false;
+            txtMapUnitFullName.Enabled = false;
+            txtMapUnitFullName.ReadOnly = true;
+            btnEditFullName.Enabled = false;
+            txtMapUnitDescription.Enabled = false;
+            btnColorChooser.Enabled = false;
+            tlsbtnAssignUnit.Enabled = false;
+            tlsbtnRemoveLegendItem.Enabled = false;
+            tlsbtnSaveMapUnit.Enabled = false;
+            tlsbtnCancel.Enabled = false;
+
+            // Set Update Flag
+            m_ThisIsAnUpdate = false;
+            
+            // Clear the old MapUnit variable
+            m_theOldMapUnitName = null;
+        }
+
+        private void btnColorChooser_Click(object sender, EventArgs e)
+        {
+            // Open color dialog to allow user to pick a color
+            this.colorDialog.Color = this.pnlColor.BackColor;
+            this.colorDialog.ShowDialog();
+            this.pnlColor.BackColor = this.colorDialog.Color;
+        }
+
+    #region "Adjustments to be made when textboxes are changed"
+
+        private void txtUnitName_TextChanged(object sender, EventArgs e)
+        {
+            EnableSaveButton();
+            AdjustFullName();
+        }
+
+        private void txtMapUnitAbbreviation_TextChanged(object sender, EventArgs e)
+        {
+            EnableSaveButton();
+        }
+
+        private void txtMapUnitAge_TextChanged(object sender, EventArgs e)
+        {
+            EnableSaveButton();
+            AdjustFullName();
+        }
+
+        private void txtMapUnitDescription_TextChanged(object sender, EventArgs e)
+        {
+            EnableSaveButton();
+        }
+
+        private void EnableSaveButton()
+        {
+            // If you've populated all the right textboxes, then enable the save button
+            switch (chkIsHeading.Checked)
+            {
+                case true:
+                    if (txtUnitName.Text.Length > 0) { tlsbtnSaveMapUnit.Enabled = true; }
+                    else { tlsbtnSaveMapUnit.Enabled = false; }
+                    break;
+
+                case false:
+                    if ((txtUnitName.Text.Length > 0) && (txtMapUnitAbbreviation.Text.Length > 0) && (txtMapUnitAge.Text.Length > 0) && (txtMapUnitDescription.Text.Length > 0))
+                    { tlsbtnSaveMapUnit.Enabled = true; }
+                    else { tlsbtnSaveMapUnit.Enabled = false; }
+                    break;
+            }
+        }
+
+        private void AdjustFullName()
+        {
+            if (txtMapUnitFullName.ReadOnly == false) { return; }
+            if (txtMapUnitFullName.Enabled == true) { txtMapUnitFullName.Text = txtUnitName.Text + " (" + txtMapUnitAge.Text + ")"; }
+            //else { txtMapUnitFullName.Text = null; }
+        }
+
+        private void btnEditFullName_Click(object sender, EventArgs e)
+        {
+            txtMapUnitFullName.ReadOnly = false;
+        }
+
+        private void chkIsHeading_CheckedChanged(object sender, EventArgs e)
+        {
+            EnableControls(chkIsHeading.Checked, false);
+        }
+
+    #endregion        
+
+    #region "Save/Cancel Functionality"
+
+        private void tlsbtnSaveMapUnit_Click(object sender, EventArgs e)
+        {
+            // Get attributes from the form
+            string thisDmuAge = txtMapUnitAge.Text;
+            string thisDmuDefinitionSourceID = commonFunctions.GetCurrentDataSourceID();
+            string thisDmuDescription = txtMapUnitDescription.Text;
+            string thisDmuFullName = txtMapUnitFullName.Text;
+            string thisDmuLabel = txtMapUnitAbbreviation.Text;
+            string thisDmuMapUnit = txtMapUnitAbbreviation.Text;
+            string thisDmuName = txtUnitName.Text;
+
+            // These attributes are dependant on whether this is a heading or not
+            string thisDmuParagraphStyle = "";
+            string thisDmuAreaFillRGB = "";
+            if (chkIsHeading.Checked == true)
+            {
+                thisDmuParagraphStyle = "Heading";
+                thisDmuAreaFillRGB = "";
+            }
+            else
+            {
+                thisDmuParagraphStyle = "Standard";
+                thisDmuAreaFillRGB = pnlColor.BackColor.R + ";" + pnlColor.BackColor.G + ";" + pnlColor.BackColor.B;
+            }
+
+            // Get the DMU reference that will be used to provide table access
+            DescriptionOfMapUnitsAccess dmuAccess = new DescriptionOfMapUnitsAccess(m_theWorkspace);
+
+            // Set the variable to represent the updated Dmu entry in the case of an update. This will be used to update polygons later
+            DescriptionOfMapUnitsAccess.DescriptionOfMapUnit dmuEntry = new DescriptionOfMapUnitsAccess.DescriptionOfMapUnit();
+
+            switch (m_ThisIsAnUpdate)
+            {
+                case true:
+                    // Get the DMU entry that should be updated
+                    dmuAccess.AddDescriptionOfMapUnits("DescriptionOfMapUnits_ID = '" + trvLegendItems.SelectedNode.Name + "'");
+                    dmuEntry = dmuAccess.DescriptionOfMapUnitsDictionary[trvLegendItems.SelectedNode.Name];
+
+                    // Add attributes from the form
+                    dmuEntry.Age = thisDmuAge;
+                    dmuEntry.DescriptionSourceID = thisDmuDefinitionSourceID;
+                    dmuEntry.Description = thisDmuDescription;
+                    dmuEntry.FullName = thisDmuFullName;
+                    dmuEntry.Label = thisDmuLabel;
+                    dmuEntry.MapUnit = thisDmuMapUnit;
+                    dmuEntry.Name = thisDmuName;
+                    dmuEntry.RequiresUpdate = true;
+
+                    // These attributes are dependant on whether this is a heading or not
+                    if (chkIsHeading.Checked == true)
+                    {
+                        dmuEntry.ParagraphStyle = thisDmuParagraphStyle;
+                        dmuEntry.AreaFillRGB = thisDmuAreaFillRGB;
+                    }
+                    else
+                    {
+                        dmuEntry.ParagraphStyle = thisDmuParagraphStyle;
+                        dmuEntry.AreaFillRGB = thisDmuAreaFillRGB;
+                    }
+
+                    // Perform the update
+                    dmuAccess.UpdateDescriptionOfMapUnit(dmuEntry);
+
+                    break;
+
+                case false:
+                    // This is a new entry, get an Hierarchy Key
+                    string thisDmuHierarchyKey = GetNewHierarchyKey();
+
+                    // Add the record
+                    dmuAccess.NewDescriptionOfMapUnit(thisDmuMapUnit, thisDmuName, thisDmuFullName, 
+                        thisDmuLabel, thisDmuAge, thisDmuDescription, 
+                        thisDmuHierarchyKey, thisDmuParagraphStyle, thisDmuAreaFillRGB, 
+                        "", thisDmuDefinitionSourceID, "", "");
+
+                    break;
+            }
+
+            // All done - save
+            dmuAccess.SaveDescriptionOfMapUnits();
+
+            // Refresh the tree
+            PopulateMainLegendTree();
+
+            // Update polys
+            if ((m_ThisIsAnUpdate == true) && (m_theOldMapUnitName != null)) { UpdatePolygons(m_theOldMapUnitName, dmuEntry); }
+
+            // Clear Inputs
+            ClearMapUnitInput();
+                
+        }
+
+        private void tlsbtnCancel_Click(object sender, EventArgs e)
+        {
+            // Don't save or anything, just cancel
+            ClearMapUnitInput();
+            trvLegendItems.SelectedNode = null;
+        }
+
+    #endregion
+
+    #region "Add/Remove Legend Item Buttons"
+
+        private void tlsbtnNewLegendItem_Click(object sender, EventArgs e)
+        {
+            // Clear the input controls
+            ClearMapUnitInput();
+            trvLegendItems.SelectedNode = null;
+
+            // Set the Update flag
+            m_ThisIsAnUpdate = false;
+            
+            // Enable controls - in this case I need to explicitly disable the Remove and assign buttons
+            EnableControls(false, true);
+            tlsbtnRemoveLegendItem.Enabled = false;
+            tlsbtnAssignUnit.Enabled = false;
+        }
+
+        private void tlsbtnRemoveLegendItem_Click(object sender, EventArgs e)
+        {
+            // Get DMU Access Class
+            DescriptionOfMapUnitsAccess dmuAccess = new DescriptionOfMapUnitsAccess(m_theWorkspace);
+
+            // Find out if the selected node has children
+            if (trvLegendItems.SelectedNode.Nodes.Count > 0)
+            {
+                // This node has children, ensure they want it all gone
+                DialogResult result = MessageBox.Show("If you delete this entry, all of its children will be removed as well. Do you want to continue?", "NCGMP Tools", MessageBoxButtons.YesNo);
+                if (result != DialogResult.Yes) { return; }
+
+                // They want to continue. First delete this one
+                dmuAccess.AddDescriptionOfMapUnits("DescriptionOfMapUnits_ID = '" + trvLegendItems.SelectedNode.Name + "'");
+                DescriptionOfMapUnitsAccess.DescriptionOfMapUnit thisEntry = dmuAccess.DescriptionOfMapUnitsDictionary[trvLegendItems.SelectedNode.Name];
+                dmuAccess.DeleteDescriptionOfMapUnits(thisEntry);
+
+                // Now Delete all children
+                DeleteAllChildren(thisEntry.HierarchyKey);
+
+                // Adjust the Hierarchy
+                RemoveItemFromHierarchy(thisEntry.HierarchyKey);
+            }
+            else
+            {
+                // This node has no children, simply delete it
+                dmuAccess.AddDescriptionOfMapUnits("DescriptionOfMapUnits_ID = '" + trvLegendItems.SelectedNode.Name + "'");
+                DescriptionOfMapUnitsAccess.DescriptionOfMapUnit thisEntry = dmuAccess.DescriptionOfMapUnitsDictionary[trvLegendItems.SelectedNode.Name];
+                dmuAccess.DeleteDescriptionOfMapUnits(thisEntry);
+
+                // Remove this item from the Hierarchy - Update its siblings and children
+                RemoveItemFromHierarchy(thisEntry.HierarchyKey);
+            }
+
+            // Clear Inputs
+            ClearMapUnitInput();
+
+            //Re-populate the Treeview
+            PopulateMainLegendTree();
+        }
+
+        private void DeleteAllChildren(string parentKey)
+        {
+            // Get DMU Access Class
+            DescriptionOfMapUnitsAccess DmuAccess = new DescriptionOfMapUnitsAccess(m_theWorkspace);
+
+            // Get the children
+            var sortedChildren = GetSortedChildren(parentKey);
+
+            // Loop through them, delete each one
+            foreach (KeyValuePair<string, DescriptionOfMapUnitsAccess.DescriptionOfMapUnit> anEntry in sortedChildren)
+            {
+                // Get the DMU entry for this entry
+                DmuAccess.AddDescriptionOfMapUnits("DescriptionOfMapUnits_ID = '" + anEntry.Value.DescriptionOfMapUnits_ID + "'");
+                DescriptionOfMapUnitsAccess.DescriptionOfMapUnit thisDmuEntry = DmuAccess.DescriptionOfMapUnitsDictionary[anEntry.Value.DescriptionOfMapUnits_ID];
+
+                // Delete it
+                DmuAccess.DeleteDescriptionOfMapUnits(thisDmuEntry);
+
+                // Delete its children
+                DeleteAllChildren(thisDmuEntry.HierarchyKey);
+            }
+        }
+
+    #endregion
+
+    #region "Hierarchy Control"
+
+        private void InsertItemIntoHierarchy(DescriptionOfMapUnitsAccess.DescriptionOfMapUnit theInsertedDmuEntry, string theNewHierarchyKey, 
+            IOrderedEnumerable<KeyValuePair<string, DescriptionOfMapUnitsAccess.DescriptionOfMapUnit>> thisItemsChildren)
+        {
+            // Get the insert location parent Hierarchy Key
+            string parentKey;
+            if (theNewHierarchyKey.Length == 4) { parentKey = null; }
+            else { parentKey = theNewHierarchyKey.Remove(theNewHierarchyKey.Length - 5); }
+
+            int newKeyValue = int.Parse(theNewHierarchyKey.Substring(theNewHierarchyKey.Length - 4));
+
+            // Get the children of the inserted item's new parent
+            var sortedChildren = GetSortedChildren(parentKey);
+
+            // Get a DMU Access object to perform an update
+            DescriptionOfMapUnitsAccess DmuAccess = new DescriptionOfMapUnitsAccess(m_theWorkspace);            
+
+            // I need to have each of the entry's children gathered before I start updating them.
+            // What a fucking mess.
+            Dictionary<string, IOrderedEnumerable<KeyValuePair<string, DescriptionOfMapUnitsAccess.DescriptionOfMapUnit>>> theChildren = new Dictionary<string, IOrderedEnumerable<KeyValuePair<string, DescriptionOfMapUnitsAccess.DescriptionOfMapUnit>>>();
+            foreach (KeyValuePair<string, DescriptionOfMapUnitsAccess.DescriptionOfMapUnit> anEntry in sortedChildren)
+            {
+                theChildren.Add(anEntry.Value.DescriptionOfMapUnits_ID, GetSortedChildren(anEntry.Value.HierarchyKey));
+            }
+
+            // Cycle through these children
+            foreach (KeyValuePair<string, DescriptionOfMapUnitsAccess.DescriptionOfMapUnit> anEntry in sortedChildren)
+            {
+                // Grab this item's hierarchy info
+                string thisKey = anEntry.Value.HierarchyKey;
+                int thisKeyValue = int.Parse(thisKey.Substring(thisKey.Length - 4));
+
+                // If the value is greater than or equal to the inserted item's new hierarchy value, increment by one, update children
+                if (thisKeyValue >= newKeyValue)
+                {
+                    string thisNewKey;
+                    if (parentKey == null) { thisNewKey = (thisKeyValue + 1).ToString().PadLeft(4, '0'); }
+                    else { thisNewKey = parentKey + "." + (thisKeyValue + 1).ToString().PadLeft(4, '0'); }
+
+                    // Get the DMU entry for this entry
+                    DmuAccess.AddDescriptionOfMapUnits("DescriptionOfMapUnits_ID = '" + anEntry.Value.DescriptionOfMapUnits_ID + "'");
+                    DescriptionOfMapUnitsAccess.DescriptionOfMapUnit thisDmuEntry = DmuAccess.DescriptionOfMapUnitsDictionary[anEntry.Value.DescriptionOfMapUnits_ID];
+
+                    // Update its key
+                    thisDmuEntry.HierarchyKey = thisNewKey;
+                    DmuAccess.UpdateDescriptionOfMapUnit(thisDmuEntry);
+
+                    // Update its children's keys, gathered beforehand
+                    UpdateChildrenKeys(thisKey, thisNewKey, theChildren[thisDmuEntry.DescriptionOfMapUnits_ID]);
+                }
+            }
+
+            // Update the Children of the dragged item using the collection of children passed in            
+            UpdateChildrenKeys(theInsertedDmuEntry.HierarchyKey, theNewHierarchyKey, thisItemsChildren);
+
+            // Update the dragged item itself
+            theInsertedDmuEntry.HierarchyKey = theNewHierarchyKey;
+            DmuAccess.UpdateDescriptionOfMapUnit(theInsertedDmuEntry);
+
+            // Save changes
+            DmuAccess.SaveDescriptionOfMapUnits();
+        }
+
+        private void RemoveItemFromHierarchy(string keyBeingRemoved)
+        {
+            // Get the parent Hierearchy Key
+            string parentKey;
+            if (keyBeingRemoved.Length == 4) { parentKey = null; }
+            else { parentKey = keyBeingRemoved.Remove(keyBeingRemoved.Length - 5); }
+
+            int removedKeyValue = int.Parse(keyBeingRemoved.Substring(keyBeingRemoved.Length - 4));
+
+            // Get the children of the removed node's parent
+            var sortedChildren = GetSortedChildren(parentKey);
+
+            // Get a DMU Access object to perform an update
+            DescriptionOfMapUnitsAccess DmuAccess = new DescriptionOfMapUnitsAccess(m_theWorkspace);
+
+            // Cycle through the children            
+            foreach (KeyValuePair<string, DescriptionOfMapUnitsAccess.DescriptionOfMapUnit> anEntry in sortedChildren)
+            {
+                // Grab the hierarchy information
+                string thisKey = anEntry.Value.HierarchyKey;
+                int thisKeyValue = int.Parse(thisKey.Substring(thisKey.Length - 4));
+
+                // If the value is greater than the removed key, decrement by one, and update children
+                if (thisKeyValue > removedKeyValue)
+                {
+                    string newKey;
+                    if (parentKey == null) { newKey = (thisKeyValue -1).ToString().PadLeft(4, '0'); }
+                    else { newKey = parentKey + "." + (thisKeyValue - 1).ToString().PadLeft(4, '0'); }
+
+                    // Get the DMU entry for this entry
+                    DmuAccess.AddDescriptionOfMapUnits("DescriptionOfMapUnits_ID = '" + anEntry.Value.DescriptionOfMapUnits_ID + "'");
+                    DescriptionOfMapUnitsAccess.DescriptionOfMapUnit thisDmuEntry = DmuAccess.DescriptionOfMapUnitsDictionary[anEntry.Value.DescriptionOfMapUnits_ID];
+
+                    // Update its key
+                    thisDmuEntry.HierarchyKey = newKey;
+                    DmuAccess.UpdateDescriptionOfMapUnit(thisDmuEntry);
+
+                    // Update its children's keys
+                    UpdateChildrenKeys(thisKey, newKey);
+                }
+            }
+
+            // Save the changes
+            DmuAccess.SaveDescriptionOfMapUnits();
+        }
+
+        private void UpdateChildrenKeys(string oldParentKey, string newParentKey, IOrderedEnumerable<KeyValuePair<string, DescriptionOfMapUnitsAccess.DescriptionOfMapUnit>> sortedChildren = null)
+        {
+            // If a set of children are not passed in to update, then get them based on the oldParentKey that is sent in
+            if (sortedChildren == null) { sortedChildren = GetSortedChildren(oldParentKey); }
+
+            // Get a DMU Access object to perform an update
+            DescriptionOfMapUnitsAccess DmuAccess = new DescriptionOfMapUnitsAccess(m_theWorkspace);
+
+            // Cycle through the children            
+            foreach (KeyValuePair<string, DescriptionOfMapUnitsAccess.DescriptionOfMapUnit> anEntry in sortedChildren)
+            {
+                // Grab, adjust the hierarchy information
+                string thisKey = anEntry.Value.HierarchyKey;
+                string thisKeyValue = thisKey.Substring(thisKey.Length - 4);
+                string newKey = newParentKey + "." + thisKeyValue;
+
+                // Get the DMU entry for this entry
+                DmuAccess.AddDescriptionOfMapUnits("DescriptionOfMapUnits_ID = '" + anEntry.Value.DescriptionOfMapUnits_ID + "'");
+                DescriptionOfMapUnitsAccess.DescriptionOfMapUnit thisDmuEntry = DmuAccess.DescriptionOfMapUnitsDictionary[anEntry.Value.DescriptionOfMapUnits_ID];
+
+                // Update its key
+                thisDmuEntry.HierarchyKey = newKey;
+                DmuAccess.UpdateDescriptionOfMapUnit(thisDmuEntry);
+
+                // Update its children's keys
+                UpdateChildrenKeys(thisKey, newKey);
+            }
+
+            // Save the changes
+            DmuAccess.SaveDescriptionOfMapUnits();
+        }
+
+        private string GetNewHierarchyKey(string parentKey = null)
+        {
+            // Null parentKey will return a new Hierarchy Key at the top level.
+
+            // First find the last current HierarchyKey
+            string lastHierarchyKey = GetLastHierarchyKey(parentKey);
+
+            // If there is nothing in the legend yet, lastHierarchyKey will come through null
+            int lastKeyValue;
+            if (lastHierarchyKey == null) { lastKeyValue = 0; }
+            else
+            {
+                // Pick the last few characters off of it, cast as int
+                lastKeyValue = int.Parse(lastHierarchyKey.Substring(lastHierarchyKey.Length - 4));
+            }
+
+            // Increment by one and pad it
+            string newLastKeyValue = ((lastKeyValue + 1).ToString()).PadLeft(4, '0');
+
+            // Generate the new key
+            string newHierarchyKey = "";
+            if (parentKey != null) { newHierarchyKey += parentKey + "."; }
+            newHierarchyKey += newLastKeyValue;
+
+            return newHierarchyKey;            
+        }
+
+        private string GetLastHierarchyKey(string parentKey = null)
+        {            
+            // Get Sorted DmuEntries - parentKey will limit this list to children of a specific parent
+            var sortedDmuEntries = GetSortedChildren(parentKey);
+
+            // If there's nothing in the legend yet, sortedDmuEntries will be blank
+            if (sortedDmuEntries.Count() == 0) { return null; }
+
+            // Loop through to find the longest and last hierarchy key
+            string lastHierarchyKey = "";
+            foreach (KeyValuePair<string, DescriptionOfMapUnitsAccess.DescriptionOfMapUnit> anEntry in sortedDmuEntries)
+            {
+                // If this one is longer than the longest so far, set it and continue
+                if (anEntry.Value.HierarchyKey.Length > lastHierarchyKey.Length) { lastHierarchyKey = anEntry.Value.HierarchyKey; continue; }
+
+                // If the length's are equal, compare the values at the end of the strings
+                if (anEntry.Value.HierarchyKey.Length == lastHierarchyKey.Length)
+                {
+                    int thisHierarchy = int.Parse(anEntry.Value.HierarchyKey.Substring(anEntry.Value.HierarchyKey.Length - 4));
+                    int bestSoFar = int.Parse(lastHierarchyKey.Substring(lastHierarchyKey.Length - 4));
+
+                    if (thisHierarchy > bestSoFar) { lastHierarchyKey = anEntry.Value.HierarchyKey; }
+                }
+            }
+
+            return lastHierarchyKey;
+        }
+
+        private IOrderedEnumerable<KeyValuePair<string, DescriptionOfMapUnitsAccess.DescriptionOfMapUnit>> GetDmuSortedByHierarchy()
+        {
+            // Get All DescriptionOfMapUnits.
+            DescriptionOfMapUnitsAccess DmuAccess = new DescriptionOfMapUnitsAccess(m_theWorkspace);
+            DmuAccess.AddDescriptionOfMapUnits();                           
+
+            // Sort using Linq syntax
+            var sortedDmuEntries = (
+                from entry in DmuAccess.DescriptionOfMapUnitsDictionary
+                orderby ((DescriptionOfMapUnitsAccess.DescriptionOfMapUnit)entry.Value).HierarchyKey ascending 
+                select entry);
+
+            return sortedDmuEntries;
+        }
+
+        private IOrderedEnumerable<KeyValuePair<string, DescriptionOfMapUnitsAccess.DescriptionOfMapUnit>> GetSortedChildren(string parentKey = null)
+        {
+            // Get the children of a given parent, sorted on HierarchyKey
+            // First get all DMU entries
+            DescriptionOfMapUnitsAccess DmuAccess = new DescriptionOfMapUnitsAccess(m_theWorkspace);
+            DmuAccess.AddDescriptionOfMapUnits();
+
+            if (parentKey != null)
+            {
+                // Sort and filter using Linq syntax
+                var sortedDmuEntries = (
+                    from entry in DmuAccess.DescriptionOfMapUnitsDictionary
+                    where ((entry.Value.HierarchyKey.Length == parentKey.Length + 5) && (entry.Value.HierarchyKey.StartsWith(parentKey)))
+                    orderby entry.Value.HierarchyKey ascending
+                    select entry);
+
+                return sortedDmuEntries;
+            }
+            else
+            {
+                // Just return the root-level stuff
+                var sortedDmuEntries = (
+                    from entry in DmuAccess.DescriptionOfMapUnitsDictionary
+                    where entry.Value.HierarchyKey.Length == 4
+                    orderby entry.Value.HierarchyKey ascending
+                    select entry);
+
+                return sortedDmuEntries;
+
+            }
+        }
+
+        private Dictionary<string, string> BuildIDLookupFromHierarchy(IOrderedEnumerable<KeyValuePair<string, DescriptionOfMapUnitsAccess.DescriptionOfMapUnit>> dmuEntries)
+        {
+            // Pass these records into a new Dictionary correlating ID to HierarchyKey
+            Dictionary<string, string> hierarchyDmuDictionary = new Dictionary<string,string>();
+            foreach (KeyValuePair<string, DescriptionOfMapUnitsAccess.DescriptionOfMapUnit> aDictionaryEntry in dmuEntries)
+            {
+                DescriptionOfMapUnitsAccess.DescriptionOfMapUnit thisDmuEntry = (DescriptionOfMapUnitsAccess.DescriptionOfMapUnit)aDictionaryEntry.Value;
+                hierarchyDmuDictionary.Add(thisDmuEntry.HierarchyKey, thisDmuEntry.DescriptionOfMapUnits_ID);
+            }
+
+            return hierarchyDmuDictionary;
+        }
+
+    #endregion
+
+    #region "Attribute Polygons, Maintain Attribution"
+
+        private void tlsbtnAssignUnit_Click(object sender, EventArgs e)
+        {
+            // Find the selected DMU Entry
+            string dmuID = trvLegendItems.SelectedNode.Name;
+            if (dmuID == null) { return; }
+
+            DescriptionOfMapUnitsAccess dmuAccess = new DescriptionOfMapUnitsAccess(m_theWorkspace);
+            dmuAccess.AddDescriptionOfMapUnits("DescriptionOfMapUnits_ID = '" + dmuID + "'");
+            DescriptionOfMapUnitsAccess.DescriptionOfMapUnit dmuEntry = dmuAccess.DescriptionOfMapUnitsDictionary[dmuID];
+
+            // Get selected polygons
+            IFeatureLayer mapUnitPolysLayer = commonFunctions.FindFeatureLayer(m_theWorkspace, "MapUnitPolys");
+
+            // Find out if there are selected features
+            IFeatureSelection featureSelection = (IFeatureSelection)mapUnitPolysLayer;
+            ISelectionSet theSelection = featureSelection.SelectionSet;
+
+            // Bail if nothing was selected
+            if (theSelection.Count == 0) { return; }
+
+            // Pass the selected features into a cursor that we can iterate through
+            ICursor theCursor;
+            theSelection.Search(null, false, out theCursor);
+            int IdFld = theCursor.FindField("MapUnitPolys_ID");
+
+            // Build the Where Clause to get these features by looping through the cursor
+            string sqlWhereClause = "MapUnitPolys_ID = '";
+            IRow theRow = theCursor.NextRow();
+            while (theRow != null)
+            {
+                sqlWhereClause += theRow.get_Value(IdFld) + "' OR MapUnitPolys_ID = '";
+                theRow = theCursor.NextRow();
+            }
+
+            System.Runtime.InteropServices.Marshal.ReleaseComObject(theCursor);
+
+            // If we didn't add anything to the where clause, bail
+            if (sqlWhereClause == "MapUnitPolys_ID = '") { return; }
+
+            // Cleanup the where clause
+            sqlWhereClause = sqlWhereClause.Remove(sqlWhereClause.Length - 23);
+
+            // Get the MapUnitPolys
+            MapUnitPolysAccess polysAccess = new MapUnitPolysAccess(m_theWorkspace);
+            polysAccess.AddMapUnitPolys(sqlWhereClause);
+
+            //---------------------------------------------------------------------------------
+            //---------------------------------------------------------------------------------
+            // Data Access Issue: I actually have to pass the dictionary into another object.
+            //  If I don't, once the first record is updated, the dictionary is changed.
+            //  Then the foreach loop fails, because what it is looping through was adjusted.
+            //  Not very happy with this.
+            //---------------------------------------------------------------------------------
+            //---------------------------------------------------------------------------------
+
+            // Sort using Linq syntax
+            var sortedPolys = (
+                from entry in polysAccess.MapUnitPolysDictionary                
+                select entry);
+            
+                MapUnitPolysAccess secondPolysAccess = new MapUnitPolysAccess(m_theWorkspace);
+            try
+            {
+                // Cycle through the MapUnitPolys and update the MapUnit and Label  attributes
+                foreach (KeyValuePair<string, MapUnitPolysAccess.MapUnitPoly> anEntry in sortedPolys)
+                {
+                    // Get the MapUnitPoly object                    
+                    secondPolysAccess.AddMapUnitPolys("MapUnitPolys_ID = '" + anEntry.Value.MapUnitPolys_ID + "'");
+                    MapUnitPolysAccess.MapUnitPoly aPoly = secondPolysAccess.MapUnitPolysDictionary[anEntry.Value.MapUnitPolys_ID];
+
+                    // Change the appropriate values
+                    aPoly.MapUnit = dmuEntry.MapUnit;
+                    aPoly.Label = dmuEntry.Label;
+
+                    // Update the Poly
+                    secondPolysAccess.UpdateMapUnitPoly(aPoly);
+                }
+            }
+            catch (Exception err) { MessageBox.Show(err.Message); }
+
+            // Save updates
+            secondPolysAccess.SaveMapUnitPolys();
+
+            // Update the active view
+            ArcMap.Document.ActiveView.PartialRefresh(esriViewDrawPhase.esriViewGeography, mapUnitPolysLayer, null);
+
+        }
+
+        private void UpdatePolygons(string oldMapUnitName, DescriptionOfMapUnitsAccess.DescriptionOfMapUnit theNewDmuEntry)
+        {
+            // Find polygons that use the old MapUnit
+            MapUnitPolysAccess polysFinder = new MapUnitPolysAccess(m_theWorkspace);
+            polysFinder.AddMapUnitPolys("MapUnit = '" + oldMapUnitName + "'");
+
+            try
+            {
+                // A second poly access class to do the updating
+                MapUnitPolysAccess polysUpdater = new MapUnitPolysAccess(m_theWorkspace);
+
+                // Loop through them and update
+                foreach (KeyValuePair<string, MapUnitPolysAccess.MapUnitPoly> anEntry in polysFinder.MapUnitPolysDictionary)
+                {
+                    // Get the Polygon
+                    polysUpdater.AddMapUnitPolys("MapUnitPolys_ID = '" + anEntry.Value.MapUnitPolys_ID + "'");
+                    MapUnitPolysAccess.MapUnitPoly aPoly = polysUpdater.MapUnitPolysDictionary[anEntry.Value.MapUnitPolys_ID];
+
+                    // Set new values
+                    aPoly.MapUnit = theNewDmuEntry.MapUnit;
+                    aPoly.Label = theNewDmuEntry.Label;
+
+                    // Update it
+                    polysUpdater.UpdateMapUnitPoly(aPoly);
+                }
+
+                // Save changes
+                polysUpdater.SaveMapUnitPolys();
+
+                // Refresh the Active View
+                IFeatureLayer mapUnitPolysLayer = commonFunctions.FindFeatureLayer(m_theWorkspace, "MapUnitPolys");
+                ArcMap.Document.ActiveView.PartialRefresh(esriViewDrawPhase.esriViewGeography, mapUnitPolysLayer, null);
+            }
+            catch (Exception err) { MessageBox.Show(err.Message); }            
+        }
+
+    #endregion
+
+    #endregion
+    }
+}

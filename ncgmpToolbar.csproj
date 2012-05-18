@@ -1,0 +1,360 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{91D9DEA9-3A7E-422A-A2CF-6333BB3C54CD}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ncgmpToolbar</RootNamespace>
+    <AssemblyName>ncgmpToolbar</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ESRI.ArcGIS.Carto, Version=10.0.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Catalog, Version=10.0.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.CatalogUI, Version=10.0.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.DataSourcesFile, Version=10.0.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.DataSourcesGDB, Version=10.0.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Desktop.AddIns">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Display, Version=10.0.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Framework">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Geodatabase, Version=10.0.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.GeoDatabaseDistributed, Version=10.0.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.GeoDatabaseUI, Version=10.0.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Geometry, Version=10.0.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.System">
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="stdole, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="btnAddEditDataSource.cs" />
+    <Compile Include="btnApplySelectedDefaults.cs" />
+    <Compile Include="btnDatabaseMaintenance.cs" />
+    <Compile Include="btnNewNcgmpDatabase.cs" />
+    <Compile Include="btnOpenNcgmpDatabase.cs" />
+    <Compile Include="btnShowMapUnitLegendEditor.cs" />
+    <Compile Include="btnTheTestingButton.cs" />
+    <Compile Include="Config.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Config.esriaddinx</DependentUpon>
+    </Compile>
+    <Compile Include="dwnMapUnitLegendEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="dwnMapUnitLegendEditor.Designer.cs">
+      <DependentUpon>dwnMapUnitLegendEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AddEditDataSource.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AddEditDataSource.Designer.cs">
+      <DependentUpon>AddEditDataSource.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\azgsSqlDatabaseChooser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\azgsSqlDatabaseChooser.Designer.cs">
+      <DependentUpon>azgsSqlDatabaseChooser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\DatabaseMaintenance.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\DatabaseMaintenance.Designer.cs">
+      <DependentUpon>DatabaseMaintenance.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\dropChooser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\dropChooser.Designer.cs">
+      <DependentUpon>dropChooser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\genericForms.cs" />
+    <Compile Include="Forms\newDatabaseInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\newDatabaseInfo.Designer.cs">
+      <DependentUpon>newDatabaseInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\sourceLegendItemSelection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\sourceLegendItemSelection.Designer.cs">
+      <DependentUpon>sourceLegendItemSelection.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\sqlOrFileChooser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\sqlOrFileChooser.Designer.cs">
+      <DependentUpon>sqlOrFileChooser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\updateAttributes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\updateAttributes.Designer.cs">
+      <DependentUpon>updateAttributes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="tlDigitizeOrientationData.cs" />
+    <Compile Include="tlDrawPolygonLegend.cs" />
+    <Compile Include="Utilities\commonFunctions.cs" />
+    <Compile Include="Utilities\DataAccess\ContactsAndFaultsAccess.cs" />
+    <Compile Include="Utilities\DataAccess\DataSourcesAccess.cs" />
+    <Compile Include="Utilities\DataAccess\DescriptionOfMapUnitsAccess.cs" />
+    <Compile Include="Utilities\DataAccess\GlossaryAccess.cs" />
+    <Compile Include="Utilities\DataAccess\MapUnitPolysAccess.cs" />
+    <Compile Include="Utilities\DataAccess\NotesAccess.cs" />
+    <Compile Include="Utilities\DataAccess\OrientationDataPointsAccess.cs" />
+    <Compile Include="Utilities\DataAccess\OtherLinesAccess.cs" />
+    <Compile Include="Utilities\DataAccess\OverlayPolysAccess.cs" />
+    <Compile Include="Utilities\DataAccess\RelatedDocumentsAccess.cs" />
+    <Compile Include="Utilities\DataAccess\SamplePointsAccess.cs" />
+    <Compile Include="Utilities\DataAccess\StationPointsAccess.cs" />
+    <Compile Include="Utilities\DataAccess\sysInfo.cs" />
+    <Compile Include="Utilities\DatabaseMaintenance\databaseExporter.cs" />
+    <Compile Include="Utilities\DatabaseMaintenance\dataSourceChecker.cs" />
+    <Compile Include="Utilities\DatabaseMaintenance\domainUpdater.cs" />
+    <Compile Include="Utilities\globalVariables.cs" />
+    <Compile Include="Utilities\ncgmpChecks.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <AddInContent Include="Config.esriaddinx">
+      <Generator>ArcGISAddInHostGenerator</Generator>
+      <LastGenOutput>Config.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </AddInContent>
+  </ItemGroup>
+  <ItemGroup>
+    <AddInContent Include="Images\ncgmpToolbar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="cmbDataSource.cs" />
+    <AddInContent Include="Images\cmbDataSource.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="ESRI.ArcGIS.Editor">
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ncgmpEditorExtension.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="ESRI.ArcGIS.ArcMapUI">
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <AddInContent Include="Images\btnOpenNcgmpDatabase.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AddInContent Include="Images\btnAddEditDataSource.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AddInContent Include="Images\tlDigitizeOrientationData.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AddInContent Include="Images\dwnMapUnitLegendEditor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AddInContent Include="Images\btnShowMapUnitLegendEditor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AddInContent Include="Images\btnTheTestingButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="dwnMapUnitLegendEditor.resx">
+      <DependentUpon>dwnMapUnitLegendEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AddEditDataSource.resx">
+      <DependentUpon>AddEditDataSource.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\DatabaseMaintenance.resx">
+      <DependentUpon>DatabaseMaintenance.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\dropChooser.resx">
+      <DependentUpon>dropChooser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\sourceLegendItemSelection.resx">
+      <DependentUpon>sourceLegendItemSelection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\sqlOrFileChooser.resx">
+      <DependentUpon>sqlOrFileChooser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\updateAttributes.resx">
+      <DependentUpon>updateAttributes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Cursors\firstPointCursor.cur" />
+    <EmbeddedResource Include="Cursors\GetDipCursor.cur" />
+    <EmbeddedResource Include="Cursors\SecondPointCursor.cur" />
+    <EmbeddedResource Include="Cursors\StationLocCursor.cur" />
+  </ItemGroup>
+  <ItemGroup>
+    <AddInContent Include="Images\btnDatabaseMaintenance.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AddInContent Include="Images\btnNewNcgmpDatabase.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\accept.png" />
+    <Content Include="Images\add.png" />
+    <Content Include="Images\arrow_refresh.png" />
+    <AddInContent Include="Images\btnApplySelectedDefaults.png" />
+    <Content Include="Images\cancel.png" />
+    <Content Include="Images\ChildDrop.jpg" />
+    <Content Include="Images\color_wheel.png" />
+    <Content Include="Images\folder_page.png" />
+    <Content Include="Images\page_copy.png" />
+    <Content Include="Images\pencil.png" />
+    <Content Include="Images\SibDrop.jpg" />
+    <None Include="Resources\ZONE11.XML" />
+    <None Include="Resources\FULL-12-3-10.XML" />
+    <None Include="Resources\FULL-12-7-10.XML" />
+    <AddInContent Include="Images\tlDrawPolygonLegend.png" />
+    <AddInContent Include="Images\tlDrawPolygonLegend.cur" />
+    <None Include="Resources\9-20-11.xml" />
+    <Content Include="Resources\full-9-29-10.xml" />
+    <Content Include="Resources\minRequired.xml" />
+    <Content Include="Resources\stations.xml" />
+    <Content Include="Resources\topology.xml" />
+    <Content Include="Resources\topologyRepresentations.xml" />
+  </ItemGroup>
+  <PropertyGroup>
+    <ZipFileExtension>esriAddIn</ZipFileExtension>
+    <AddInTargetProduct>Desktop</AddInTargetProduct>
+    <AddInTargetVersion>10.0</AddInTargetVersion>
+  </PropertyGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\ESRI\ESRI.ArcGIS.AddIns.targets" Condition="Exists('$(MSBuildExtensionsPath)\ESRI\ESRI.ArcGIS.AddIns.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  -->
+  <Target Name="AfterBuild">
+    <!-- Gives build warning when add-in targets file is not found. -->
+    <Warning Text="Unable to create .esriAddin; missing ESRI ArcGIS Add-in SDK component(s)." Condition="!Exists('$(MSBuildExtensionsPath)\ESRI\ESRI.ArcGIS.AddIns.targets')" />
+  </Target>
+  <ProjectExtensions>
+    <!-- Default ESRI add-in properties -->
+    <ESRIAddInProperties>
+      <Host>ArcMap</Host>
+    </ESRIAddInProperties>
+  </ProjectExtensions>
+</Project>
