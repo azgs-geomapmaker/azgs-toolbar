@@ -57,6 +57,7 @@
             this.grpUnitName = new System.Windows.Forms.GroupBox();
             this.txtUnitName = new System.Windows.Forms.TextBox();
             this.tabLith = new System.Windows.Forms.TabPage();
+            this.tabAge = new System.Windows.Forms.TabPage();
             this.tlsLegendControls = new System.Windows.Forms.ToolStrip();
             this.tlsbtnNewLegendItem = new System.Windows.Forms.ToolStripButton();
             this.tlsbtnRemoveLegendItem = new System.Windows.Forms.ToolStripButton();
@@ -74,7 +75,17 @@
             this.tlsbtnCloseCopy = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
-            this.tabAge = new System.Windows.Forms.TabPage();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.spltMain.Panel1.SuspendLayout();
             this.spltMain.Panel2.SuspendLayout();
             this.spltMain.SuspendLayout();
@@ -98,8 +109,13 @@
             this.grpAbbreviation.SuspendLayout();
             this.grpAge.SuspendLayout();
             this.grpUnitName.SuspendLayout();
+            this.tabLith.SuspendLayout();
             this.tlsLegendControls.SuspendLayout();
             this.tlsCopyFrom.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // spltMain
@@ -154,7 +170,7 @@
             // 
             this.trvLegendItems.AllowDrop = true;
             this.trvLegendItems.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.trvLegendItems.Font = new System.Drawing.Font("FGDCGeoAge", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.trvLegendItems.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.trvLegendItems.FullRowSelect = true;
             this.trvLegendItems.HideSelection = false;
             this.trvLegendItems.Location = new System.Drawing.Point(3, 16);
@@ -396,10 +412,10 @@
             // txtMapUnitAbbreviation
             // 
             this.txtMapUnitAbbreviation.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtMapUnitAbbreviation.Font = new System.Drawing.Font("FGDCGeoAge", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtMapUnitAbbreviation.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtMapUnitAbbreviation.Location = new System.Drawing.Point(3, 16);
             this.txtMapUnitAbbreviation.Name = "txtMapUnitAbbreviation";
-            this.txtMapUnitAbbreviation.Size = new System.Drawing.Size(89, 19);
+            this.txtMapUnitAbbreviation.Size = new System.Drawing.Size(89, 20);
             this.txtMapUnitAbbreviation.TabIndex = 1;
             this.txtMapUnitAbbreviation.TextChanged += new System.EventHandler(this.txtMapUnitAbbreviation_TextChanged);
             // 
@@ -445,6 +461,12 @@
             // 
             // tabLith
             // 
+            this.tabLith.AutoScroll = true;
+            this.tabLith.Controls.Add(this.toolStrip1);
+            this.tabLith.Controls.Add(this.groupBox3);
+            this.tabLith.Controls.Add(this.groupBox2);
+            this.tabLith.Controls.Add(this.listBox1);
+            this.tabLith.Controls.Add(this.groupBox1);
             this.tabLith.Location = new System.Drawing.Point(4, 22);
             this.tabLith.Name = "tabLith";
             this.tabLith.Padding = new System.Windows.Forms.Padding(3);
@@ -452,6 +474,15 @@
             this.tabLith.TabIndex = 1;
             this.tabLith.Text = "Formal Lithology";
             this.tabLith.UseVisualStyleBackColor = true;
+            // 
+            // tabAge
+            // 
+            this.tabAge.Location = new System.Drawing.Point(4, 22);
+            this.tabAge.Name = "tabAge";
+            this.tabAge.Size = new System.Drawing.Size(298, 295);
+            this.tabAge.TabIndex = 2;
+            this.tabAge.Text = "Formal Age";
+            this.tabAge.UseVisualStyleBackColor = true;
             // 
             // tlsLegendControls
             // 
@@ -608,14 +639,106 @@
             this.colorDialog.FullOpen = true;
             this.colorDialog.SolidColorOnly = true;
             // 
-            // tabAge
+            // groupBox1
             // 
-            this.tabAge.Location = new System.Drawing.Point(4, 22);
-            this.tabAge.Name = "tabAge";
-            this.tabAge.Size = new System.Drawing.Size(298, 295);
-            this.tabAge.TabIndex = 2;
-            this.tabAge.Text = "Formal Age";
-            this.tabAge.UseVisualStyleBackColor = true;
+            this.groupBox1.Controls.Add(this.comboBox1);
+            this.groupBox1.Location = new System.Drawing.Point(146, 46);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(149, 55);
+            this.groupBox1.TabIndex = 0;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "groupBox1";
+            // 
+            // listBox1
+            // 
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.Location = new System.Drawing.Point(0, 50);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(140, 199);
+            this.listBox1.TabIndex = 2;
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(6, 20);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(137, 21);
+            this.comboBox1.TabIndex = 0;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.comboBox2);
+            this.groupBox2.Location = new System.Drawing.Point(146, 120);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(149, 55);
+            this.groupBox2.TabIndex = 3;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "groupBox2";
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Location = new System.Drawing.Point(6, 20);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(137, 21);
+            this.comboBox2.TabIndex = 0;
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.comboBox3);
+            this.groupBox3.Location = new System.Drawing.Point(146, 194);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(149, 55);
+            this.groupBox3.TabIndex = 1;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "groupBox3";
+            // 
+            // comboBox3
+            // 
+            this.comboBox3.FormattingEnabled = true;
+            this.comboBox3.Location = new System.Drawing.Point(6, 20);
+            this.comboBox3.Name = "comboBox3";
+            this.comboBox3.Size = new System.Drawing.Size(137, 21);
+            this.comboBox3.TabIndex = 0;
+            // 
+            // toolStrip1
+            // 
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButton1,
+            this.toolStripButton2,
+            this.toolStripButton3});
+            this.toolStrip1.Location = new System.Drawing.Point(3, 3);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(292, 25);
+            this.toolStrip1.TabIndex = 4;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton1.Text = "toolStripButton1";
+            // 
+            // toolStripButton2
+            // 
+            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
+            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton2.Name = "toolStripButton2";
+            this.toolStripButton2.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton2.Text = "toolStripButton2";
+            // 
+            // toolStripButton3
+            // 
+            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
+            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton3.Name = "toolStripButton3";
+            this.toolStripButton3.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton3.Text = "toolStripButton3";
             // 
             // dwnMapUnitLegendEditor
             // 
@@ -655,10 +778,17 @@
             this.grpAge.PerformLayout();
             this.grpUnitName.ResumeLayout(false);
             this.grpUnitName.PerformLayout();
+            this.tabLith.ResumeLayout(false);
+            this.tabLith.PerformLayout();
             this.tlsLegendControls.ResumeLayout(false);
             this.tlsLegendControls.PerformLayout();
             this.tlsCopyFrom.ResumeLayout(false);
             this.tlsCopyFrom.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -713,6 +843,17 @@
         private System.Windows.Forms.Panel pnlColor;
         private System.Windows.Forms.ToolStripButton tlsbtnRefreshLegend;
         private System.Windows.Forms.TabPage tabAge;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton toolStripButton2;
+        private System.Windows.Forms.ToolStripButton toolStripButton3;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.ComboBox comboBox1;
 
     }
 }

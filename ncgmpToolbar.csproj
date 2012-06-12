@@ -138,6 +138,12 @@
     <Compile Include="Forms\AddEditDataSource.Designer.cs">
       <DependentUpon>AddEditDataSource.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\AddLith.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AddLith.Designer.cs">
+      <DependentUpon>AddLith.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\azgsSqlDatabaseChooser.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -201,6 +207,7 @@
     <Compile Include="Utilities\DataAccess\OverlayPolysAccess.cs" />
     <Compile Include="Utilities\DataAccess\RelatedDocumentsAccess.cs" />
     <Compile Include="Utilities\DataAccess\SamplePointsAccess.cs" />
+    <Compile Include="Utilities\DataAccess\StandardLithologyAccess.cs" />
     <Compile Include="Utilities\DataAccess\StationPointsAccess.cs" />
     <Compile Include="Utilities\DataAccess\sysInfo.cs" />
     <Compile Include="Utilities\DatabaseMaintenance\databaseExporter.cs" />
@@ -277,6 +284,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AddEditDataSource.resx">
       <DependentUpon>AddEditDataSource.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AddLith.resx">
+      <DependentUpon>AddLith.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\DatabaseMaintenance.resx">
       <DependentUpon>DatabaseMaintenance.cs</DependentUpon>

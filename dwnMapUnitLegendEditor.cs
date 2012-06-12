@@ -370,6 +370,7 @@ namespace ncgmpToolbar
             // Make sure that something is selected
             if (e.Node == null) { return; }
             
+
             // Get the selected DMU entry
             DescriptionOfMapUnitsAccess dmuAccess = new DescriptionOfMapUnitsAccess(m_theWorkspace);
             dmuAccess.AddDescriptionOfMapUnits("DescriptionOfMapUnits_ID = '" + e.Node.Name + "'");
@@ -1301,6 +1302,14 @@ namespace ncgmpToolbar
 
     #endregion
 
+        private void btnAddLith_Click(object sender, EventArgs e)
+        {
+            Form form1 = new AddLith();
+            form1.Show();
+        }
+
     #endregion
+
+
     }
 }
