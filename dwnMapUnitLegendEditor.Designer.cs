@@ -507,6 +507,7 @@
             this.btnDeleteLith.Size = new System.Drawing.Size(23, 22);
             this.btnDeleteLith.Text = "Delete";
             this.btnDeleteLith.ToolTipText = "Delete the Selected Lithology";
+            this.btnDeleteLith.Click += new System.EventHandler(this.btnDeleteLith_Click);
             // 
             // btnAddLith
             // 
@@ -604,6 +605,7 @@
             this.liLith.Location = new System.Drawing.Point(0, 50);
             this.liLith.Name = "liLith";
             this.liLith.Size = new System.Drawing.Size(140, 199);
+            this.liLith.Sorted = true;
             this.liLith.TabIndex = 2;
             this.liLith.SelectedIndexChanged += new System.EventHandler(this.liLith_SelectedIndexChanged);
             // 

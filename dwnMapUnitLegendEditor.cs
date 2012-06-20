@@ -1408,6 +1408,22 @@ namespace ncgmpToolbar
             }
         }
 
+        private void btnDeleteLith_Click(object sender, EventArgs e)
+        {
+            if (m_theWorkspace != null)
+            {
+                string lith = liLith.SelectedItem.ToString();
+
+                StandardLithologyAccess lithAccess = new StandardLithologyAccess(m_theWorkspace);
+                lithAccess.AddStandardLithology("Lithology = '" + lith + "'");
+
+                StandardLithologyAccess.StandardLithology aLithology = lithAccess.StandardLithologyDictionary.First().Value;
+                lithAccess.DeleteStandardLithology(aLithology);
+
+                initLithListBox(m_theWorkspace, aLithology.MapUnit);
+            }
+        }
+
     #endregion
     }
 }
