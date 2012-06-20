@@ -28,7 +28,7 @@ namespace ncgmpToolbar.Utilities.DataAccess
             public string PartType;
             public string Lithology;
             public string ProportionTerm;
-            public string ProportionValue;
+            public double ProportionValue;
             public string ScientificConfidence;
             public string DataSourceID;
             public bool RequiresUpdate;
@@ -45,7 +45,7 @@ namespace ncgmpToolbar.Utilities.DataAccess
             m_StandardLithologyDictionary.Clear();
         }
 
-        public void AddStandardLithologyAccess(string SqlWhereClause = null)
+        public void AddStandardLithology(string SqlWhereClause = null)
         {
             int idFld = m_StandardLithologyTable.FindField("StandardLithology_ID");
             int unitFld = m_StandardLithologyTable.FindField("MapUnit");
@@ -76,7 +76,7 @@ namespace ncgmpToolbar.Utilities.DataAccess
                 anStandardLithology.PartType = theRow.get_Value(pTypeFld).ToString();
                 anStandardLithology.Lithology = theRow.get_Value(lithFld).ToString();
                 anStandardLithology.ProportionTerm = theRow.get_Value(propTermFld).ToString();
-                anStandardLithology.ProportionValue = theRow.get_Value(propValueFld).ToString();
+                anStandardLithology.ProportionValue = Convert.ToDouble(theRow.get_Value(propValueFld));
                 anStandardLithology.ScientificConfidence = theRow.get_Value(sciConfidenceFld).ToString();
                 anStandardLithology.DataSourceID = theRow.get_Value(dataSrcFld).ToString();
                 anStandardLithology.RequiresUpdate = true;
@@ -88,7 +88,7 @@ namespace ncgmpToolbar.Utilities.DataAccess
         }
 
         public string NewStandardLithology(string MapUnit, string PartType, string Lithology, string ProportionTerm,
-            string ProportionValue, string ScientificConfidence, string DataSourceID)
+            double ProportionValue, string ScientificConfidence, string DataSourceID)
         {
             StandardLithology newStandardLithology = new StandardLithology();
             
@@ -168,7 +168,7 @@ namespace ncgmpToolbar.Utilities.DataAccess
                 if (updateWhereClause == "StandardLithology_ID = '") { return; }
 
                 theEditor.StartOperation();
-                updateWhereClause = updateWhereClause.Remove(updateWhereClause.Length - 32);
+                updateWhereClause = updateWhereClause.Remove(updateWhereClause.Length - 28);
 
                 IQueryFilter QF = new QueryFilterClass();
                 QF.WhereClause = updateWhereClause;

@@ -33,6 +33,7 @@ namespace ncgmpToolbar
     {
         IWorkspace m_theWorkspace;
         bool m_ThisIsAnUpdate = true;
+        bool m_isLithUpdate = true;
         string m_theOldMapUnitName;
 
         // Some logic here which tries to adjust depending on the edit state/ncgmp validity
@@ -68,6 +69,12 @@ namespace ncgmpToolbar
                 this.tlslblLegendName.Text = "Not Editing.";
                 ClearMainLegendTree();
             }
+
+            if (trvLegendItems.SelectedNode != null)
+            {
+                initLithListBox(m_theWorkspace, trvLegendItems.SelectedNode.Name);
+            }
+          
         }
 
         /// <summary>
@@ -379,6 +386,8 @@ namespace ncgmpToolbar
             // Populate controls
             PopulateInputControls(thisDmuEntry);
 
+            // Get the related standard lithology entry
+            initLithListBox(m_theWorkspace, thisDmuEntry.MapUnit);
         }
 
         private void tlsbtnRefreshLegend_Click(object sender, EventArgs e)
@@ -539,6 +548,7 @@ namespace ncgmpToolbar
 
             // Clear inputs
             ClearMapUnitInput();
+            ClearLithologyInput();
 
             // Enable/Disable appropriate controls
             EnableControls(isHeading, buildFullName);
@@ -668,7 +678,7 @@ namespace ncgmpToolbar
             this.pnlColor.BackColor = this.colorDialog.Color;
         }
 
-    #region "Adjustments to be made when textboxes are changed"
+        #region "Adjustments to be made when textboxes are changed"
 
         private void txtUnitName_TextChanged(object sender, EventArgs e)
         {
@@ -838,6 +848,7 @@ namespace ncgmpToolbar
         {
             // Clear the input controls
             ClearMapUnitInput();
+            ClearLithologyInput();
             trvLegendItems.SelectedNode = null;
 
             // Set the Update flag
@@ -1302,14 +1313,101 @@ namespace ncgmpToolbar
 
     #endregion
 
-        private void btnAddLith_Click(object sender, EventArgs e)
-        {
-            Form form1 = new AddLith();
-            form1.Show();
-        }
-
     #endregion
 
 
+    #region "Lithology Controls by Genhan"
+
+        private void ClearLithologyInput()
+        {
+            liLith.Items.Clear();
+            cboLith.SelectedIndex = -1;
+            cboPartType.SelectedIndex = -1;
+            cboPropTerm.SelectedIndex = -1;
+        }
+
+        private void initLithListBox(IWorkspace theWorkspace, string mapUnit)
+        {
+            ClearLithologyInput();
+           
+            StandardLithologyAccess lithAccess = new StandardLithologyAccess(theWorkspace);
+            lithAccess.AddStandardLithology("MapUnit = '" + mapUnit + "'");
+
+            foreach (KeyValuePair<string, StandardLithologyAccess.StandardLithology> aDictionaryEntry
+                in lithAccess.StandardLithologyDictionary)
+            {
+                StandardLithologyAccess.StandardLithology aDictionaryValue = aDictionaryEntry.Value;
+                liLith.Items.Add(aDictionaryValue.Lithology);
+            }
+        }
+
+        private void btnNewLith_Click(object sender, EventArgs e)
+        {
+            cboLith.SelectedIndex = -1;
+            cboPartType.SelectedIndex = -1;
+            cboPropTerm.SelectedIndex = -1;
+            liLith.ClearSelected();
+
+            m_isLithUpdate = false;
+        }
+
+        private void btnAcceptLith_Click(object sender, EventArgs e)
+        {
+            if (m_theWorkspace != null)
+            {
+                StandardLithologyAccess lithAccess = new StandardLithologyAccess(m_theWorkspace);
+
+                string mapUnit = txtMapUnitAbbreviation.Text;
+                string lithology = cboLith.Text;
+                string partType = cboPartType.Text;
+                string proportion = cboPropTerm.Text;
+
+                if (m_isLithUpdate)
+                {
+                    lithAccess.AddStandardLithology("Lithology = '" + liLith.SelectedItem.ToString() + "'");
+                    StandardLithologyAccess.StandardLithology thisLith = lithAccess.StandardLithologyDictionary.First().Value;
+                    thisLith.Lithology = lithology;
+                    thisLith.PartType = partType;
+                    thisLith.ProportionTerm = proportion;
+                    lithAccess.UpdateStandardLithology(thisLith);
+                }
+                else
+                {
+                    lithAccess.NewStandardLithology(mapUnit, partType, lithology, proportion, 0.0, null, null);
+                }
+
+                if (mapUnit != null)
+                {                    
+                    lithAccess.SaveStandardLithology();
+                    initLithListBox(m_theWorkspace, mapUnit);
+                }
+            }
+        }
+
+        private void liLith_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (m_theWorkspace == null) { return; }
+
+            if (liLith.SelectedIndex != -1)
+            {
+                m_isLithUpdate = true;
+                string lith = liLith.SelectedItem.ToString();
+
+                StandardLithologyAccess lithAccess = new StandardLithologyAccess(m_theWorkspace);
+                lithAccess.AddStandardLithology("Lithology = '" + lith + "'");
+
+                StandardLithologyAccess.StandardLithology aLithology = lithAccess.StandardLithologyDictionary.First().Value;
+
+                int lithIndex = cboLith.Items.IndexOf(lith);
+                int pTypeIndex = cboPartType.Items.IndexOf(aLithology.PartType);
+                int propIndex = cboPropTerm.Items.IndexOf(aLithology.ProportionTerm);
+
+                cboLith.SelectedIndex = lithIndex;
+                cboPartType.SelectedIndex = pTypeIndex;
+                cboPropTerm.SelectedIndex = propIndex;
+            }
+        }
+
+    #endregion
     }
 }

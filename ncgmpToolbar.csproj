@@ -138,12 +138,6 @@
     <Compile Include="Forms\AddEditDataSource.Designer.cs">
       <DependentUpon>AddEditDataSource.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\AddLith.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\AddLith.Designer.cs">
-      <DependentUpon>AddLith.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\azgsSqlDatabaseChooser.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -285,9 +279,6 @@
     <EmbeddedResource Include="Forms\AddEditDataSource.resx">
       <DependentUpon>AddEditDataSource.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\AddLith.resx">
-      <DependentUpon>AddLith.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\DatabaseMaintenance.resx">
       <DependentUpon>DatabaseMaintenance.cs</DependentUpon>
     </EmbeddedResource>
@@ -323,6 +314,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Images\accept.png" />
+    <Content Include="Images\save.gif" />
     <Content Include="Images\add.png" />
     <Content Include="Images\arrow_refresh.png" />
     <AddInContent Include="Images\btnApplySelectedDefaults.png" />

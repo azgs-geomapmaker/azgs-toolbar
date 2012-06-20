@@ -57,6 +57,17 @@
             this.grpUnitName = new System.Windows.Forms.GroupBox();
             this.txtUnitName = new System.Windows.Forms.TextBox();
             this.tabLith = new System.Windows.Forms.TabPage();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.btnNewLith = new System.Windows.Forms.ToolStripButton();
+            this.btnDeleteLith = new System.Windows.Forms.ToolStripButton();
+            this.btnAddLith = new System.Windows.Forms.ToolStripButton();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.cboPropTerm = new System.Windows.Forms.ComboBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.cboPartType = new System.Windows.Forms.ComboBox();
+            this.liLith = new System.Windows.Forms.ListBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cboLith = new System.Windows.Forms.ComboBox();
             this.tabAge = new System.Windows.Forms.TabPage();
             this.tlsLegendControls = new System.Windows.Forms.ToolStrip();
             this.tlsbtnNewLegendItem = new System.Windows.Forms.ToolStripButton();
@@ -75,17 +86,6 @@
             this.tlsbtnCloseCopy = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.listBox1 = new System.Windows.Forms.ListBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.spltMain.Panel1.SuspendLayout();
             this.spltMain.Panel2.SuspendLayout();
             this.spltMain.SuspendLayout();
@@ -110,12 +110,12 @@
             this.grpAge.SuspendLayout();
             this.grpUnitName.SuspendLayout();
             this.tabLith.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.tlsLegendControls.SuspendLayout();
             this.tlsCopyFrom.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // spltMain
@@ -465,7 +465,7 @@
             this.tabLith.Controls.Add(this.toolStrip1);
             this.tabLith.Controls.Add(this.groupBox3);
             this.tabLith.Controls.Add(this.groupBox2);
-            this.tabLith.Controls.Add(this.listBox1);
+            this.tabLith.Controls.Add(this.liLith);
             this.tabLith.Controls.Add(this.groupBox1);
             this.tabLith.Location = new System.Drawing.Point(4, 22);
             this.tabLith.Name = "tabLith";
@@ -474,6 +474,424 @@
             this.tabLith.TabIndex = 1;
             this.tabLith.Text = "Formal Lithology";
             this.tabLith.UseVisualStyleBackColor = true;
+            // 
+            // toolStrip1
+            // 
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnNewLith,
+            this.btnDeleteLith,
+            this.btnAddLith});
+            this.toolStrip1.Location = new System.Drawing.Point(3, 3);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(292, 25);
+            this.toolStrip1.TabIndex = 4;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // btnNewLith
+            // 
+            this.btnNewLith.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnNewLith.Image = global::ncgmpToolbar.Properties.Resources.add;
+            this.btnNewLith.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnNewLith.Name = "btnNewLith";
+            this.btnNewLith.Size = new System.Drawing.Size(23, 22);
+            this.btnNewLith.Text = "New";
+            this.btnNewLith.ToolTipText = "New Lithology";
+            this.btnNewLith.Click += new System.EventHandler(this.btnNewLith_Click);
+            // 
+            // btnDeleteLith
+            // 
+            this.btnDeleteLith.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnDeleteLith.Image = global::ncgmpToolbar.Properties.Resources.cancel;
+            this.btnDeleteLith.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnDeleteLith.Name = "btnDeleteLith";
+            this.btnDeleteLith.Size = new System.Drawing.Size(23, 22);
+            this.btnDeleteLith.Text = "Delete";
+            this.btnDeleteLith.ToolTipText = "Delete the Selected Lithology";
+            // 
+            // btnAddLith
+            // 
+            this.btnAddLith.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnAddLith.Image = global::ncgmpToolbar.Properties.Resources.accept;
+            this.btnAddLith.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnAddLith.Name = "btnAddLith";
+            this.btnAddLith.Size = new System.Drawing.Size(23, 22);
+            this.btnAddLith.Text = "Add";
+            this.btnAddLith.ToolTipText = "Accept the Update/New Term";
+            this.btnAddLith.Click += new System.EventHandler(this.btnAcceptLith_Click);
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox3.Controls.Add(this.cboPropTerm);
+            this.groupBox3.Location = new System.Drawing.Point(146, 194);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(149, 55);
+            this.groupBox3.TabIndex = 1;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Proportion Term";
+            // 
+            // cboPropTerm
+            // 
+            this.cboPropTerm.FormattingEnabled = true;
+            this.cboPropTerm.Items.AddRange(new object[] {
+            "all",
+            "major",
+            "more thanhalf",
+            "minor",
+            "most abundant",
+            "present",
+            "rare",
+            "less thanhalf",
+            "trace",
+            "variable",
+            "CGI Proportion Term Vocabulary"});
+            this.cboPropTerm.Location = new System.Drawing.Point(6, 20);
+            this.cboPropTerm.Name = "cboPropTerm";
+            this.cboPropTerm.Size = new System.Drawing.Size(137, 21);
+            this.cboPropTerm.TabIndex = 0;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.cboPartType);
+            this.groupBox2.Location = new System.Drawing.Point(146, 120);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(149, 55);
+            this.groupBox2.TabIndex = 3;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Part Type";
+            // 
+            // cboPartType
+            // 
+            this.cboPartType.FormattingEnabled = true;
+            this.cboPartType.Items.AddRange(new object[] {
+            "Bed lithosome",
+            "Blocks",
+            "Concretion",
+            "Cyclic bedding package",
+            "Enclave",
+            "Facies",
+            "Geologic unit matrix",
+            "Inclusion",
+            "Irregular lithosome",
+            "Layer lithosome",
+            "Lenticular lithosome",
+            "Lithosome",
+            "Marker bed",
+            "Only part",
+            "Part of",
+            "Pendants",
+            "Rafts",
+            "Roof pendant",
+            "Screen",
+            "Stratigraphic part",
+            "Tectonic block",
+            "Unspecified part role",
+            "Vein or dike lithosome",
+            "Xenolith",
+            "CGI Geologic Unit Part Role vocabulary"});
+            this.cboPartType.Location = new System.Drawing.Point(6, 20);
+            this.cboPartType.Name = "cboPartType";
+            this.cboPartType.Size = new System.Drawing.Size(137, 21);
+            this.cboPartType.TabIndex = 0;
+            // 
+            // liLith
+            // 
+            this.liLith.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.liLith.FormattingEnabled = true;
+            this.liLith.Location = new System.Drawing.Point(0, 50);
+            this.liLith.Name = "liLith";
+            this.liLith.Size = new System.Drawing.Size(140, 199);
+            this.liLith.TabIndex = 2;
+            this.liLith.SelectedIndexChanged += new System.EventHandler(this.liLith_SelectedIndexChanged);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.cboLith);
+            this.groupBox1.Location = new System.Drawing.Point(146, 46);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(149, 55);
+            this.groupBox1.TabIndex = 0;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Lithology";
+            // 
+            // cboLith
+            // 
+            this.cboLith.FormattingEnabled = true;
+            this.cboLith.Items.AddRange(new object[] {
+            "Acidic igneous material",
+            "Acidic igneous rock",
+            "Alkali olivine basalt",
+            "Alkali feldspar granite",
+            "Alkali feldspar rhyolite",
+            "Alkali feldspar syenite",
+            "Alkali feldspar syenitic rock",
+            "Alkali feldspar trachyte",
+            "Alkali feldspar trachytic rock",
+            "Amphibolite",
+            "Andesite",
+            "Anorthosite",
+            "Anorthositic rock",
+            "Anthracite",
+            "Anthropogenic material",
+            "Anthropogenic unconsolidated material",
+            "Aphanite",
+            "Aplite",
+            "Arenite",
+            "Ash and lapilli",
+            "Ash breccia, bomb, or block tephra",
+            "Ash tuff, lapillistone, and lapilli tuff",
+            "Basalt",
+            "Basanite",
+            "Basanitic foidite",
+            "Basic igneous material",
+            "Basic igneous rock",
+            "Bauxite",
+            "Biogenic sediment",
+            "Biogenic silica sedimentary rock",
+            "Bituminous coal",
+            "Boninite",
+            "Boulder gravel size sediment^^xsd:string",
+            "Boundstone",
+            "Breccia",
+            "Breccia-gouge series",
+            "Calcareous carbonate sediment",
+            "Calcareous carbonate sedimentary material",
+            "Calcareous carbonate sedimentary rock",
+            "Carbonate mud",
+            "Carbonate mudstone",
+            "Carbonate ooze",
+            "Carbonate rich mud",
+            "Carbonate rich mudstone",
+            "Carbonate sediment",
+            "Carbonate sedimentary material",
+            "Carbonate sedimentary rock",
+            "Carbonate wackestone",
+            "Carbonatite",
+            "Cataclasite series",
+            "Chalk",
+            "Chemical sedimentary material",
+            "Chlorite actinolite epidote metamorphic rock",
+            "Conglomerate",
+            "Mudstone",
+            "Sandstone",
+            "Clastic sediment",
+            "Clastic sedimentary material",
+            "Clastic sedimentary rock",
+            "Clay",
+            "Claystone",
+            "Coal",
+            "Cobble gravel size sediment^^xsd:string",
+            "Composite genesis material",
+            "Composite genesis rock",
+            "Compound material",
+            "Crystalline carbonate",
+            "Dacite",
+            "Diamictite",
+            "Diamicton",
+            "Diorite",
+            "Dioritic rock",
+            "Dioritoid",
+            "Doleritic rock",
+            "Dolomitic or magnesian sedimentary material",
+            "Dolomitic or magnesian sedimentary rock",
+            "Dolomitic sediment",
+            "Dolomite",
+            "Duricrust",
+            "Eclogite",
+            "Evaporite",
+            "Exotic alkaline rock",
+            "Exotic composition igneous rock",
+            "Exotic evaporite",
+            "Fault-related material",
+            "Fine grained igneous rock",
+            "Foid bearing alkali feldspar syenite",
+            "Foid bearing alkali feldspar trachyte",
+            "Foid bearing anorthosite",
+            "Foid bearing diorite",
+            "Foid bearing gabbro",
+            "Foid bearing latite",
+            "Foid bearing monzodiorite",
+            "Foid bearing monzogabbro",
+            "Foid bearing monzonite",
+            "Foid bearing syenite",
+            "Foid bearing trachyte",
+            "Foid diorite",
+            "Foid dioritoid",
+            "Foid gabbro",
+            "Foid gabbroid",
+            "Foid monzodiorite",
+            "Foid monzogabbro",
+            "Foid monzosyenite",
+            "Foid syenite",
+            "Foid syenitoid",
+            "Foidite",
+            "Foiditoid",
+            "Foidolite",
+            "Foliated metamorphic rock",
+            "Fragmental igneous material",
+            "Fragmental igneous rock",
+            "Framestone",
+            "Gabbro",
+            "Gabbroic rock",
+            "Gabbroid",
+            "Generic conglomerate",
+            "Generic mudstone",
+            "Generic sandstone",
+            "Glass rich igneous rock",
+            "Glassy igneous rock",
+            "Glaucophane lawsonite epidote metamorphic rock",
+            "Gneiss",
+            "Grainstone",
+            "Granite",
+            "Granitoid",
+            "Granodiorite",
+            "Granofels",
+            "Granulite",
+            "Gravel",
+            "Gravel size sediment",
+            "High magnesium fine grained igneous rock",
+            "Hornblendite",
+            "Hornfels",
+            "Hybrid sediment",
+            "Hybrid sedimentary rock",
+            "Igneous material",
+            "Igneous rock",
+            "Impact generated material",
+            "Impure calcareous carbonate sediment",
+            "Impure carbonate sediment",
+            "Impure carbonate sedimentary rock",
+            "Impure dolomitic sediment",
+            "Impure dolomite",
+            "Impure limestone",
+            "Intermediate composition igneous material",
+            "Intermediate composition igneous rock",
+            "Iron rich sediment",
+            "Iron rich sedimentary material",
+            "Iron rich sedimentary rock",
+            "Kalsilitic and melilitic rocks",
+            "Komatiitic rock",
+            "Latite",
+            "Latitic rock",
+            "Lignite",
+            "Limestone",
+            "Marble",
+            "Material formed in surficial environment",
+            "Metamorphic rock",
+            "Metasomatic rock",
+            "Mica schist",
+            "Migmatite",
+            "Monzodiorite",
+            "Monzodioritic rock",
+            "Monzogabbro",
+            "Monzogabbroic rock",
+            "Monzogranite",
+            "Monzonite",
+            "Monzonitic rock",
+            "Mud",
+            "Mud size sediment",
+            "Mylonitic rock",
+            "Natural unconsolidated material",
+            "Non-clastic siliceous sediment",
+            "Non-clastic siliceous sedimentary material",
+            "Non-clastic siliceous sedimentary rock",
+            "Ooze",
+            "Organic bearing mudstone",
+            "Organic rich sediment",
+            "Organic rich sedimentary material",
+            "Organic rich sedimentary rock",
+            "Orthogneiss",
+            "Packstone",
+            "Paragneiss",
+            "Peat",
+            "Pebble gravel size sediment",
+            "Pegmatite",
+            "Peridotite",
+            "Phaneritic igneous rock",
+            "Phonolite",
+            "Phonolitic basanite",
+            "Phonolitic foidite",
+            "Phonolitic tephrite",
+            "Phonolitoid",
+            "Phosphate rich sediment",
+            "Phosphate rich sedimentary material",
+            "Phosphorite",
+            "Phyllite",
+            "Phyllonite",
+            "Porphyry",
+            "Pure calcareous carbonate sediment",
+            "Pure carbonate mudstone",
+            "Pure carbonate sediment",
+            "Pure carbonate sedimentary rock",
+            "Pure dolomitic sediment",
+            "Pyroclastic material",
+            "Pyroclastic rock",
+            "Pyroxenite",
+            "Quartz alkali feldspar syenite",
+            "Quartz alkali feldspar trachyte",
+            "Quartz anorthosite",
+            "Quartz diorite",
+            "Quartz gabbro",
+            "Quartz latite",
+            "Quartz monzodiorite",
+            "Quartz monzogabbro",
+            "Quartz monzonite",
+            "Quartz rich igneous rock",
+            "Quartz syenite",
+            "Quartz trachyte",
+            "Quartzite",
+            "Residual material",
+            "Rhyolite",
+            "Rhyolitoid",
+            "Rock",
+            "Gypsum or anhydrite",
+            "Rock salt",
+            "Sand",
+            "Sand size sediment",
+            "Sapropel",
+            "Schist",
+            "Sediment",
+            "Sedimentary material",
+            "Sedimentary rock",
+            "Serpentinite",
+            "Shale",
+            "Silicate mud",
+            "Silicate mudstone",
+            "Siliceous ooze",
+            "Silt",
+            "Siltstone",
+            "Skarn",
+            "Slate",
+            "Spilite",
+            "Syenite",
+            "Syenitic rock",
+            "Syenitoid",
+            "Syenogranite",
+            "Tephra",
+            "Tephrite",
+            "Tephritic foidite",
+            "Tephritic phonolite",
+            "Tephritoid",
+            "Tholeiitic basalt",
+            "Tonalite",
+            "Trachyte",
+            "Trachytic rock",
+            "Trachytoid",
+            "Travertine",
+            "Tuff-breccia, agglomerate, or pyroclastic breccia",
+            "Tuffite",
+            "Ultrabasic igneous rock",
+            "Ultramafic igneous rock",
+            "Unconsolidated material",
+            "Wacke",
+            "CGI Simple Lithology Categories"});
+            this.cboLith.Location = new System.Drawing.Point(6, 20);
+            this.cboLith.Name = "cboLith";
+            this.cboLith.Size = new System.Drawing.Size(137, 21);
+            this.cboLith.TabIndex = 0;
             // 
             // tabAge
             // 
@@ -639,107 +1057,6 @@
             this.colorDialog.FullOpen = true;
             this.colorDialog.SolidColorOnly = true;
             // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.comboBox1);
-            this.groupBox1.Location = new System.Drawing.Point(146, 46);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(149, 55);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "groupBox1";
-            // 
-            // listBox1
-            // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(0, 50);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(140, 199);
-            this.listBox1.TabIndex = 2;
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(6, 20);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(137, 21);
-            this.comboBox1.TabIndex = 0;
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.comboBox2);
-            this.groupBox2.Location = new System.Drawing.Point(146, 120);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(149, 55);
-            this.groupBox2.TabIndex = 3;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "groupBox2";
-            // 
-            // comboBox2
-            // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(6, 20);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(137, 21);
-            this.comboBox2.TabIndex = 0;
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.comboBox3);
-            this.groupBox3.Location = new System.Drawing.Point(146, 194);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(149, 55);
-            this.groupBox3.TabIndex = 1;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "groupBox3";
-            // 
-            // comboBox3
-            // 
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(6, 20);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(137, 21);
-            this.comboBox3.TabIndex = 0;
-            // 
-            // toolStrip1
-            // 
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton1,
-            this.toolStripButton2,
-            this.toolStripButton3});
-            this.toolStrip1.Location = new System.Drawing.Point(3, 3);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(292, 25);
-            this.toolStrip1.TabIndex = 4;
-            this.toolStrip1.Text = "toolStrip1";
-            // 
-            // toolStripButton1
-            // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton1.Text = "toolStripButton1";
-            // 
-            // toolStripButton2
-            // 
-            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton2.Text = "toolStripButton2";
-            // 
-            // toolStripButton3
-            // 
-            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
-            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton3.Text = "toolStripButton3";
-            // 
             // dwnMapUnitLegendEditor
             // 
             this.Controls.Add(this.spltMain);
@@ -780,15 +1097,15 @@
             this.grpUnitName.PerformLayout();
             this.tabLith.ResumeLayout(false);
             this.tabLith.PerformLayout();
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
             this.tlsLegendControls.ResumeLayout(false);
             this.tlsLegendControls.PerformLayout();
             this.tlsCopyFrom.ResumeLayout(false);
             this.tlsCopyFrom.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -844,16 +1161,16 @@
         private System.Windows.Forms.ToolStripButton tlsbtnRefreshLegend;
         private System.Windows.Forms.TabPage tabAge;
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
-        private System.Windows.Forms.ToolStripButton toolStripButton2;
-        private System.Windows.Forms.ToolStripButton toolStripButton3;
+        private System.Windows.Forms.ToolStripButton btnNewLith;
+        private System.Windows.Forms.ToolStripButton btnDeleteLith;
+        private System.Windows.Forms.ToolStripButton btnAddLith;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.ComboBox cboPropTerm;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ComboBox cboPartType;
+        private System.Windows.Forms.ListBox liLith;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox cboLith;
 
     }
 }
