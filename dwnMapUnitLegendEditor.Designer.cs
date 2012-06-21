@@ -524,9 +524,9 @@
             // 
             this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox3.Controls.Add(this.cboPropTerm);
-            this.groupBox3.Location = new System.Drawing.Point(146, 194);
+            this.groupBox3.Location = new System.Drawing.Point(131, 231);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(149, 55);
+            this.groupBox3.Size = new System.Drawing.Size(164, 55);
             this.groupBox3.TabIndex = 1;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Proportion Term";
@@ -537,27 +537,26 @@
             this.cboPropTerm.Items.AddRange(new object[] {
             "all",
             "major",
-            "more thanhalf",
+            "more than half",
             "minor",
             "most abundant",
             "present",
             "rare",
-            "less thanhalf",
+            "less than half",
             "trace",
-            "variable",
-            "CGI Proportion Term Vocabulary"});
-            this.cboPropTerm.Location = new System.Drawing.Point(6, 20);
+            "variable"});
+            this.cboPropTerm.Location = new System.Drawing.Point(6, 19);
             this.cboPropTerm.Name = "cboPropTerm";
-            this.cboPropTerm.Size = new System.Drawing.Size(137, 21);
+            this.cboPropTerm.Size = new System.Drawing.Size(152, 21);
             this.cboPropTerm.TabIndex = 0;
             // 
             // groupBox2
             // 
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.Controls.Add(this.cboPartType);
-            this.groupBox2.Location = new System.Drawing.Point(146, 120);
+            this.groupBox2.Location = new System.Drawing.Point(131, 135);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(149, 55);
+            this.groupBox2.Size = new System.Drawing.Size(164, 55);
             this.groupBox2.TabIndex = 3;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Part Type";
@@ -591,20 +590,20 @@
             "Vein or dike lithosome",
             "Xenolith",
             "CGI Geologic Unit Part Role vocabulary"});
-            this.cboPartType.Location = new System.Drawing.Point(6, 20);
+            this.cboPartType.Location = new System.Drawing.Point(6, 19);
             this.cboPartType.Name = "cboPartType";
-            this.cboPartType.Size = new System.Drawing.Size(137, 21);
+            this.cboPartType.Size = new System.Drawing.Size(152, 21);
             this.cboPartType.TabIndex = 0;
             // 
             // liLith
             // 
-            this.liLith.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
+            this.liLith.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.liLith.FormattingEnabled = true;
-            this.liLith.Location = new System.Drawing.Point(0, 50);
+            this.liLith.HorizontalScrollbar = true;
+            this.liLith.Location = new System.Drawing.Point(6, 35);
             this.liLith.Name = "liLith";
-            this.liLith.Size = new System.Drawing.Size(140, 199);
+            this.liLith.Size = new System.Drawing.Size(122, 251);
             this.liLith.Sorted = true;
             this.liLith.TabIndex = 2;
             this.liLith.SelectedIndexChanged += new System.EventHandler(this.liLith_SelectedIndexChanged);
@@ -613,9 +612,9 @@
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.cboLith);
-            this.groupBox1.Location = new System.Drawing.Point(146, 46);
+            this.groupBox1.Location = new System.Drawing.Point(131, 35);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(149, 55);
+            this.groupBox1.Size = new System.Drawing.Size(164, 55);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Lithology";
@@ -888,11 +887,10 @@
             "Ultrabasic igneous rock",
             "Ultramafic igneous rock",
             "Unconsolidated material",
-            "Wacke",
-            "CGI Simple Lithology Categories"});
-            this.cboLith.Location = new System.Drawing.Point(6, 20);
+            "Wacke"});
+            this.cboLith.Location = new System.Drawing.Point(6, 19);
             this.cboLith.Name = "cboLith";
-            this.cboLith.Size = new System.Drawing.Size(137, 21);
+            this.cboLith.Size = new System.Drawing.Size(152, 21);
             this.cboLith.TabIndex = 0;
             // 
             // tabAge

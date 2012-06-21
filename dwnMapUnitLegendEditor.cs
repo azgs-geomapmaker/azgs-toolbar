@@ -393,6 +393,7 @@ namespace ncgmpToolbar
         private void tlsbtnRefreshLegend_Click(object sender, EventArgs e)
         {
             // Clear Inputs and refresh the Legend Tree
+            ClearLithologyInput();
             ClearMapUnitInput();
             PopulateMainLegendTree();
 
@@ -1360,7 +1361,9 @@ namespace ncgmpToolbar
                 string mapUnit = txtMapUnitAbbreviation.Text;
                 string lithology = cboLith.Text;
                 string partType = cboPartType.Text;
-                string proportion = cboPropTerm.Text;
+                string propTerm = cboPropTerm.Text;
+                double propValue = getPropValue(propTerm);
+                string resourceID = commonFunctions.GetCurrentDataSourceID();
 
                 if (m_isLithUpdate)
                 {
@@ -1368,12 +1371,13 @@ namespace ncgmpToolbar
                     StandardLithologyAccess.StandardLithology thisLith = lithAccess.StandardLithologyDictionary.First().Value;
                     thisLith.Lithology = lithology;
                     thisLith.PartType = partType;
-                    thisLith.ProportionTerm = proportion;
+                    thisLith.ProportionTerm = propTerm;
+                    thisLith.ProportionValue = propValue;
                     lithAccess.UpdateStandardLithology(thisLith);
                 }
                 else
                 {
-                    lithAccess.NewStandardLithology(mapUnit, partType, lithology, proportion, 0.0, null, null);
+                    lithAccess.NewStandardLithology(mapUnit, partType, lithology, propTerm, propValue, null, resourceID);
                 }
 
                 if (mapUnit != null)
@@ -1386,32 +1390,38 @@ namespace ncgmpToolbar
 
         private void liLith_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (m_theWorkspace == null) { return; }
-
-            if (liLith.SelectedIndex != -1)
+            if (m_theWorkspace != null) 
             {
-                m_isLithUpdate = true;
-                string lith = liLith.SelectedItem.ToString();
+                if (liLith.SelectedIndex != -1)
+                {
+                    m_isLithUpdate = true;
+                    string lith = liLith.SelectedItem.ToString();
 
-                StandardLithologyAccess lithAccess = new StandardLithologyAccess(m_theWorkspace);
-                lithAccess.AddStandardLithology("Lithology = '" + lith + "'");
+                    StandardLithologyAccess lithAccess = new StandardLithologyAccess(m_theWorkspace);
+                    lithAccess.AddStandardLithology("Lithology = '" + lith + "'");
 
-                StandardLithologyAccess.StandardLithology aLithology = lithAccess.StandardLithologyDictionary.First().Value;
+                    StandardLithologyAccess.StandardLithology aLithology = lithAccess.StandardLithologyDictionary.First().Value;
 
-                int lithIndex = cboLith.Items.IndexOf(lith);
-                int pTypeIndex = cboPartType.Items.IndexOf(aLithology.PartType);
-                int propIndex = cboPropTerm.Items.IndexOf(aLithology.ProportionTerm);
+                    int lithIndex = cboLith.Items.IndexOf(lith);
+                    int pTypeIndex = cboPartType.Items.IndexOf(aLithology.PartType);
+                    int propIndex = cboPropTerm.Items.IndexOf(aLithology.ProportionTerm);
 
-                cboLith.SelectedIndex = lithIndex;
-                cboPartType.SelectedIndex = pTypeIndex;
-                cboPropTerm.SelectedIndex = propIndex;
+                    cboLith.SelectedIndex = lithIndex;
+                    cboPartType.SelectedIndex = pTypeIndex;
+                    cboPropTerm.SelectedIndex = propIndex;
+                }
             }
+
         }
 
         private void btnDeleteLith_Click(object sender, EventArgs e)
         {
             if (m_theWorkspace != null)
             {
+                // Confirm box to delete the lithology record
+                DialogResult result = MessageBox.Show("Are you sure to delete this record?", liLith.SelectedItem.ToString(), MessageBoxButtons.YesNo);
+                if (result != DialogResult.Yes) { return; }
+
                 string lith = liLith.SelectedItem.ToString();
 
                 StandardLithologyAccess lithAccess = new StandardLithologyAccess(m_theWorkspace);
@@ -1422,6 +1432,36 @@ namespace ncgmpToolbar
 
                 initLithListBox(m_theWorkspace, aLithology.MapUnit);
             }
+        }
+
+        private double getPropValue (string propTerm) 
+        {
+            switch (propTerm)
+            {
+                case "trace":
+                    return 0.05;
+                case "rare":
+                    return 2;
+                case "minor":
+                    return 15;
+                case "present":
+                    return 35;
+                case "variable":
+                    return 35;
+                case "less than half":
+                    return 40;
+                case "most abundant":
+                    return 52;
+                case "more than half":
+                    return 60;
+                case "major":
+                    return 85;
+                case "all":
+                    return 100;
+                default:
+                    return 999;
+            }
+
         }
 
     #endregion
