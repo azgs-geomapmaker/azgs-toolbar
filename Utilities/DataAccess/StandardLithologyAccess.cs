@@ -38,6 +38,7 @@ namespace ncgmpToolbar.Utilities.DataAccess
         public Dictionary<string, StandardLithology> StandardLithologyDictionary
         {
             get { return m_StandardLithologyDictionary; }
+            set { m_StandardLithologyDictionary = value; }
         }
 
         public void ClearDescriptionOfMapUnits()

@@ -86,6 +86,9 @@
             this.tlsbtnCloseCopy = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
+            this.btnSaveLith = new System.Windows.Forms.ToolStripButton();
+            this.toolStrip2 = new System.Windows.Forms.ToolStrip();
+            this.btnCancelLith = new System.Windows.Forms.ToolStripButton();
             this.spltMain.Panel1.SuspendLayout();
             this.spltMain.Panel2.SuspendLayout();
             this.spltMain.SuspendLayout();
@@ -116,6 +119,7 @@
             this.groupBox1.SuspendLayout();
             this.tlsLegendControls.SuspendLayout();
             this.tlsCopyFrom.SuspendLayout();
+            this.toolStrip2.SuspendLayout();
             this.SuspendLayout();
             // 
             // spltMain
@@ -462,6 +466,7 @@
             // tabLith
             // 
             this.tabLith.AutoScroll = true;
+            this.tabLith.Controls.Add(this.toolStrip2);
             this.tabLith.Controls.Add(this.toolStrip1);
             this.tabLith.Controls.Add(this.groupBox3);
             this.tabLith.Controls.Add(this.groupBox2);
@@ -524,7 +529,7 @@
             // 
             this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox3.Controls.Add(this.cboPropTerm);
-            this.groupBox3.Location = new System.Drawing.Point(131, 231);
+            this.groupBox3.Location = new System.Drawing.Point(131, 188);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(164, 55);
             this.groupBox3.TabIndex = 1;
@@ -536,25 +541,26 @@
             this.cboPropTerm.FormattingEnabled = true;
             this.cboPropTerm.Items.AddRange(new object[] {
             "all",
+            "less than half",
             "major",
-            "more than half",
             "minor",
+            "more than half",
             "most abundant",
             "present",
             "rare",
-            "less than half",
             "trace",
             "variable"});
             this.cboPropTerm.Location = new System.Drawing.Point(6, 19);
             this.cboPropTerm.Name = "cboPropTerm";
             this.cboPropTerm.Size = new System.Drawing.Size(152, 21);
+            this.cboPropTerm.Sorted = true;
             this.cboPropTerm.TabIndex = 0;
             // 
             // groupBox2
             // 
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.Controls.Add(this.cboPartType);
-            this.groupBox2.Location = new System.Drawing.Point(131, 135);
+            this.groupBox2.Location = new System.Drawing.Point(131, 112);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(164, 55);
             this.groupBox2.TabIndex = 3;
@@ -588,11 +594,11 @@
             "Tectonic block",
             "Unspecified part role",
             "Vein or dike lithosome",
-            "Xenolith",
-            "CGI Geologic Unit Part Role vocabulary"});
+            "Xenolith"});
             this.cboPartType.Location = new System.Drawing.Point(6, 19);
             this.cboPartType.Name = "cboPartType";
             this.cboPartType.Size = new System.Drawing.Size(152, 21);
+            this.cboPartType.Sorted = true;
             this.cboPartType.TabIndex = 0;
             // 
             // liLith
@@ -603,7 +609,7 @@
             this.liLith.HorizontalScrollbar = true;
             this.liLith.Location = new System.Drawing.Point(6, 35);
             this.liLith.Name = "liLith";
-            this.liLith.Size = new System.Drawing.Size(122, 251);
+            this.liLith.Size = new System.Drawing.Size(122, 212);
             this.liLith.Sorted = true;
             this.liLith.TabIndex = 2;
             this.liLith.SelectedIndexChanged += new System.EventHandler(this.liLith_SelectedIndexChanged);
@@ -625,13 +631,13 @@
             this.cboLith.Items.AddRange(new object[] {
             "Acidic igneous material",
             "Acidic igneous rock",
-            "Alkali olivine basalt",
             "Alkali feldspar granite",
             "Alkali feldspar rhyolite",
             "Alkali feldspar syenite",
             "Alkali feldspar syenitic rock",
             "Alkali feldspar trachyte",
             "Alkali feldspar trachytic rock",
+            "Alkali olivine basalt",
             "Amphibolite",
             "Andesite",
             "Anorthosite",
@@ -676,9 +682,6 @@
             "Chalk",
             "Chemical sedimentary material",
             "Chlorite actinolite epidote metamorphic rock",
-            "Conglomerate",
-            "Mudstone",
-            "Sandstone",
             "Clastic sediment",
             "Clastic sedimentary material",
             "Clastic sedimentary rock",
@@ -689,6 +692,7 @@
             "Composite genesis material",
             "Composite genesis rock",
             "Compound material",
+            "Conglomerate",
             "Crystalline carbonate",
             "Dacite",
             "Diamictite",
@@ -697,10 +701,10 @@
             "Dioritic rock",
             "Dioritoid",
             "Doleritic rock",
+            "Dolomite",
             "Dolomitic or magnesian sedimentary material",
             "Dolomitic or magnesian sedimentary rock",
             "Dolomitic sediment",
-            "Dolomite",
             "Duricrust",
             "Eclogite",
             "Evaporite",
@@ -754,6 +758,7 @@
             "Granulite",
             "Gravel",
             "Gravel size sediment",
+            "Gypsum or anhydrite",
             "High magnesium fine grained igneous rock",
             "Hornblendite",
             "Hornfels",
@@ -765,8 +770,8 @@
             "Impure calcareous carbonate sediment",
             "Impure carbonate sediment",
             "Impure carbonate sedimentary rock",
-            "Impure dolomitic sediment",
             "Impure dolomite",
+            "Impure dolomitic sediment",
             "Impure limestone",
             "Intermediate composition igneous material",
             "Intermediate composition igneous rock",
@@ -794,6 +799,7 @@
             "Monzonitic rock",
             "Mud",
             "Mud size sediment",
+            "Mudstone",
             "Mylonitic rock",
             "Natural unconsolidated material",
             "Non-clastic siliceous sediment",
@@ -848,10 +854,10 @@
             "Rhyolite",
             "Rhyolitoid",
             "Rock",
-            "Gypsum or anhydrite",
             "Rock salt",
             "Sand",
             "Sand size sediment",
+            "Sandstone",
             "Sapropel",
             "Schist",
             "Sediment",
@@ -891,6 +897,7 @@
             this.cboLith.Location = new System.Drawing.Point(6, 19);
             this.cboLith.Name = "cboLith";
             this.cboLith.Size = new System.Drawing.Size(152, 21);
+            this.cboLith.Sorted = true;
             this.cboLith.TabIndex = 0;
             // 
             // tabAge
@@ -1057,6 +1064,42 @@
             this.colorDialog.FullOpen = true;
             this.colorDialog.SolidColorOnly = true;
             // 
+            // btnSaveLith
+            // 
+            this.btnSaveLith.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btnSaveLith.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.btnSaveLith.Image = ((System.Drawing.Image)(resources.GetObject("btnSaveLith.Image")));
+            this.btnSaveLith.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSaveLith.Name = "btnSaveLith";
+            this.btnSaveLith.Size = new System.Drawing.Size(39, 22);
+            this.btnSaveLith.Text = "Save";
+            this.btnSaveLith.ToolTipText = "Save Lithology";
+            this.btnSaveLith.Click += new System.EventHandler(this.btnSaveLith_Click);
+            // 
+            // toolStrip2
+            // 
+            this.toolStrip2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnSaveLith,
+            this.btnCancelLith});
+            this.toolStrip2.Location = new System.Drawing.Point(3, 267);
+            this.toolStrip2.Name = "toolStrip2";
+            this.toolStrip2.Size = new System.Drawing.Size(292, 25);
+            this.toolStrip2.TabIndex = 5;
+            this.toolStrip2.Text = "toolStrip1";
+            // 
+            // btnCancelLith
+            // 
+            this.btnCancelLith.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.btnCancelLith.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btnCancelLith.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.btnCancelLith.Image = ((System.Drawing.Image)(resources.GetObject("btnCancelLith.Image")));
+            this.btnCancelLith.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnCancelLith.Name = "btnCancelLith";
+            this.btnCancelLith.Size = new System.Drawing.Size(48, 22);
+            this.btnCancelLith.Text = "Cancel";
+            this.btnCancelLith.ToolTipText = "Cancel Lithology Input";
+            // 
             // dwnMapUnitLegendEditor
             // 
             this.Controls.Add(this.spltMain);
@@ -1106,6 +1149,8 @@
             this.tlsLegendControls.PerformLayout();
             this.tlsCopyFrom.ResumeLayout(false);
             this.tlsCopyFrom.PerformLayout();
+            this.toolStrip2.ResumeLayout(false);
+            this.toolStrip2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1171,6 +1216,9 @@
         private System.Windows.Forms.ListBox liLith;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ComboBox cboLith;
+        private System.Windows.Forms.ToolStrip toolStrip2;
+        private System.Windows.Forms.ToolStripButton btnSaveLith;
+        private System.Windows.Forms.ToolStripButton btnCancelLith;
 
     }
 }
