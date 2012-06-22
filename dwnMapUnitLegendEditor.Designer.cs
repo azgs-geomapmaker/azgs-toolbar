@@ -421,6 +421,7 @@
             this.txtMapUnitAbbreviation.Name = "txtMapUnitAbbreviation";
             this.txtMapUnitAbbreviation.Size = new System.Drawing.Size(89, 20);
             this.txtMapUnitAbbreviation.TabIndex = 1;
+            this.txtMapUnitAbbreviation.EnabledChanged += new System.EventHandler(this.txtMapUnitAbbreviation_EnabledChanged);
             this.txtMapUnitAbbreviation.TextChanged += new System.EventHandler(this.txtMapUnitAbbreviation_TextChanged);
             // 
             // grpAge
@@ -1099,6 +1100,7 @@
             this.btnCancelLith.Size = new System.Drawing.Size(48, 22);
             this.btnCancelLith.Text = "Cancel";
             this.btnCancelLith.ToolTipText = "Cancel Lithology Input";
+            this.btnCancelLith.Click += new System.EventHandler(this.btnCancelLith_Click);
             // 
             // dwnMapUnitLegendEditor
             // 

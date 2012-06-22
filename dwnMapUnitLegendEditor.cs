@@ -71,7 +71,7 @@ namespace ncgmpToolbar
 
             if (trvLegendItems.SelectedNode != null)
             {
-                initLithListBox(m_theWorkspace, trvLegendItems.SelectedNode.Name);
+                initLithListBox(m_theWorkspace, trvLegendItems.SelectedNode.Name, false);
             }
           
         }
@@ -386,7 +386,7 @@ namespace ncgmpToolbar
             PopulateInputControls(thisDmuEntry);
 
             // Get the related standard lithology entry
-            initLithListBox(m_theWorkspace, thisDmuEntry.MapUnit);
+            initLithListBox(m_theWorkspace, thisDmuEntry.MapUnit, chkIsHeading.Checked);
         }
 
         private void tlsbtnRefreshLegend_Click(object sender, EventArgs e)
@@ -1334,25 +1334,39 @@ namespace ncgmpToolbar
             m_isLithUpdate = false;
         }
 
-        private void initLithListBox(IWorkspace theWorkspace, string mapUnit)
+        private void initLithListBox(IWorkspace theWorkspace, string mapUnit, bool isHeading)
         {
             liLith.Items.Clear();
-            ClearLithologyInput();            
+            ClearLithologyInput();
 
             m_StandardLithologyDictionary.Clear();
-           
+            m_StandardLithologyDeleteDictionary.Clear();
+
             StandardLithologyAccess lithAccess = new StandardLithologyAccess(theWorkspace);
             lithAccess.AddStandardLithology("MapUnit = '" + mapUnit + "'");
 
-            foreach (KeyValuePair<string, StandardLithologyAccess.StandardLithology> aDictionaryEntry
-                in lithAccess.StandardLithologyDictionary)
-            {
-                string aKey = aDictionaryEntry.Key;
-                StandardLithologyAccess.StandardLithology aDictionaryValue = aDictionaryEntry.Value;
-                liLith.Items.Add(aDictionaryValue.Lithology);
+            btnNewLith.Enabled = !isHeading;
+            btnAddLith.Enabled = !isHeading;
+            btnDeleteLith.Enabled = !isHeading;
+            btnSaveLith.Enabled = !isHeading;
+            btnCancelLith.Enabled = !isHeading;
+            liLith.Enabled = !isHeading;
+            cboLith.Enabled = !isHeading;
+            cboPartType.Enabled = !isHeading;
+            cboPropTerm.Enabled = !isHeading;
 
-                m_StandardLithologyDictionary.Add(aKey, aDictionaryValue);
+            if (!isHeading)
+            {
+                foreach (KeyValuePair<string, StandardLithologyAccess.StandardLithology> aDictionaryEntry in lithAccess.StandardLithologyDictionary)
+                {
+                    string aKey = aDictionaryEntry.Key;
+                    StandardLithologyAccess.StandardLithology aDictionaryValue = aDictionaryEntry.Value;
+                    liLith.Items.Add(aDictionaryValue.Lithology);
+
+                    m_StandardLithologyDictionary.Add(aKey, aDictionaryValue);
+                }
             }
+
         }
 
         private void btnNewLith_Click(object sender, EventArgs e)
@@ -1464,6 +1478,8 @@ namespace ncgmpToolbar
                         break;
                     }
                 }
+
+                ClearLithologyInput();
             }
         }
 
@@ -1499,6 +1515,11 @@ namespace ncgmpToolbar
 
         private void btnSaveLith_Click(object sender, EventArgs e)
         {
+            saveLithology();
+        }
+
+        private void saveLithology()
+        {
             string mapUnit = txtMapUnitAbbreviation.Text;
 
             if (m_theWorkspace != null && mapUnit != null)
@@ -1515,9 +1536,28 @@ namespace ncgmpToolbar
                 }
 
                 ClearLithologyInput();
+            } 
+        }
+
+        private void btnCancelLith_Click(object sender, EventArgs e)
+        {
+            string mapUnit = txtMapUnitAbbreviation.Text;
+            if (m_theWorkspace != null && mapUnit != null)
+            {
+                initLithListBox(m_theWorkspace, mapUnit, false);
+            }
+        }
+
+        private void txtMapUnitAbbreviation_EnabledChanged(object sender, EventArgs e)
+        {
+            // No lithology info for header
+            if (m_theWorkspace != null && txtMapUnitAbbreviation.Text != null)
+            {
+                initLithListBox(m_theWorkspace, txtMapUnitAbbreviation.Text, chkIsHeading.Checked);
             }
         }
 
     #endregion
+
     }
 }
