@@ -688,7 +688,7 @@ namespace ncgmpToolbar
 
         private void txtMapUnitAbbreviation_TextChanged(object sender, EventArgs e)
         {
-            EnableSaveButton();
+            EnableSaveButton();           
         }
 
         private void txtMapUnitAge_TextChanged(object sender, EventArgs e)
@@ -742,6 +742,13 @@ namespace ncgmpToolbar
     #region "Save/Cancel Functionality"
 
         private void tlsbtnSaveMapUnit_Click(object sender, EventArgs e)
+        {
+            saveLithology();
+            saveMapUnit();
+            
+        }
+
+        private void saveMapUnit()
         {
             // Get attributes from the form
             string thisDmuAge = txtMapUnitAge.Text;
@@ -811,9 +818,9 @@ namespace ncgmpToolbar
                     string thisDmuHierarchyKey = GetNewHierarchyKey();
 
                     // Add the record
-                    dmuAccess.NewDescriptionOfMapUnit(thisDmuMapUnit, thisDmuName, thisDmuFullName, 
-                        thisDmuLabel, thisDmuAge, thisDmuDescription, 
-                        thisDmuHierarchyKey, thisDmuParagraphStyle, thisDmuAreaFillRGB, 
+                    dmuAccess.NewDescriptionOfMapUnit(thisDmuMapUnit, thisDmuName, thisDmuFullName,
+                        thisDmuLabel, thisDmuAge, thisDmuDescription,
+                        thisDmuHierarchyKey, thisDmuParagraphStyle, thisDmuAreaFillRGB,
                         "", thisDmuDefinitionSourceID, "", "");
 
                     break;
@@ -829,11 +836,16 @@ namespace ncgmpToolbar
             if ((m_ThisIsAnUpdate == true) && (m_theOldMapUnitName != null)) { UpdatePolygons(m_theOldMapUnitName, dmuEntry); }
 
             // Clear Inputs
-            ClearMapUnitInput();
-                
+            ClearMapUnitInput(); 
         }
 
         private void tlsbtnCancel_Click(object sender, EventArgs e)
+        {
+            cancelMapUnit();
+            cancelLithology();
+        }
+
+        private void cancelMapUnit()
         {
             // Don't save or anything, just cancel
             ClearMapUnitInput();
@@ -1516,11 +1528,13 @@ namespace ncgmpToolbar
         private void btnSaveLith_Click(object sender, EventArgs e)
         {
             saveLithology();
+            saveMapUnit();
         }
 
         private void saveLithology()
         {
-            string mapUnit = txtMapUnitAbbreviation.Text;
+            updateLithology4MapUnit();
+            string mapUnit = txtMapUnitAbbreviation.Text;          
 
             if (m_theWorkspace != null && mapUnit != null)
             {
@@ -1539,7 +1553,35 @@ namespace ncgmpToolbar
             } 
         }
 
+        #region "Update the related lithology if when the map unit info changes -- by Genhan"
+
+        private void updateLithology4MapUnit()
+        {
+            if (m_StandardLithologyDictionary.Count != 0)
+            {
+                Dictionary<string, StandardLithologyAccess.StandardLithology> newStandardLithologyDictionary = new Dictionary<string, StandardLithologyAccess.StandardLithology>();
+                foreach (KeyValuePair<string, StandardLithologyAccess.StandardLithology> aDictionaryEntry in m_StandardLithologyDictionary)
+                {
+                    string key = aDictionaryEntry.Key;
+                    StandardLithologyAccess.StandardLithology aLithology = aDictionaryEntry.Value;
+                    aLithology.MapUnit = txtMapUnitAbbreviation.Text;
+
+                    newStandardLithologyDictionary.Add(key, aLithology);
+                }
+
+                m_StandardLithologyDictionary = newStandardLithologyDictionary;
+            }
+        }
+
+        #endregion
+
         private void btnCancelLith_Click(object sender, EventArgs e)
+        {
+            cancelLithology();
+            cancelMapUnit();
+        }
+
+        private void cancelLithology()
         {
             string mapUnit = txtMapUnitAbbreviation.Text;
             if (m_theWorkspace != null && mapUnit != null)

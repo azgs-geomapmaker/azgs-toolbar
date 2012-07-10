@@ -57,6 +57,9 @@
             this.grpUnitName = new System.Windows.Forms.GroupBox();
             this.txtUnitName = new System.Windows.Forms.TextBox();
             this.tabLith = new System.Windows.Forms.TabPage();
+            this.toolStrip2 = new System.Windows.Forms.ToolStrip();
+            this.btnSaveLith = new System.Windows.Forms.ToolStripButton();
+            this.btnCancelLith = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.btnNewLith = new System.Windows.Forms.ToolStripButton();
             this.btnDeleteLith = new System.Windows.Forms.ToolStripButton();
@@ -86,9 +89,6 @@
             this.tlsbtnCloseCopy = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
-            this.btnSaveLith = new System.Windows.Forms.ToolStripButton();
-            this.toolStrip2 = new System.Windows.Forms.ToolStrip();
-            this.btnCancelLith = new System.Windows.Forms.ToolStripButton();
             this.spltMain.Panel1.SuspendLayout();
             this.spltMain.Panel2.SuspendLayout();
             this.spltMain.SuspendLayout();
@@ -113,13 +113,13 @@
             this.grpAge.SuspendLayout();
             this.grpUnitName.SuspendLayout();
             this.tabLith.SuspendLayout();
+            this.toolStrip2.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tlsLegendControls.SuspendLayout();
             this.tlsCopyFrom.SuspendLayout();
-            this.toolStrip2.SuspendLayout();
             this.SuspendLayout();
             // 
             // spltMain
@@ -322,7 +322,7 @@
             this.tlsbtnSaveMapUnit.Name = "tlsbtnSaveMapUnit";
             this.tlsbtnSaveMapUnit.Size = new System.Drawing.Size(39, 22);
             this.tlsbtnSaveMapUnit.Text = "Save";
-            this.tlsbtnSaveMapUnit.ToolTipText = "Save Map Unit";
+            this.tlsbtnSaveMapUnit.ToolTipText = "Save";
             this.tlsbtnSaveMapUnit.Click += new System.EventHandler(this.tlsbtnSaveMapUnit_Click);
             // 
             // tlsbtnCancel
@@ -335,7 +335,7 @@
             this.tlsbtnCancel.Name = "tlsbtnCancel";
             this.tlsbtnCancel.Size = new System.Drawing.Size(48, 22);
             this.tlsbtnCancel.Text = "Cancel";
-            this.tlsbtnCancel.ToolTipText = "Cancel Map Unit Input";
+            this.tlsbtnCancel.ToolTipText = "Cancel";
             this.tlsbtnCancel.Click += new System.EventHandler(this.tlsbtnCancel_Click);
             // 
             // grpMapUnitFullName
@@ -480,6 +480,43 @@
             this.tabLith.TabIndex = 1;
             this.tabLith.Text = "Formal Lithology";
             this.tabLith.UseVisualStyleBackColor = true;
+            // 
+            // toolStrip2
+            // 
+            this.toolStrip2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnSaveLith,
+            this.btnCancelLith});
+            this.toolStrip2.Location = new System.Drawing.Point(3, 267);
+            this.toolStrip2.Name = "toolStrip2";
+            this.toolStrip2.Size = new System.Drawing.Size(292, 25);
+            this.toolStrip2.TabIndex = 5;
+            this.toolStrip2.Text = "toolStrip1";
+            // 
+            // btnSaveLith
+            // 
+            this.btnSaveLith.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btnSaveLith.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.btnSaveLith.Image = ((System.Drawing.Image)(resources.GetObject("btnSaveLith.Image")));
+            this.btnSaveLith.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSaveLith.Name = "btnSaveLith";
+            this.btnSaveLith.Size = new System.Drawing.Size(39, 22);
+            this.btnSaveLith.Text = "Save";
+            this.btnSaveLith.ToolTipText = "Save";
+            this.btnSaveLith.Click += new System.EventHandler(this.btnSaveLith_Click);
+            // 
+            // btnCancelLith
+            // 
+            this.btnCancelLith.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.btnCancelLith.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btnCancelLith.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.btnCancelLith.Image = ((System.Drawing.Image)(resources.GetObject("btnCancelLith.Image")));
+            this.btnCancelLith.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnCancelLith.Name = "btnCancelLith";
+            this.btnCancelLith.Size = new System.Drawing.Size(48, 22);
+            this.btnCancelLith.Text = "Cancel";
+            this.btnCancelLith.ToolTipText = "Cancel";
+            this.btnCancelLith.Click += new System.EventHandler(this.btnCancelLith_Click);
             // 
             // toolStrip1
             // 
@@ -1065,43 +1102,6 @@
             this.colorDialog.FullOpen = true;
             this.colorDialog.SolidColorOnly = true;
             // 
-            // btnSaveLith
-            // 
-            this.btnSaveLith.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.btnSaveLith.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
-            this.btnSaveLith.Image = ((System.Drawing.Image)(resources.GetObject("btnSaveLith.Image")));
-            this.btnSaveLith.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSaveLith.Name = "btnSaveLith";
-            this.btnSaveLith.Size = new System.Drawing.Size(39, 22);
-            this.btnSaveLith.Text = "Save";
-            this.btnSaveLith.ToolTipText = "Save Lithology";
-            this.btnSaveLith.Click += new System.EventHandler(this.btnSaveLith_Click);
-            // 
-            // toolStrip2
-            // 
-            this.toolStrip2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnSaveLith,
-            this.btnCancelLith});
-            this.toolStrip2.Location = new System.Drawing.Point(3, 267);
-            this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(292, 25);
-            this.toolStrip2.TabIndex = 5;
-            this.toolStrip2.Text = "toolStrip1";
-            // 
-            // btnCancelLith
-            // 
-            this.btnCancelLith.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.btnCancelLith.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.btnCancelLith.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
-            this.btnCancelLith.Image = ((System.Drawing.Image)(resources.GetObject("btnCancelLith.Image")));
-            this.btnCancelLith.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnCancelLith.Name = "btnCancelLith";
-            this.btnCancelLith.Size = new System.Drawing.Size(48, 22);
-            this.btnCancelLith.Text = "Cancel";
-            this.btnCancelLith.ToolTipText = "Cancel Lithology Input";
-            this.btnCancelLith.Click += new System.EventHandler(this.btnCancelLith_Click);
-            // 
             // dwnMapUnitLegendEditor
             // 
             this.Controls.Add(this.spltMain);
@@ -1142,6 +1142,8 @@
             this.grpUnitName.PerformLayout();
             this.tabLith.ResumeLayout(false);
             this.tabLith.PerformLayout();
+            this.toolStrip2.ResumeLayout(false);
+            this.toolStrip2.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.groupBox3.ResumeLayout(false);
@@ -1151,8 +1153,6 @@
             this.tlsLegendControls.PerformLayout();
             this.tlsCopyFrom.ResumeLayout(false);
             this.tlsCopyFrom.PerformLayout();
-            this.toolStrip2.ResumeLayout(false);
-            this.toolStrip2.PerformLayout();
             this.ResumeLayout(false);
 
         }
