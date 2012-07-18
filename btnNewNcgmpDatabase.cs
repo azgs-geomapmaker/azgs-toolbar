@@ -67,7 +67,7 @@ namespace ncgmpToolbar
             //  Write the XML Workspace document to a local file
             string tempFilePath = System.IO.Path.GetTempFileName();
             tempFilePath += ".xml";
-            using (StreamWriter outfile = new StreamWriter(tempFilePath)) { outfile.Write(Properties.Resources.FULL_12_7_10.ToString()); }
+            using (StreamWriter outfile = new StreamWriter(tempFilePath)) { outfile.Write(Properties.Resources.FULL_5_11_12.ToString()); }
 
             // Use the temp file to perform the import
             IGdbXmlImport xmlImporter = new GdbImporterClass();

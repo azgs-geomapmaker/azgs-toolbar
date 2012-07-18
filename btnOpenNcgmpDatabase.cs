@@ -68,8 +68,8 @@ namespace ncgmpToolbar
 
                 // Setup connection properties for the selected database
                 IPropertySet connectionProperties = new PropertySetClass();
-                connectionProperties.SetProperty("SERVER", "malachite\\azgsgeodatabases");
-                connectionProperties.SetProperty("INSTANCE", "sde:sqlserver:malachite\\azgsgeodatabases");
+                connectionProperties.SetProperty("SERVER", "malachite");
+                connectionProperties.SetProperty("INSTANCE", "sde:sqlserver:malachite");
                 connectionProperties.SetProperty("DATABASE", chooseDbForm.databaseName);
                 connectionProperties.SetProperty("AUTHENTICATION_MODE", "OSA");
                 connectionProperties.SetProperty("VERSION", "DBO." + chooseDbForm.versionName);

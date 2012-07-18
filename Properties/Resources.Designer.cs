@@ -119,6 +119,15 @@ namespace ncgmpToolbar.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;esri:Workspace xmlns:esri=&apos;http://www.esri.com/schemas/ArcGIS/10.0&apos; xmlns:xsi=&apos;http://www.w3.org/2001/XMLSchema-instance&apos; xmlns:xs=&apos;http://www.w3.org/2001/XMLSchema&apos;&gt;&lt;WorkspaceDefinition xsi:type=&apos;esri:WorkspaceDefinition&apos;&gt;&lt;WorkspaceType&gt;esriLocalDatabaseWorkspace&lt;/WorkspaceType&gt;&lt;Version&gt;&lt;/Version&gt;&lt;Domains xsi:type=&apos;esri:ArrayOfDomain&apos;&gt;&lt;Domain xsi:type=&apos;esri:CodedValueDomain&apos;&gt;&lt;DomainName&gt;r_OrientationDataPoints_Rules&lt;/DomainName&gt;&lt;FieldType&gt;esriFieldTypeInteger&lt;/FieldType&gt;&lt;MergePolicy&gt;esriMPTDefaultValue&lt;/M [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string FULL_5_11_12 {
+            get {
+                return ResourceManager.GetString("FULL_5_11_12", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;esri:Workspace xmlns:esri=&apos;http://www.esri.com/schemas/ArcGIS/10.0&apos; xmlns:xsi=&apos;http://www.w3.org/2001/XMLSchema-instance&apos; xmlns:xs=&apos;http://www.w3.org/2001/XMLSchema&apos;&gt;
         ///&lt;WorkspaceDefinition xsi:type=&apos;esri:WorkspaceDefinition&apos;&gt;
         ///&lt;WorkspaceType&gt;esriLocalDatabaseWorkspace&lt;/WorkspaceType&gt;

@@ -331,6 +331,7 @@
     <AddInContent Include="Images\tlDrawPolygonLegend.png" />
     <AddInContent Include="Images\tlDrawPolygonLegend.cur" />
     <None Include="Resources\9-20-11.xml" />
+    <None Include="Resources\FULL-5-11-12.XML" />
     <Content Include="Resources\full-9-29-10.xml" />
     <Content Include="Resources\minRequired.xml" />
     <Content Include="Resources\stations.xml" />
