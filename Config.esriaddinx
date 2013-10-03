@@ -4,9 +4,9 @@
   <Description>These set of tools ease the generation of geologic map data in the NCGMP format.</Description>
   <Version>0.9.9.2</Version>
   <Image>Images\ncgmpToolbar.png</Image>
-  <Author>Ryan Clark</Author>
+  <Author>Ryan Clark, Genhan Chan, Janel Day</Author>
   <Company>Arizona Geological Survey</Company>
-  <Date>6/17/2011</Date>
+  <Date>10/03/2013</Date>
   <Targets>
     <Target name="Desktop" version="10.0" />
   </Targets>
@@ -44,10 +44,8 @@
         <Menu id="Arizona_Geological_Survey_ncgmpToolbar_NCGMP_Menu" caption="NCGMP Menu" isRootMenu="false">
           <Items>
             <Button refID="Arizona_Geological_Survey_ncgmpToolbar_btnOpenNcgmpDatabase" />
-            <Button refID="Arizona_Geological_Survey_ncgmpToolbar_btnNewNcgmpDatabase" />
             <Button refID="Arizona_Geological_Survey_ncgmpToolbar_btnDatabaseMaintenance" />
             <Button separator="true" refID="Arizona_Geological_Survey_ncgmpToolbar_btnShowMapUnitLegendEditor" />
-            <Button separator="true" refID="Arizona_Geological_Survey_ncgmpToolbar_btnTheTestingButton" />
           </Items>
         </Menu>
       </Menus>

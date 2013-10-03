@@ -193,6 +193,8 @@
     <Compile Include="Utilities\DataAccess\ContactsAndFaultsAccess.cs" />
     <Compile Include="Utilities\DataAccess\DataSourcesAccess.cs" />
     <Compile Include="Utilities\DataAccess\DescriptionOfMapUnitsAccess.cs" />
+    <Compile Include="Utilities\DataAccess\ExtendedAttributesAccess.cs" />
+    <Compile Include="Utilities\DataAccess\GeologicEventsAccess.cs" />
     <Compile Include="Utilities\DataAccess\GlossaryAccess.cs" />
     <Compile Include="Utilities\DataAccess\MapUnitPolysAccess.cs" />
     <Compile Include="Utilities\DataAccess\NotesAccess.cs" />

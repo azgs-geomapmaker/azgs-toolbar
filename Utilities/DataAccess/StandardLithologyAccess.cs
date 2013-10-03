@@ -77,7 +77,7 @@ namespace ncgmpToolbar.Utilities.DataAccess
                 anStandardLithology.PartType = theRow.get_Value(pTypeFld).ToString();
                 anStandardLithology.Lithology = theRow.get_Value(lithFld).ToString();
                 anStandardLithology.ProportionTerm = theRow.get_Value(propTermFld).ToString();
-                anStandardLithology.ProportionValue = Convert.ToDouble(theRow.get_Value(propValueFld));
+                anStandardLithology.ProportionValue = double.Parse(theRow.get_Value(propValueFld).ToString());
                 anStandardLithology.ScientificConfidence = theRow.get_Value(sciConfidenceFld).ToString();
                 anStandardLithology.DataSourceID = theRow.get_Value(dataSrcFld).ToString();
                 anStandardLithology.RequiresUpdate = true;

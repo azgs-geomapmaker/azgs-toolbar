@@ -72,6 +72,47 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.cboLith = new System.Windows.Forms.ComboBox();
             this.tabAge = new System.Windows.Forms.TabPage();
+            this.tabEvtEditor = new System.Windows.Forms.TabControl();
+            this.tabAgeList = new System.Windows.Forms.TabPage();
+            this.toolStrip5 = new System.Windows.Forms.ToolStrip();
+            this.btnSaveAge = new System.Windows.Forms.ToolStripButton();
+            this.btnCancelAge = new System.Windows.Forms.ToolStripButton();
+            this.grpEvtList = new System.Windows.Forms.GroupBox();
+            this.liEvts = new System.Windows.Forms.ListBox();
+            this.grpThisAge = new System.Windows.Forms.GroupBox();
+            this.liEvts4ThisUnit = new System.Windows.Forms.ListBox();
+            this.toolStrip4 = new System.Windows.Forms.ToolStrip();
+            this.btnAgeAdd = new System.Windows.Forms.ToolStripButton();
+            this.btnAgeDelete = new System.Windows.Forms.ToolStripButton();
+            this.btnAgeChangeAccept = new System.Windows.Forms.ToolStripButton();
+            this.tabAgeEvent = new System.Windows.Forms.TabPage();
+            this.grpRangeTimeScale = new System.Windows.Forms.GroupBox();
+            this.cboRYoungerEra = new System.Windows.Forms.ComboBox();
+            this.cboROlderEra = new System.Windows.Forms.ComboBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.txtRYoungerAge = new System.Windows.Forms.TextBox();
+            this.txtROlderAge = new System.Windows.Forms.TextBox();
+            this.btnAgeGen = new System.Windows.Forms.Button();
+            this.cboEvt = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.txtAgeDisplay = new System.Windows.Forms.TextBox();
+            this.grpSingleTimeScale = new System.Windows.Forms.GroupBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txtSYoungerAge = new System.Windows.Forms.TextBox();
+            this.txtSOlderAge = new System.Windows.Forms.TextBox();
+            this.cboSEra = new System.Windows.Forms.ComboBox();
+            this.toolStrip3 = new System.Windows.Forms.ToolStrip();
+            this.cboEventType = new System.Windows.Forms.ToolStripComboBox();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnEvtAccept = new System.Windows.Forms.ToolStripButton();
+            this.grpNotes = new System.Windows.Forms.GroupBox();
+            this.txtNotes = new System.Windows.Forms.TextBox();
             this.tlsLegendControls = new System.Windows.Forms.ToolStrip();
             this.tlsbtnNewLegendItem = new System.Windows.Forms.ToolStripButton();
             this.tlsbtnRemoveLegendItem = new System.Windows.Forms.ToolStripButton();
@@ -118,6 +159,18 @@
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.tabAge.SuspendLayout();
+            this.tabEvtEditor.SuspendLayout();
+            this.tabAgeList.SuspendLayout();
+            this.toolStrip5.SuspendLayout();
+            this.grpEvtList.SuspendLayout();
+            this.grpThisAge.SuspendLayout();
+            this.toolStrip4.SuspendLayout();
+            this.tabAgeEvent.SuspendLayout();
+            this.grpRangeTimeScale.SuspendLayout();
+            this.grpSingleTimeScale.SuspendLayout();
+            this.toolStrip3.SuspendLayout();
+            this.grpNotes.SuspendLayout();
             this.tlsLegendControls.SuspendLayout();
             this.tlsCopyFrom.SuspendLayout();
             this.SuspendLayout();
@@ -578,16 +631,16 @@
             // 
             this.cboPropTerm.FormattingEnabled = true;
             this.cboPropTerm.Items.AddRange(new object[] {
-            "all",
-            "less than half",
-            "major",
-            "minor",
-            "more than half",
-            "most abundant",
-            "present",
-            "rare",
-            "trace",
-            "variable"});
+            "All",
+            "Less than half",
+            "Major",
+            "Minor",
+            "More than half",
+            "Most abundant",
+            "Present",
+            "Rare",
+            "Trace",
+            "Variable"});
             this.cboPropTerm.Location = new System.Drawing.Point(6, 19);
             this.cboPropTerm.Name = "cboPropTerm";
             this.cboPropTerm.Size = new System.Drawing.Size(152, 21);
@@ -940,12 +993,1065 @@
             // 
             // tabAge
             // 
+            this.tabAge.Controls.Add(this.tabEvtEditor);
             this.tabAge.Location = new System.Drawing.Point(4, 22);
             this.tabAge.Name = "tabAge";
             this.tabAge.Size = new System.Drawing.Size(298, 295);
             this.tabAge.TabIndex = 2;
             this.tabAge.Text = "Formal Age";
             this.tabAge.UseVisualStyleBackColor = true;
+            // 
+            // tabEvtEditor
+            // 
+            this.tabEvtEditor.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabEvtEditor.Controls.Add(this.tabAgeList);
+            this.tabEvtEditor.Controls.Add(this.tabAgeEvent);
+            this.tabEvtEditor.Location = new System.Drawing.Point(3, 0);
+            this.tabEvtEditor.Name = "tabEvtEditor";
+            this.tabEvtEditor.SelectedIndex = 0;
+            this.tabEvtEditor.Size = new System.Drawing.Size(292, 296);
+            this.tabEvtEditor.TabIndex = 0;
+            // 
+            // tabAgeList
+            // 
+            this.tabAgeList.Controls.Add(this.toolStrip5);
+            this.tabAgeList.Controls.Add(this.grpEvtList);
+            this.tabAgeList.Controls.Add(this.grpThisAge);
+            this.tabAgeList.Controls.Add(this.toolStrip4);
+            this.tabAgeList.Location = new System.Drawing.Point(4, 22);
+            this.tabAgeList.Name = "tabAgeList";
+            this.tabAgeList.Padding = new System.Windows.Forms.Padding(3);
+            this.tabAgeList.Size = new System.Drawing.Size(284, 270);
+            this.tabAgeList.TabIndex = 0;
+            this.tabAgeList.Text = "Age Display List";
+            this.tabAgeList.UseVisualStyleBackColor = true;
+            // 
+            // toolStrip5
+            // 
+            this.toolStrip5.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.toolStrip5.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnSaveAge,
+            this.btnCancelAge});
+            this.toolStrip5.Location = new System.Drawing.Point(3, 242);
+            this.toolStrip5.Name = "toolStrip5";
+            this.toolStrip5.Size = new System.Drawing.Size(278, 25);
+            this.toolStrip5.TabIndex = 6;
+            this.toolStrip5.Text = "toolStrip1";
+            // 
+            // btnSaveAge
+            // 
+            this.btnSaveAge.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btnSaveAge.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.btnSaveAge.Image = ((System.Drawing.Image)(resources.GetObject("btnSaveAge.Image")));
+            this.btnSaveAge.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSaveAge.Name = "btnSaveAge";
+            this.btnSaveAge.Size = new System.Drawing.Size(39, 22);
+            this.btnSaveAge.Text = "Save";
+            this.btnSaveAge.ToolTipText = "Save";
+            this.btnSaveAge.Click += new System.EventHandler(this.btnSaveAge_Click);
+            // 
+            // btnCancelAge
+            // 
+            this.btnCancelAge.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.btnCancelAge.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btnCancelAge.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.btnCancelAge.Image = ((System.Drawing.Image)(resources.GetObject("btnCancelAge.Image")));
+            this.btnCancelAge.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnCancelAge.Name = "btnCancelAge";
+            this.btnCancelAge.Size = new System.Drawing.Size(48, 22);
+            this.btnCancelAge.Text = "Cancel";
+            this.btnCancelAge.ToolTipText = "Cancel";
+            this.btnCancelAge.Click += new System.EventHandler(this.btnCancelAge_Click);
+            // 
+            // grpEvtList
+            // 
+            this.grpEvtList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.grpEvtList.Controls.Add(this.liEvts);
+            this.grpEvtList.Location = new System.Drawing.Point(7, 127);
+            this.grpEvtList.Name = "grpEvtList";
+            this.grpEvtList.Size = new System.Drawing.Size(271, 102);
+            this.grpEvtList.TabIndex = 2;
+            this.grpEvtList.TabStop = false;
+            this.grpEvtList.Text = "Age Event List";
+            // 
+            // liEvts
+            // 
+            this.liEvts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.liEvts.FormattingEnabled = true;
+            this.liEvts.Location = new System.Drawing.Point(7, 20);
+            this.liEvts.Name = "liEvts";
+            this.liEvts.Size = new System.Drawing.Size(258, 69);
+            this.liEvts.Sorted = true;
+            this.liEvts.TabIndex = 0;
+            this.liEvts.Click += new System.EventHandler(this.liEvts_Click);
+            this.liEvts.SelectedIndexChanged += new System.EventHandler(this.liEvts_SelectedIndexChanged);
+            // 
+            // grpThisAge
+            // 
+            this.grpThisAge.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.grpThisAge.Controls.Add(this.liEvts4ThisUnit);
+            this.grpThisAge.Location = new System.Drawing.Point(7, 32);
+            this.grpThisAge.Name = "grpThisAge";
+            this.grpThisAge.Size = new System.Drawing.Size(271, 89);
+            this.grpThisAge.TabIndex = 1;
+            this.grpThisAge.TabStop = false;
+            this.grpThisAge.Text = "Event List for this Map Unit";
+            // 
+            // liEvts4ThisUnit
+            // 
+            this.liEvts4ThisUnit.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.liEvts4ThisUnit.FormattingEnabled = true;
+            this.liEvts4ThisUnit.Location = new System.Drawing.Point(7, 20);
+            this.liEvts4ThisUnit.Name = "liEvts4ThisUnit";
+            this.liEvts4ThisUnit.Size = new System.Drawing.Size(258, 56);
+            this.liEvts4ThisUnit.Sorted = true;
+            this.liEvts4ThisUnit.TabIndex = 0;
+            this.liEvts4ThisUnit.Click += new System.EventHandler(this.liEvts4ThisUnit_Click);
+            // 
+            // toolStrip4
+            // 
+            this.toolStrip4.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnAgeAdd,
+            this.btnAgeDelete,
+            this.btnAgeChangeAccept});
+            this.toolStrip4.Location = new System.Drawing.Point(3, 3);
+            this.toolStrip4.Name = "toolStrip4";
+            this.toolStrip4.Size = new System.Drawing.Size(278, 25);
+            this.toolStrip4.TabIndex = 0;
+            this.toolStrip4.Text = "toolStrip4";
+            // 
+            // btnAgeAdd
+            // 
+            this.btnAgeAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnAgeAdd.Image = global::ncgmpToolbar.Properties.Resources.add;
+            this.btnAgeAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnAgeAdd.Name = "btnAgeAdd";
+            this.btnAgeAdd.Size = new System.Drawing.Size(23, 22);
+            this.btnAgeAdd.Text = "Add a New Event";
+            this.btnAgeAdd.Click += new System.EventHandler(this.btnAgeAdd_Click);
+            // 
+            // btnAgeDelete
+            // 
+            this.btnAgeDelete.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnAgeDelete.Image = global::ncgmpToolbar.Properties.Resources.cancel;
+            this.btnAgeDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnAgeDelete.Name = "btnAgeDelete";
+            this.btnAgeDelete.Size = new System.Drawing.Size(23, 22);
+            this.btnAgeDelete.Text = "Delete the Selected Event";
+            this.btnAgeDelete.Click += new System.EventHandler(this.btnAgeDelete_Click);
+            // 
+            // btnAgeChangeAccept
+            // 
+            this.btnAgeChangeAccept.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnAgeChangeAccept.Image = global::ncgmpToolbar.Properties.Resources.accept;
+            this.btnAgeChangeAccept.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnAgeChangeAccept.Name = "btnAgeChangeAccept";
+            this.btnAgeChangeAccept.Size = new System.Drawing.Size(23, 22);
+            this.btnAgeChangeAccept.Text = "Accept the Selected Event for this Map Unit";
+            this.btnAgeChangeAccept.Click += new System.EventHandler(this.btnAgeChangeAccept_Click);
+            // 
+            // tabAgeEvent
+            // 
+            this.tabAgeEvent.Controls.Add(this.grpRangeTimeScale);
+            this.tabAgeEvent.Controls.Add(this.btnAgeGen);
+            this.tabAgeEvent.Controls.Add(this.cboEvt);
+            this.tabAgeEvent.Controls.Add(this.label7);
+            this.tabAgeEvent.Controls.Add(this.label6);
+            this.tabAgeEvent.Controls.Add(this.txtAgeDisplay);
+            this.tabAgeEvent.Controls.Add(this.grpSingleTimeScale);
+            this.tabAgeEvent.Controls.Add(this.toolStrip3);
+            this.tabAgeEvent.Controls.Add(this.grpNotes);
+            this.tabAgeEvent.Location = new System.Drawing.Point(4, 22);
+            this.tabAgeEvent.Name = "tabAgeEvent";
+            this.tabAgeEvent.Padding = new System.Windows.Forms.Padding(3);
+            this.tabAgeEvent.Size = new System.Drawing.Size(284, 270);
+            this.tabAgeEvent.TabIndex = 1;
+            this.tabAgeEvent.Text = "Event Details";
+            this.tabAgeEvent.UseVisualStyleBackColor = true;
+            // 
+            // grpRangeTimeScale
+            // 
+            this.grpRangeTimeScale.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.grpRangeTimeScale.Controls.Add(this.cboRYoungerEra);
+            this.grpRangeTimeScale.Controls.Add(this.cboROlderEra);
+            this.grpRangeTimeScale.Controls.Add(this.label13);
+            this.grpRangeTimeScale.Controls.Add(this.label8);
+            this.grpRangeTimeScale.Controls.Add(this.label11);
+            this.grpRangeTimeScale.Controls.Add(this.label12);
+            this.grpRangeTimeScale.Controls.Add(this.txtRYoungerAge);
+            this.grpRangeTimeScale.Controls.Add(this.txtROlderAge);
+            this.grpRangeTimeScale.Location = new System.Drawing.Point(6, 92);
+            this.grpRangeTimeScale.Name = "grpRangeTimeScale";
+            this.grpRangeTimeScale.Size = new System.Drawing.Size(270, 104);
+            this.grpRangeTimeScale.TabIndex = 12;
+            this.grpRangeTimeScale.TabStop = false;
+            this.grpRangeTimeScale.Text = "Range Time Scale";
+            this.grpRangeTimeScale.Visible = false;
+            // 
+            // cboRYoungerEra
+            // 
+            this.cboRYoungerEra.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.cboRYoungerEra.FormattingEnabled = true;
+            this.cboRYoungerEra.Items.AddRange(new object[] {
+            "Aalenian Age",
+            "Aeronian Age",
+            "Albian Age",
+            "Anisian Age",
+            "Aptian Age",
+            "Aquitanian Age",
+            "Archaean Eon",
+            "Artinskian Age",
+            "Asselian Age",
+            "Bajocian Age",
+            "Barremian Age",
+            "Bartonian Age",
+            "Bashkirian Age",
+            "Bathonian Age",
+            "Berriasian Age",
+            "Burdigalian Age",
+            "Cainozoic Era",
+            "Calabrian Age",
+            "Callovian Age",
+            "Calymmian Period",
+            "Cambrian Period",
+            "Cambrian Series 2 Epoch",
+            "Cambrian Series 3 Epoch",
+            "Cambrian Stage 10 Age",
+            "Cambrian Stage 2 Age",
+            "Cambrian Stage 3 Age",
+            "Cambrian Stage 4 Age",
+            "Cambrian Stage 5 Age",
+            "Cambrian Stage 9 Age",
+            "Campanian Age",
+            "Capitanian Age",
+            "Carboniferous Period",
+            "Carnian Age",
+            "Cenomanian Age",
+            "Cenozoic Era",
+            "Changhsingian Age",
+            "Chattian Age",
+            "Cisuralian Epoch",
+            "Coniacian Age",
+            "Cretaceous Period",
+            "Cryogenian Period",
+            "Danian Age",
+            "Dapingian Age",
+            "Darriwilian Age",
+            "Devonian Period",
+            "Drumian Age",
+            "Ectasian Period",
+            "Ediacaran Period",
+            "Eifelian Age",
+            "Emsian Age",
+            "Eoarchaean Era",
+            "Eocene Epoch",
+            "Famennian Age",
+            "Floian Age",
+            "Fortunian Age",
+            "Frasnian Age",
+            "Furongian Epoch",
+            "Gelasian Age",
+            "Givetian Age",
+            "Gorstian Age",
+            "Guadalupian Epoch",
+            "Guzhangian Age",
+            "Gzhelian Age",
+            "Hadean Eon",
+            "Hauterivian Age",
+            "Hettangian Age",
+            "Hirnantian Age",
+            "Holocene Epoch",
+            "Homerian Age",
+            "Induan Age",
+            "Ionian Age",
+            "Jurassic Period",
+            "Kasimovian Age",
+            "Katian Age",
+            "Kimmeridgian Age",
+            "Kungurian Age",
+            "Ladinian Age",
+            "Langhian Age",
+            "Llandovery Epoch",
+            "Lochkovian Age",
+            "Lopingian Epoch",
+            "Lower Cretaceous Epoch",
+            "Lower Devonian Epcoh",
+            "Lower Jurassic Epoch",
+            "Lower Mississippian Epoch",
+            "Lower Ordovician Epoch",
+            "Lower Pennsylvanian Epoch",
+            "Lower Triassic Epoch",
+            "Ludfordian Age",
+            "Ludlow Epoch",
+            "Lutetian Age",
+            "Maastrichtian Age",
+            "Mesoarchaean Era",
+            "Mesoproterozoic Era",
+            "Mesozoic Era",
+            "Messinian Age",
+            "Middle Devonian Epoch",
+            "Middle Jurassic Epoch",
+            "Middle Mississippian Epoch",
+            "Middle Ordovician Epoch",
+            "Middle Pennsylvanian Epoch",
+            "Middle Triassic Epoch",
+            "Miocene Epoch",
+            "Mississippian Sub-period",
+            "Moscovian Age",
+            "Neoarchaean Era",
+            "Neogene Period",
+            "Neoproterozoic Era",
+            "Norian Age",
+            "Olenekian Age",
+            "Oligocene Epoch",
+            "Ordovician Period",
+            "Orosirian Period",
+            "Oxfordian Age",
+            "Paibian Age",
+            "Palaeoarchaean Era",
+            "Palaeocene Epoch",
+            "Palaeogene Period",
+            "Palaeoproterozoic Era",
+            "Palaeozoic Era",
+            "Pennsylvanian Sub-period",
+            "Permian Period",
+            "Phanerozoic Eon",
+            "Piacenzian Age",
+            "Pleistocene Epoch",
+            "Pliensbachian Age",
+            "Pliocene Epoch",
+            "Pragian Age",
+            "Precambrian Supereon",
+            "Priabonian Age",
+            "Pridoli Epoch",
+            "Proterozoic Eon",
+            "Quaternary Period",
+            "Rhaetian Age",
+            "Rhuddanian Age",
+            "Rhyacian Period",
+            "Roadian Age",
+            "Rupelian Age",
+            "Sakmarian Age",
+            "Sandbian Age",
+            "Santonian Age",
+            "Selandian Age",
+            "Serpukhovian Age",
+            "Serravallian Age",
+            "Sheinwoodian Age",
+            "Siderian Period",
+            "Silurian Period",
+            "Sinemurian Age",
+            "Statherian Period",
+            "Stenian Period",
+            "Telychian Age",
+            "Terreneuvian Epoch",
+            "Thanetian Age",
+            "Tithonian Age",
+            "Toarcian Age",
+            "Tonian Period",
+            "Tortonian Age",
+            "Tournaisian Age",
+            "Tremadocian Age",
+            "Triassic Period",
+            "Turonian Age",
+            "Upper Cretaceous Epoch",
+            "Upper Devonian Epoch",
+            "Upper Jurassic Epoch",
+            "Upper Mississippian Epoch",
+            "Upper Ordovician Epoch",
+            "Upper Pennsylvanian Epoch",
+            "Upper Pleistocene Age",
+            "Upper Triassic Epoch",
+            "Valanginian Age",
+            "Visean Age",
+            "Wenlock Epoch",
+            "Wordian Age",
+            "Wuchiapingian Age",
+            "Ypresian Age",
+            "Zanclean Age"});
+            this.cboRYoungerEra.Location = new System.Drawing.Point(84, 22);
+            this.cboRYoungerEra.Name = "cboRYoungerEra";
+            this.cboRYoungerEra.Size = new System.Drawing.Size(179, 21);
+            this.cboRYoungerEra.Sorted = true;
+            this.cboRYoungerEra.TabIndex = 12;
+            this.cboRYoungerEra.SelectedIndexChanged += new System.EventHandler(this.cboRYoungerEra_SelectedIndexChanged);
+            // 
+            // cboROlderEra
+            // 
+            this.cboROlderEra.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.cboROlderEra.FormattingEnabled = true;
+            this.cboROlderEra.Items.AddRange(new object[] {
+            "Aalenian Age",
+            "Aeronian Age",
+            "Albian Age",
+            "Anisian Age",
+            "Aptian Age",
+            "Aquitanian Age",
+            "Archaean Eon",
+            "Artinskian Age",
+            "Asselian Age",
+            "Bajocian Age",
+            "Barremian Age",
+            "Bartonian Age",
+            "Bashkirian Age",
+            "Bathonian Age",
+            "Berriasian Age",
+            "Burdigalian Age",
+            "Cainozoic Era",
+            "Calabrian Age",
+            "Callovian Age",
+            "Calymmian Period",
+            "Cambrian Period",
+            "Cambrian Series 2 Epoch",
+            "Cambrian Series 3 Epoch",
+            "Cambrian Stage 10 Age",
+            "Cambrian Stage 2 Age",
+            "Cambrian Stage 3 Age",
+            "Cambrian Stage 4 Age",
+            "Cambrian Stage 5 Age",
+            "Cambrian Stage 9 Age",
+            "Campanian Age",
+            "Capitanian Age",
+            "Carboniferous Period",
+            "Carnian Age",
+            "Cenomanian Age",
+            "Cenozoic Era",
+            "Changhsingian Age",
+            "Chattian Age",
+            "Cisuralian Epoch",
+            "Coniacian Age",
+            "Cretaceous Period",
+            "Cryogenian Period",
+            "Danian Age",
+            "Dapingian Age",
+            "Darriwilian Age",
+            "Devonian Period",
+            "Drumian Age",
+            "Ectasian Period",
+            "Ediacaran Period",
+            "Eifelian Age",
+            "Emsian Age",
+            "Eoarchaean Era",
+            "Eocene Epoch",
+            "Famennian Age",
+            "Floian Age",
+            "Fortunian Age",
+            "Frasnian Age",
+            "Furongian Epoch",
+            "Gelasian Age",
+            "Givetian Age",
+            "Gorstian Age",
+            "Guadalupian Epoch",
+            "Guzhangian Age",
+            "Gzhelian Age",
+            "Hadean Eon",
+            "Hauterivian Age",
+            "Hettangian Age",
+            "Hirnantian Age",
+            "Holocene Epoch",
+            "Homerian Age",
+            "Induan Age",
+            "Ionian Age",
+            "Jurassic Period",
+            "Kasimovian Age",
+            "Katian Age",
+            "Kimmeridgian Age",
+            "Kungurian Age",
+            "Ladinian Age",
+            "Langhian Age",
+            "Llandovery Epoch",
+            "Lochkovian Age",
+            "Lopingian Epoch",
+            "Lower Cretaceous Epoch",
+            "Lower Devonian Epcoh",
+            "Lower Jurassic Epoch",
+            "Lower Mississippian Epoch",
+            "Lower Ordovician Epoch",
+            "Lower Pennsylvanian Epoch",
+            "Lower Triassic Epoch",
+            "Ludfordian Age",
+            "Ludlow Epoch",
+            "Lutetian Age",
+            "Maastrichtian Age",
+            "Mesoarchaean Era",
+            "Mesoproterozoic Era",
+            "Mesozoic Era",
+            "Messinian Age",
+            "Middle Devonian Epoch",
+            "Middle Jurassic Epoch",
+            "Middle Mississippian Epoch",
+            "Middle Ordovician Epoch",
+            "Middle Pennsylvanian Epoch",
+            "Middle Triassic Epoch",
+            "Miocene Epoch",
+            "Mississippian Sub-period",
+            "Moscovian Age",
+            "Neoarchaean Era",
+            "Neogene Period",
+            "Neoproterozoic Era",
+            "Norian Age",
+            "Olenekian Age",
+            "Oligocene Epoch",
+            "Ordovician Period",
+            "Orosirian Period",
+            "Oxfordian Age",
+            "Paibian Age",
+            "Palaeoarchaean Era",
+            "Palaeocene Epoch",
+            "Palaeogene Period",
+            "Palaeoproterozoic Era",
+            "Palaeozoic Era",
+            "Pennsylvanian Sub-period",
+            "Permian Period",
+            "Phanerozoic Eon",
+            "Piacenzian Age",
+            "Pleistocene Epoch",
+            "Pliensbachian Age",
+            "Pliocene Epoch",
+            "Pragian Age",
+            "Precambrian Supereon",
+            "Priabonian Age",
+            "Pridoli Epoch",
+            "Proterozoic Eon",
+            "Quaternary Period",
+            "Rhaetian Age",
+            "Rhuddanian Age",
+            "Rhyacian Period",
+            "Roadian Age",
+            "Rupelian Age",
+            "Sakmarian Age",
+            "Sandbian Age",
+            "Santonian Age",
+            "Selandian Age",
+            "Serpukhovian Age",
+            "Serravallian Age",
+            "Sheinwoodian Age",
+            "Siderian Period",
+            "Silurian Period",
+            "Sinemurian Age",
+            "Statherian Period",
+            "Stenian Period",
+            "Telychian Age",
+            "Terreneuvian Epoch",
+            "Thanetian Age",
+            "Tithonian Age",
+            "Toarcian Age",
+            "Tonian Period",
+            "Tortonian Age",
+            "Tournaisian Age",
+            "Tremadocian Age",
+            "Triassic Period",
+            "Turonian Age",
+            "Upper Cretaceous Epoch",
+            "Upper Devonian Epoch",
+            "Upper Jurassic Epoch",
+            "Upper Mississippian Epoch",
+            "Upper Ordovician Epoch",
+            "Upper Pennsylvanian Epoch",
+            "Upper Pleistocene Age",
+            "Upper Triassic Epoch",
+            "Valanginian Age",
+            "Visean Age",
+            "Wenlock Epoch",
+            "Wordian Age",
+            "Wuchiapingian Age",
+            "Ypresian Age",
+            "Zanclean Age"});
+            this.cboROlderEra.Location = new System.Drawing.Point(84, 49);
+            this.cboROlderEra.Name = "cboROlderEra";
+            this.cboROlderEra.Size = new System.Drawing.Size(179, 21);
+            this.cboROlderEra.Sorted = true;
+            this.cboROlderEra.TabIndex = 11;
+            this.cboROlderEra.SelectedIndexChanged += new System.EventHandler(this.cboROlderEra_SelectedIndexChanged);
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(5, 52);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(62, 13);
+            this.label13.TabIndex = 10;
+            this.label13.Text = "Older Term:";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(5, 25);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(77, 13);
+            this.label8.TabIndex = 9;
+            this.label8.Text = "Younger Term:";
+            // 
+            // label11
+            // 
+            this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(148, 79);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(49, 13);
+            this.label11.TabIndex = 6;
+            this.label11.Text = "Min Age:";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(5, 79);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(52, 13);
+            this.label12.TabIndex = 5;
+            this.label12.Text = "Max Age:";
+            // 
+            // txtRYoungerAge
+            // 
+            this.txtRYoungerAge.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtRYoungerAge.Location = new System.Drawing.Point(211, 76);
+            this.txtRYoungerAge.Name = "txtRYoungerAge";
+            this.txtRYoungerAge.Size = new System.Drawing.Size(52, 20);
+            this.txtRYoungerAge.TabIndex = 3;
+            // 
+            // txtROlderAge
+            // 
+            this.txtROlderAge.Location = new System.Drawing.Point(83, 76);
+            this.txtROlderAge.Name = "txtROlderAge";
+            this.txtROlderAge.Size = new System.Drawing.Size(52, 20);
+            this.txtROlderAge.TabIndex = 1;
+            // 
+            // btnAgeGen
+            // 
+            this.btnAgeGen.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAgeGen.FlatAppearance.BorderColor = System.Drawing.SystemColors.Control;
+            this.btnAgeGen.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAgeGen.Image = global::ncgmpToolbar.Properties.Resources.arrow_refresh;
+            this.btnAgeGen.Location = new System.Drawing.Point(241, 35);
+            this.btnAgeGen.Name = "btnAgeGen";
+            this.btnAgeGen.Size = new System.Drawing.Size(30, 21);
+            this.btnAgeGen.TabIndex = 18;
+            this.btnAgeGen.TabStop = false;
+            this.btnAgeGen.UseVisualStyleBackColor = true;
+            this.btnAgeGen.Click += new System.EventHandler(this.btnAgeGen_Click);
+            // 
+            // cboEvt
+            // 
+            this.cboEvt.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.cboEvt.FormattingEnabled = true;
+            this.cboEvt.Items.AddRange(new object[] {
+            "Accretion",
+            "Alteration",
+            "Biological precipitation",
+            "Biological weathering",
+            "Bolide impact",
+            "Chemical precipitation",
+            "Chemical weathering",
+            "Cometary impact",
+            "Contact metamorphism",
+            "Continental breakup",
+            "Continental collision",
+            "Debris flow deposition",
+            "Deep water oxygen depletion",
+            "Deformation",
+            "Deformation twinning",
+            "Deposition",
+            "Diagenetic process",
+            "Diffusion creep",
+            "Dislocation metamorphism",
+            "Dissolution",
+            "Dissolution creep",
+            "Ductile flow",
+            "Effusive eruption",
+            "Erosion",
+            "Eruption",
+            "Excavation",
+            "Extinction",
+            "Faulting",
+            "Folding",
+            "Fracturing",
+            "Frost shattering",
+            "Geologic process",
+            "Geomagnetic process",
+            "Grading",
+            "Haloclasty",
+            "Hawaiian eruption",
+            "Human activity",
+            "Hydration",
+            "Hydrolysis",
+            "Ice erosion",
+            "Intrusion",
+            "Magmatic crystallisation",
+            "Magmatic process",
+            "Magnetic field reversal",
+            "Mass wasting",
+            "Mass wasting deposition",
+            "Material transport and deposition",
+            "Mechanical deposition",
+            "Melting",
+            "Metamorphic process",
+            "Meteorite impact",
+            "Microfracturing",
+            "Obduction",
+            "Organic accumulation",
+            "Orogenic process",
+            "Oxidation",
+            "Partial melting",
+            "Physical weathering",
+            "Plinian eruption",
+            "Polar wander",
+            "Pressure release weathering",
+            "Pyroclastic eruption"});
+            this.cboEvt.Location = new System.Drawing.Point(91, 65);
+            this.cboEvt.Name = "cboEvt";
+            this.cboEvt.Size = new System.Drawing.Size(179, 21);
+            this.cboEvt.Sorted = true;
+            this.cboEvt.TabIndex = 17;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(12, 65);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(38, 13);
+            this.label7.TabIndex = 16;
+            this.label7.Text = "Event:";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(12, 39);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(66, 13);
+            this.label6.TabIndex = 15;
+            this.label6.Text = "Age Display:";
+            // 
+            // txtAgeDisplay
+            // 
+            this.txtAgeDisplay.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtAgeDisplay.Location = new System.Drawing.Point(91, 35);
+            this.txtAgeDisplay.Name = "txtAgeDisplay";
+            this.txtAgeDisplay.Size = new System.Drawing.Size(149, 20);
+            this.txtAgeDisplay.TabIndex = 13;
+            // 
+            // grpSingleTimeScale
+            // 
+            this.grpSingleTimeScale.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.grpSingleTimeScale.Controls.Add(this.label5);
+            this.grpSingleTimeScale.Controls.Add(this.label2);
+            this.grpSingleTimeScale.Controls.Add(this.label1);
+            this.grpSingleTimeScale.Controls.Add(this.txtSYoungerAge);
+            this.grpSingleTimeScale.Controls.Add(this.txtSOlderAge);
+            this.grpSingleTimeScale.Controls.Add(this.cboSEra);
+            this.grpSingleTimeScale.Location = new System.Drawing.Point(6, 104);
+            this.grpSingleTimeScale.Name = "grpSingleTimeScale";
+            this.grpSingleTimeScale.Size = new System.Drawing.Size(270, 80);
+            this.grpSingleTimeScale.TabIndex = 11;
+            this.grpSingleTimeScale.TabStop = false;
+            this.grpSingleTimeScale.Tag = "";
+            this.grpSingleTimeScale.Text = "Single Time Scale";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 26);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(34, 13);
+            this.label5.TabIndex = 9;
+            this.label5.Text = "Term:";
+            // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(149, 53);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(49, 13);
+            this.label2.TabIndex = 6;
+            this.label2.Text = "Min Age:";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 53);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(52, 13);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "Max Age:";
+            // 
+            // txtSYoungerAge
+            // 
+            this.txtSYoungerAge.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtSYoungerAge.Location = new System.Drawing.Point(211, 50);
+            this.txtSYoungerAge.Name = "txtSYoungerAge";
+            this.txtSYoungerAge.Size = new System.Drawing.Size(52, 20);
+            this.txtSYoungerAge.TabIndex = 3;
+            // 
+            // txtSOlderAge
+            // 
+            this.txtSOlderAge.Location = new System.Drawing.Point(84, 50);
+            this.txtSOlderAge.Name = "txtSOlderAge";
+            this.txtSOlderAge.Size = new System.Drawing.Size(52, 20);
+            this.txtSOlderAge.TabIndex = 1;
+            // 
+            // cboSEra
+            // 
+            this.cboSEra.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.cboSEra.FormattingEnabled = true;
+            this.cboSEra.Items.AddRange(new object[] {
+            "Aalenian Age",
+            "Aeronian Age",
+            "Albian Age",
+            "Anisian Age",
+            "Aptian Age",
+            "Aquitanian Age",
+            "Archaean Eon",
+            "Artinskian Age",
+            "Asselian Age",
+            "Bajocian Age",
+            "Barremian Age",
+            "Bartonian Age",
+            "Bashkirian Age",
+            "Bathonian Age",
+            "Berriasian Age",
+            "Burdigalian Age",
+            "Cainozoic Era",
+            "Calabrian Age",
+            "Callovian Age",
+            "Calymmian Period",
+            "Cambrian Period",
+            "Cambrian Series 2 Epoch",
+            "Cambrian Series 3 Epoch",
+            "Cambrian Stage 10 Age",
+            "Cambrian Stage 2 Age",
+            "Cambrian Stage 3 Age",
+            "Cambrian Stage 4 Age",
+            "Cambrian Stage 5 Age",
+            "Cambrian Stage 9 Age",
+            "Campanian Age",
+            "Capitanian Age",
+            "Carboniferous Period",
+            "Carnian Age",
+            "Cenomanian Age",
+            "Cenozoic Era",
+            "Changhsingian Age",
+            "Chattian Age",
+            "Cisuralian Epoch",
+            "Coniacian Age",
+            "Cretaceous Period",
+            "Cryogenian Period",
+            "Danian Age",
+            "Dapingian Age",
+            "Darriwilian Age",
+            "Devonian Period",
+            "Drumian Age",
+            "Ectasian Period",
+            "Ediacaran Period",
+            "Eifelian Age",
+            "Emsian Age",
+            "Eoarchaean Era",
+            "Eocene Epoch",
+            "Famennian Age",
+            "Floian Age",
+            "Fortunian Age",
+            "Frasnian Age",
+            "Furongian Epoch",
+            "Gelasian Age",
+            "Givetian Age",
+            "Gorstian Age",
+            "Guadalupian Epoch",
+            "Guzhangian Age",
+            "Gzhelian Age",
+            "Hadean Eon",
+            "Hauterivian Age",
+            "Hettangian Age",
+            "Hirnantian Age",
+            "Holocene Epoch",
+            "Homerian Age",
+            "Induan Age",
+            "Ionian Age",
+            "Jurassic Period",
+            "Kasimovian Age",
+            "Katian Age",
+            "Kimmeridgian Age",
+            "Kungurian Age",
+            "Ladinian Age",
+            "Langhian Age",
+            "Llandovery Epoch",
+            "Lochkovian Age",
+            "Lopingian Epoch",
+            "Lower Cretaceous Epoch",
+            "Lower Devonian Epcoh",
+            "Lower Jurassic Epoch",
+            "Lower Mississippian Epoch",
+            "Lower Ordovician Epoch",
+            "Lower Pennsylvanian Epoch",
+            "Lower Triassic Epoch",
+            "Ludfordian Age",
+            "Ludlow Epoch",
+            "Lutetian Age",
+            "Maastrichtian Age",
+            "Mesoarchaean Era",
+            "Mesoproterozoic Era",
+            "Mesozoic Era",
+            "Messinian Age",
+            "Middle Devonian Epoch",
+            "Middle Jurassic Epoch",
+            "Middle Mississippian Epoch",
+            "Middle Ordovician Epoch",
+            "Middle Pennsylvanian Epoch",
+            "Middle Triassic Epoch",
+            "Miocene Epoch",
+            "Mississippian Sub-period",
+            "Moscovian Age",
+            "Neoarchaean Era",
+            "Neogene Period",
+            "Neoproterozoic Era",
+            "Norian Age",
+            "Olenekian Age",
+            "Oligocene Epoch",
+            "Ordovician Period",
+            "Orosirian Period",
+            "Oxfordian Age",
+            "Paibian Age",
+            "Palaeoarchaean Era",
+            "Palaeocene Epoch",
+            "Palaeogene Period",
+            "Palaeoproterozoic Era",
+            "Palaeozoic Era",
+            "Pennsylvanian Sub-period",
+            "Permian Period",
+            "Phanerozoic Eon",
+            "Piacenzian Age",
+            "Pleistocene Epoch",
+            "Pliensbachian Age",
+            "Pliocene Epoch",
+            "Pragian Age",
+            "Precambrian Supereon",
+            "Priabonian Age",
+            "Pridoli Epoch",
+            "Proterozoic Eon",
+            "Quaternary Period",
+            "Rhaetian Age",
+            "Rhuddanian Age",
+            "Rhyacian Period",
+            "Roadian Age",
+            "Rupelian Age",
+            "Sakmarian Age",
+            "Sandbian Age",
+            "Santonian Age",
+            "Selandian Age",
+            "Serpukhovian Age",
+            "Serravallian Age",
+            "Sheinwoodian Age",
+            "Siderian Period",
+            "Silurian Period",
+            "Sinemurian Age",
+            "Statherian Period",
+            "Stenian Period",
+            "Telychian Age",
+            "Terreneuvian Epoch",
+            "Thanetian Age",
+            "Tithonian Age",
+            "Toarcian Age",
+            "Tonian Period",
+            "Tortonian Age",
+            "Tournaisian Age",
+            "Tremadocian Age",
+            "Triassic Period",
+            "Turonian Age",
+            "Upper Cretaceous Epoch",
+            "Upper Devonian Epoch",
+            "Upper Jurassic Epoch",
+            "Upper Mississippian Epoch",
+            "Upper Ordovician Epoch",
+            "Upper Pennsylvanian Epoch",
+            "Upper Pleistocene Age",
+            "Upper Triassic Epoch",
+            "Valanginian Age",
+            "Visean Age",
+            "Wenlock Epoch",
+            "Wordian Age",
+            "Wuchiapingian Age",
+            "Ypresian Age",
+            "Zanclean Age"});
+            this.cboSEra.Location = new System.Drawing.Point(84, 23);
+            this.cboSEra.Name = "cboSEra";
+            this.cboSEra.Size = new System.Drawing.Size(179, 21);
+            this.cboSEra.Sorted = true;
+            this.cboSEra.TabIndex = 0;
+            this.cboSEra.SelectedIndexChanged += new System.EventHandler(this.cboSEra_SelectedIndexChanged);
+            // 
+            // toolStrip3
+            // 
+            this.toolStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cboEventType,
+            this.toolStripSeparator5,
+            this.btnEvtAccept});
+            this.toolStrip3.Location = new System.Drawing.Point(3, 3);
+            this.toolStrip3.Name = "toolStrip3";
+            this.toolStrip3.Size = new System.Drawing.Size(278, 25);
+            this.toolStrip3.TabIndex = 3;
+            this.toolStrip3.Text = "toolStrip3";
+            // 
+            // cboEventType
+            // 
+            this.cboEventType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboEventType.Items.AddRange(new object[] {
+            "Single Age Event",
+            "Age Range Event"});
+            this.cboEventType.Name = "cboEventType";
+            this.cboEventType.Size = new System.Drawing.Size(121, 25);
+            this.cboEventType.SelectedIndexChanged += new System.EventHandler(this.cboEventType_SelectedIndexChanged);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
+            // 
+            // btnEvtAccept
+            // 
+            this.btnEvtAccept.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnEvtAccept.Image = global::ncgmpToolbar.Properties.Resources.accept;
+            this.btnEvtAccept.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnEvtAccept.Name = "btnEvtAccept";
+            this.btnEvtAccept.Size = new System.Drawing.Size(23, 22);
+            this.btnEvtAccept.Text = "Add";
+            this.btnEvtAccept.Click += new System.EventHandler(this.btnEvtAccept_Click);
+            // 
+            // grpNotes
+            // 
+            this.grpNotes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.grpNotes.Controls.Add(this.txtNotes);
+            this.grpNotes.Location = new System.Drawing.Point(6, 202);
+            this.grpNotes.Name = "grpNotes";
+            this.grpNotes.Size = new System.Drawing.Size(270, 65);
+            this.grpNotes.TabIndex = 12;
+            this.grpNotes.TabStop = false;
+            this.grpNotes.Text = "Notes";
+            // 
+            // txtNotes
+            // 
+            this.txtNotes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtNotes.Location = new System.Drawing.Point(6, 16);
+            this.txtNotes.Multiline = true;
+            this.txtNotes.Name = "txtNotes";
+            this.txtNotes.Size = new System.Drawing.Size(258, 43);
+            this.txtNotes.TabIndex = 6;
             // 
             // tlsLegendControls
             // 
@@ -1149,6 +2255,26 @@
             this.groupBox3.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
+            this.tabAge.ResumeLayout(false);
+            this.tabEvtEditor.ResumeLayout(false);
+            this.tabAgeList.ResumeLayout(false);
+            this.tabAgeList.PerformLayout();
+            this.toolStrip5.ResumeLayout(false);
+            this.toolStrip5.PerformLayout();
+            this.grpEvtList.ResumeLayout(false);
+            this.grpThisAge.ResumeLayout(false);
+            this.toolStrip4.ResumeLayout(false);
+            this.toolStrip4.PerformLayout();
+            this.tabAgeEvent.ResumeLayout(false);
+            this.tabAgeEvent.PerformLayout();
+            this.grpRangeTimeScale.ResumeLayout(false);
+            this.grpRangeTimeScale.PerformLayout();
+            this.grpSingleTimeScale.ResumeLayout(false);
+            this.grpSingleTimeScale.PerformLayout();
+            this.toolStrip3.ResumeLayout(false);
+            this.toolStrip3.PerformLayout();
+            this.grpNotes.ResumeLayout(false);
+            this.grpNotes.PerformLayout();
             this.tlsLegendControls.ResumeLayout(false);
             this.tlsLegendControls.PerformLayout();
             this.tlsCopyFrom.ResumeLayout(false);
@@ -1221,6 +2347,47 @@
         private System.Windows.Forms.ToolStrip toolStrip2;
         private System.Windows.Forms.ToolStripButton btnSaveLith;
         private System.Windows.Forms.ToolStripButton btnCancelLith;
+        private System.Windows.Forms.TabControl tabEvtEditor;
+        private System.Windows.Forms.TabPage tabAgeList;
+        private System.Windows.Forms.ToolStrip toolStrip5;
+        private System.Windows.Forms.ToolStripButton btnSaveAge;
+        private System.Windows.Forms.ToolStripButton btnCancelAge;
+        private System.Windows.Forms.GroupBox grpEvtList;
+        private System.Windows.Forms.ListBox liEvts;
+        private System.Windows.Forms.GroupBox grpThisAge;
+        private System.Windows.Forms.ToolStrip toolStrip4;
+        private System.Windows.Forms.ToolStripButton btnAgeAdd;
+        private System.Windows.Forms.ToolStripButton btnAgeDelete;
+        private System.Windows.Forms.ToolStripButton btnAgeChangeAccept;
+        private System.Windows.Forms.TabPage tabAgeEvent;
+        private System.Windows.Forms.GroupBox grpRangeTimeScale;
+        private System.Windows.Forms.ComboBox cboRYoungerEra;
+        private System.Windows.Forms.ComboBox cboROlderEra;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TextBox txtRYoungerAge;
+        private System.Windows.Forms.TextBox txtROlderAge;
+        private System.Windows.Forms.Button btnAgeGen;
+        private System.Windows.Forms.ComboBox cboEvt;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox txtAgeDisplay;
+        private System.Windows.Forms.GroupBox grpSingleTimeScale;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox txtSYoungerAge;
+        private System.Windows.Forms.TextBox txtSOlderAge;
+        private System.Windows.Forms.ComboBox cboSEra;
+        private System.Windows.Forms.ToolStrip toolStrip3;
+        private System.Windows.Forms.ToolStripComboBox cboEventType;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripButton btnEvtAccept;
+        private System.Windows.Forms.GroupBox grpNotes;
+        private System.Windows.Forms.TextBox txtNotes;
+        private System.Windows.Forms.ListBox liEvts4ThisUnit;
 
     }
 }

@@ -107,10 +107,10 @@ namespace ncgmpToolbar.Utilities
             if (theWorkspace.get_NameExists(esriDatasetType.esriDTFeatureClass, commonFunctions.QualifyClassName(Workspace, "OrientationDataPoints")) == false) { return false; }
             if (theWorkspace.get_NameExists(esriDatasetType.esriDTTable, commonFunctions.QualifyClassName(Workspace, "Notes")) == false) { return false; }
             if (theWorkspace.get_NameExists(esriDatasetType.esriDTTable, commonFunctions.QualifyClassName(Workspace, "RelatedDocuments")) == false) { return false; }
-            if (theWorkspace.get_NameExists(esriDatasetType.esriDTRelationshipClass, commonFunctions.QualifyClassName(Workspace, "StationDocumentLink")) == false) { return false; }
+            //if (theWorkspace.get_NameExists(esriDatasetType.esriDTRelationshipClass, commonFunctions.QualifyClassName(Workspace, "StationDocumentLink")) == false) { return false; }
             if (theWorkspace.get_NameExists(esriDatasetType.esriDTRelationshipClass, commonFunctions.QualifyClassName(Workspace, "StationSampleLink")) == false) { return false; }
             if (theWorkspace.get_NameExists(esriDatasetType.esriDTRelationshipClass, commonFunctions.QualifyClassName(Workspace, "StationOrientationDataPointsLink")) == false) { return false; }
-            if (theWorkspace.get_NameExists(esriDatasetType.esriDTRelationshipClass, commonFunctions.QualifyClassName(Workspace, "StationNotesLink")) == false) { return false; }
+            //if (theWorkspace.get_NameExists(esriDatasetType.esriDTRelationshipClass, commonFunctions.QualifyClassName(Workspace, "StationNotesLink")) == false) { return false; }
             if (theWorkspace.get_NameExists(esriDatasetType.esriDTRepresentationClass, commonFunctions.QualifyClassName(Workspace, "r_OrientationDataPoints")) == false) { return false; }
 
             ITable checkTable = commonFunctions.OpenTable(Workspace, "StationPoints");
