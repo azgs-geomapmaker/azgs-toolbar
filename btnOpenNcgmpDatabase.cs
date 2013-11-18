@@ -38,6 +38,7 @@ namespace ncgmpToolbar
 
             // Check to see if it is a File, Personal or SDE database, create appropriate workspace factory
             string pathToOpen = null;
+            IGxRemoteDatabaseFolder remoteDatabaseFolder;
 
             switch (openedObject.Category)
             {
@@ -51,7 +52,12 @@ namespace ncgmpToolbar
                     break;
                 case "Spatial Database Connection":
                     wsFact = new SdeWorkspaceFactoryClass();
-                    IGxRemoteDatabaseFolder remoteDatabaseFolder = (IGxRemoteDatabaseFolder)openedObject.Parent;
+                    remoteDatabaseFolder = (IGxRemoteDatabaseFolder)openedObject.Parent;
+                    pathToOpen = remoteDatabaseFolder.Path + "\\" + openedObject.Name;
+                    break;
+                case "Database Connection":
+                    wsFact = new SdeWorkspaceFactoryClass();
+                    remoteDatabaseFolder = (IGxRemoteDatabaseFolder)openedObject.Parent;
                     pathToOpen = remoteDatabaseFolder.Path + "\\" + openedObject.Name;
                     break;
                 default:

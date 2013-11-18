@@ -1,0 +1,7 @@
+ArcGIS Code Migration analyzer run on 11/18/2013 at 10:39 AM
+--------------------------------------------------------------
+Analyzing project: ncgmpToolbar
+
+-------------------------
+
+Finished analysis. Check the Warnings in the Visual Studio Error List window for migration issues. 0 migration issues found.
