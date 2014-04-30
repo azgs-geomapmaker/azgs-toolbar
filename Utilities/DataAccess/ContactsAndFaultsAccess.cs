@@ -29,7 +29,7 @@ namespace ncgmpToolbar.Utilities.DataAccess
             public double LocationConfidenceMeters;
             public string ExistenceConfidence;
             public string IdentityConfidence;
-            public string Symbol;
+            public string RuleID;
             public string Label;
             public string Notes;
             public string DataSourceID;
@@ -59,7 +59,7 @@ namespace ncgmpToolbar.Utilities.DataAccess
             int lblFld = m_ContactsAndFaultsFC.FindField("Label");
             int notesFld = m_ContactsAndFaultsFC.FindField("Notes");
             int dsFld = m_ContactsAndFaultsFC.FindField("DataSourceID");
-            int symFld = m_ContactsAndFaultsFC.FindField("Symbol");
+            int symFld = m_ContactsAndFaultsFC.FindField("RuleID");
 
             IQueryFilter QF = new QueryFilterClass();
             QF.WhereClause = SqlWhereClause;
@@ -79,7 +79,7 @@ namespace ncgmpToolbar.Utilities.DataAccess
                 anContactsAndFault.Label = theFeature.get_Value(lblFld).ToString();
                 anContactsAndFault.Notes = theFeature.get_Value(notesFld).ToString();
                 anContactsAndFault.DataSourceID = theFeature.get_Value(dsFld).ToString();
-                anContactsAndFault.Symbol = theFeature.get_Value(symFld).ToString();
+                anContactsAndFault.RuleID = theFeature.get_Value(symFld).ToString();
                 anContactsAndFault.Shape = (IPolyline)theFeature.Shape;
                 anContactsAndFault.RequiresUpdate = true;
 
@@ -90,7 +90,7 @@ namespace ncgmpToolbar.Utilities.DataAccess
         }
 
         public string NewContactsAndFault(string Type, int IsConcealed, double LocationConfidenceMeters, string ExistenceConfidence, string IdentityConfidence,
-            string Label, string Notes, string DataSourceID, string Symbol, IPolyline Shape)
+            string Label, string Notes, string DataSourceID, string RuleID, IPolyline Shape)
         {
             ContactsAndFault newContactsAndFault = new ContactsAndFault();
 
@@ -104,7 +104,7 @@ namespace ncgmpToolbar.Utilities.DataAccess
             newContactsAndFault.Label = Label;
             newContactsAndFault.Notes = Notes;
             newContactsAndFault.DataSourceID = DataSourceID;
-            newContactsAndFault.Symbol = Symbol;
+            newContactsAndFault.RuleID = RuleID;
             newContactsAndFault.Shape = Shape;
             newContactsAndFault.RequiresUpdate = false;
 
@@ -132,7 +132,7 @@ namespace ncgmpToolbar.Utilities.DataAccess
             int lblFld = m_ContactsAndFaultsFC.FindField("Label");
             int notesFld = m_ContactsAndFaultsFC.FindField("Notes");
             int dsFld = m_ContactsAndFaultsFC.FindField("DataSourceID");
-            int symFld = m_ContactsAndFaultsFC.FindField("Symbol");
+            int symFld = m_ContactsAndFaultsFC.FindField("RuleID");
 
             IEditor theEditor = ArcMap.Editor;
             if (theEditor.EditState == esriEditState.esriStateNotEditing) { theEditor.StartEditing(m_theWorkspace); }
@@ -163,7 +163,7 @@ namespace ncgmpToolbar.Utilities.DataAccess
                             theFeatureBuffer.set_Value(lblFld, thisContactsAndFault.Label);
                             theFeatureBuffer.set_Value(notesFld, thisContactsAndFault.Notes);
                             theFeatureBuffer.set_Value(dsFld, thisContactsAndFault.DataSourceID);
-                            theFeatureBuffer.set_Value(symFld, thisContactsAndFault.Symbol);
+                            theFeatureBuffer.set_Value(symFld, thisContactsAndFault.RuleID);
                             theFeatureBuffer.Shape = thisContactsAndFault.Shape;
 
                             insertCursor.InsertFeature(theFeatureBuffer);
@@ -198,7 +198,7 @@ namespace ncgmpToolbar.Utilities.DataAccess
                     theFeature.set_Value(lblFld, thisContactsAndFault.Label);
                     theFeature.set_Value(notesFld, thisContactsAndFault.Notes);
                     theFeature.set_Value(dsFld, thisContactsAndFault.DataSourceID);
-                    theFeature.set_Value(symFld, thisContactsAndFault.Symbol);
+                    theFeature.set_Value(symFld, thisContactsAndFault.RuleID);
                     theFeature.Shape = thisContactsAndFault.Shape;
                     updateCursor.UpdateFeature(theFeature);
 

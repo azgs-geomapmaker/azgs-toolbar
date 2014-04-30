@@ -95,14 +95,14 @@ namespace ncgmpToolbar.Forms
         {
             // Will be building SQL Where Clauses for each possible selected thing
             string MapUnitPolysSearch = "MapUnitPolys_ID = '";
-            string OverlayPolysSearch = "OverlayPolys_ID = '";
+            string OtherPolysSearch = "OtherPolys_ID = '";
             string ContactsAndFaultsSearch = "ContactsAndFaults_ID = '";
-            string OtherLinesSearch = "OtherLines_ID = '";
-            string StationPointsSearch = "StationPoints_ID = '";
-            string SamplePointsSearch = "SamplePoints_ID = '";
-            string OrientationDataPointsSearch = "OrientationDataPoints_ID = '";
+            string GeologicLinesSearch = "GeologicLines_ID = '";
+            string StationsSearch = "Stations_ID = '";
+            string GenericSamplesSearch = "GenericSamples_ID = '";
+            string OrientationPointsSearch = "OrientationPoints_ID = '";
             string GlossarySearch = "Glossary_ID = '";
-            string NotesSearch = "Notes_ID = '";
+            //string NotesSearch = "Notes_ID = '";
             string RelatedDocumentsSearch = "RelatedDocuments_ID = '";
             string DataSourcesSearch = "DataSources_ID = '";
             string DescriptionOfMapUnitsSearch = "DescriptionOfMapUnits_ID = '";
@@ -135,23 +135,23 @@ namespace ncgmpToolbar.Forms
                     case "MapUnitPolys":
                         MapUnitPolysSearch += thisFeature.get_Value(thisFeature.Table.FindField("MapUnitPolys_ID")) + "' OR MapUnitPolys_ID = '";
                         break;
-                    case "OverlayPolys":
-                        OverlayPolysSearch += thisFeature.get_Value(thisFeature.Table.FindField("OverlayPolys_ID")) + "' OR OverlayPolys_ID = '";
+                    case "OtherPolys":
+                        OtherPolysSearch += thisFeature.get_Value(thisFeature.Table.FindField("OtherPolys_ID")) + "' OR OtherPolys_ID = '";
                         break;
                     case "ContactsAndFaults":
                         ContactsAndFaultsSearch += thisFeature.get_Value(thisFeature.Table.FindField("ContactsAndFaults_ID")) + "' OR ContactsAndFaults_ID = '";
                         break;
-                    case "OtherLines":
-                        OtherLinesSearch += thisFeature.get_Value(thisFeature.Table.FindField("OtherLines_ID")) + "' OR OtherLines_ID = '";
+                    case "GeologicLines":
+                        GeologicLinesSearch += thisFeature.get_Value(thisFeature.Table.FindField("GeologicLines_ID")) + "' OR GeologicLines_ID = '";
                         break;
-                    case "StationPoints":
-                        StationPointsSearch += thisFeature.get_Value(thisFeature.Table.FindField("StationPoints_ID")) + "' OR StationPoints_ID = '";
+                    case "Stations":
+                        StationsSearch += thisFeature.get_Value(thisFeature.Table.FindField("Stations_ID")) + "' OR Stations_ID = '";
                         break;
-                    case "SamplePoints":
-                        SamplePointsSearch += thisFeature.get_Value(thisFeature.Table.FindField("SamplePoints_ID")) + "' OR SamplePoints_ID = '";
+                    case "GenericSamples":
+                        GenericSamplesSearch += thisFeature.get_Value(thisFeature.Table.FindField("GenericSamples_ID")) + "' OR GenericSamples_ID = '";
                         break;
-                    case "OrientationDataPoints":
-                        OrientationDataPointsSearch += thisFeature.get_Value(thisFeature.Table.FindField("OrientationDataPoints_ID")) + "' OR OrientationDataPoints_ID = '";
+                    case "OrientationPoints":
+                        OrientationPointsSearch += thisFeature.get_Value(thisFeature.Table.FindField("OrientationPoints_ID")) + "' OR OrientationPoints_ID = '";
                         break;                    
                 }
 
@@ -171,13 +171,13 @@ namespace ncgmpToolbar.Forms
                 dataAccessClasses.Add("MapUnitPolys", MapUnitPolysRecords);
             }
 
-            // OverlayPolys
-            if (OverlayPolysSearch != "OverlayPolys_ID = '")
+            // OtherPolys
+            if (OtherPolysSearch != "OtherPolys_ID = '")
             {
-                OverlayPolysSearch = OverlayPolysSearch.Remove(OverlayPolysSearch.Length - 23);
-                OverlayPolysAccess OverlayPolysRecords = new OverlayPolysAccess(m_theWorkspace);
-                OverlayPolysRecords.AddOverlayPolys(OverlayPolysSearch);
-                dataAccessClasses.Add("OverlayPolys", OverlayPolysRecords);
+                OtherPolysSearch = OtherPolysSearch.Remove(OtherPolysSearch.Length - 23);
+                OtherPolysAccess OtherPolysRecords = new OtherPolysAccess(m_theWorkspace);
+                OtherPolysRecords.AddOtherPolys(OtherPolysSearch);
+                dataAccessClasses.Add("OtherPolys", OtherPolysRecords);
             }
 
             // ContactsAndFaults
@@ -189,40 +189,40 @@ namespace ncgmpToolbar.Forms
                 dataAccessClasses.Add("ContactsAndFaults", ContactsAndFaultsRecords);
             }
 
-            // OtherLines
-            if (OtherLinesSearch != "OtherLines_ID = '")
+            // GeologicLines
+            if (GeologicLinesSearch != "GeologicLines_ID = '")
             {
-                OtherLinesSearch = OtherLinesSearch.Remove(OtherLinesSearch.Length - 21);
-                OtherLinesAccess OtherLinesRecords = new OtherLinesAccess(m_theWorkspace);
-                OtherLinesRecords.AddOtherLines(OtherLinesSearch);
-                dataAccessClasses.Add("OtherLines", OtherLinesRecords);
+                GeologicLinesSearch = GeologicLinesSearch.Remove(GeologicLinesSearch.Length - 21);
+                GeologicLinesAccess GeologicLinesRecords = new GeologicLinesAccess(m_theWorkspace);
+                GeologicLinesRecords.AddGeologicLines(GeologicLinesSearch);
+                dataAccessClasses.Add("GeologicLines", GeologicLinesRecords);
             }
 
-            // StationPoints
-            if (StationPointsSearch != "StationPoints_ID = '")
+            // Stations
+            if (StationsSearch != "Stations_ID = '")
             {
-                StationPointsSearch = StationPointsSearch.Remove(StationPointsSearch.Length - 24);
-                StationPointsAccess StationPointsRecords = new StationPointsAccess(m_theWorkspace);
-                StationPointsRecords.AddStationPoints(StationPointsSearch);
-                dataAccessClasses.Add("StationPoints", StationPointsRecords);
+                StationsSearch = StationsSearch.Remove(StationsSearch.Length - 24);
+                StationsAccess StationsRecords = new StationsAccess(m_theWorkspace);
+                StationsRecords.AddStations(StationsSearch);
+                dataAccessClasses.Add("Stations", StationsRecords);
             }
 
-            // SamplePoints
-            if (SamplePointsSearch != "SamplePoints_ID = '")
+            // GenericSamples
+            if (GenericSamplesSearch != "GenericSamples_ID = '")
             {
-                SamplePointsSearch = SamplePointsSearch.Remove(SamplePointsSearch.Length - 23);
-                SamplePointsAccess SamplePointsRecords = new SamplePointsAccess(m_theWorkspace);
-                SamplePointsRecords.AddSamplePoints(SamplePointsSearch);
-                dataAccessClasses.Add("SamplePoints", SamplePointsRecords);
+                GenericSamplesSearch = GenericSamplesSearch.Remove(GenericSamplesSearch.Length - 23);
+                GenericSamplesAccess GenericSamplesRecords = new GenericSamplesAccess(m_theWorkspace);
+                GenericSamplesRecords.AddGenericSamples(GenericSamplesSearch);
+                dataAccessClasses.Add("GenericSamples", GenericSamplesRecords);
             }
 
-            // OrientationDataPoints
-            if (OrientationDataPointsSearch != "OrientationDataPoints_ID = '")
+            // OrientationPoints
+            if (OrientationPointsSearch != "OrientationPoints_ID = '")
             {
-                OrientationDataPointsSearch = OrientationDataPointsSearch.Remove(OrientationDataPointsSearch.Length - 32);
-                OrientationDataPointsAccess OrientationDataPointsRecords = new OrientationDataPointsAccess(m_theWorkspace);
-                OrientationDataPointsRecords.AddOrientationDataPoints(OrientationDataPointsSearch);
-                dataAccessClasses.Add("OrientationDataPoints", OrientationDataPointsRecords);
+                OrientationPointsSearch = OrientationPointsSearch.Remove(OrientationPointsSearch.Length - 32);
+                OrientationPointsAccess OrientationPointsRecords = new OrientationPointsAccess(m_theWorkspace);
+                OrientationPointsRecords.AddOrientationPoints(OrientationPointsSearch);
+                dataAccessClasses.Add("OrientationPoints", OrientationPointsRecords);
             }
 
             #endregion
@@ -262,9 +262,9 @@ namespace ncgmpToolbar.Forms
                         case "Glossary":
                             GlossarySearch += theRow.get_Value(thisTable.Table.FindField("Glossary_ID")) + "' OR Glossary_ID = '";
                             break;
-                        case "Notes":
-                            NotesSearch += theRow.get_Value(thisTable.Table.FindField("Notes_ID")) + "' OR Notes_ID = '";
-                            break;
+                        //case "Notes":
+                        //    NotesSearch += theRow.get_Value(thisTable.Table.FindField("Notes_ID")) + "' OR Notes_ID = '";
+                        //    break;
                         case "RelatedDocuments":
                             RelatedDocumentsSearch += theRow.get_Value(thisTable.Table.FindField("RelatedDocuments_ID")) + "' OR RelatedDocuments_ID = '";
                             break;
@@ -294,13 +294,13 @@ namespace ncgmpToolbar.Forms
             }
 
             // Notes
-            if (NotesSearch != "Notes_ID = '")
-            {
-                NotesSearch = NotesSearch.Remove(NotesSearch.Length - 16);
-                NotesAccess NotesRecords = new NotesAccess(m_theWorkspace);
-                NotesRecords.AddNotes(NotesSearch);
-                dataAccessClasses.Add("Notes", NotesRecords);
-            }
+            //if (NotesSearch != "Notes_ID = '")
+            //{
+            //    NotesSearch = NotesSearch.Remove(NotesSearch.Length - 16);
+            //    NotesAccess NotesRecords = new NotesAccess(m_theWorkspace);
+            //    NotesRecords.AddNotes(NotesSearch);
+            //    dataAccessClasses.Add("Notes", NotesRecords);
+            //}
 
             // RelatedDocuments
             if (RelatedDocumentsSearch != "RelatedDocuments_ID = '")
@@ -348,14 +348,14 @@ namespace ncgmpToolbar.Forms
 
             // Get DataAccess Classes to perform updates
             MapUnitPolysAccess mapUnitPolysAccess = new MapUnitPolysAccess(m_theWorkspace);
-            OverlayPolysAccess OverlayPolysAccess = new OverlayPolysAccess(m_theWorkspace);
+            OtherPolysAccess OtherPolysAccess = new OtherPolysAccess(m_theWorkspace);
             ContactsAndFaultsAccess ContactsAndFaultsAccess = new ContactsAndFaultsAccess(m_theWorkspace);
-            OtherLinesAccess OtherLinesAccess = new OtherLinesAccess(m_theWorkspace);
-            StationPointsAccess StationPointsAccess = new StationPointsAccess(m_theWorkspace);
-            SamplePointsAccess SamplePointsAccess = new SamplePointsAccess(m_theWorkspace);
-            OrientationDataPointsAccess OrientationDataPointsAccess = new OrientationDataPointsAccess(m_theWorkspace);
+            GeologicLinesAccess GeologicLinesAccess = new GeologicLinesAccess(m_theWorkspace);
+            StationsAccess StationsAccess = new StationsAccess(m_theWorkspace);
+            GenericSamplesAccess GenericSamplesAccess = new GenericSamplesAccess(m_theWorkspace);
+            OrientationPointsAccess OrientationPointsAccess = new OrientationPointsAccess(m_theWorkspace);
             GlossaryAccess GlossaryAccess = new GlossaryAccess(m_theWorkspace);
-            NotesAccess NotesAccess = new NotesAccess(m_theWorkspace);
+            //NotesAccess NotesAccess = new NotesAccess(m_theWorkspace);
             RelatedDocumentsAccess RelatedDocumentsAccess = new RelatedDocumentsAccess(m_theWorkspace);
             DescriptionOfMapUnitsAccess DescriptionOfMapUnitsAccess = new DescriptionOfMapUnitsAccess(m_theWorkspace);
 
@@ -376,15 +376,15 @@ namespace ncgmpToolbar.Forms
                         }
                         mapUnitPolysAccess.SaveMapUnitPolys();
                         break;
-                    case "OverlayPolys":
-                        OverlayPolysAccess thisOverlayPolysAccess = (OverlayPolysAccess)anEntry.Value;
-                        foreach (KeyValuePair<string, OverlayPolysAccess.OverlayPoly> OverlayPolysToUpdate in thisOverlayPolysAccess.OverlayPolysDictionary)
+                    case "OtherPolys":
+                        OtherPolysAccess thisOtherPolysAccess = (OtherPolysAccess)anEntry.Value;
+                        foreach (KeyValuePair<string, OtherPolysAccess.OtherPoly> OtherPolysToUpdate in thisOtherPolysAccess.OtherPolysDictionary)
                         {
-                            OverlayPolysAccess.OverlayPoly thisOverlayPoly = (OverlayPolysAccess.OverlayPoly)OverlayPolysToUpdate.Value;
-                            thisOverlayPoly.DataSourceID = dataSourceID;
-                            OverlayPolysAccess.UpdateOverlayPoly(thisOverlayPoly);
+                            OtherPolysAccess.OtherPoly thisOtherPoly = (OtherPolysAccess.OtherPoly)OtherPolysToUpdate.Value;
+                            thisOtherPoly.DataSourceID = dataSourceID;
+                            OtherPolysAccess.UpdateOtherPoly(thisOtherPoly);
                         }
-                        OverlayPolysAccess.SaveOverlayPolys();
+                        OtherPolysAccess.SaveOtherPolys();
                         break;
                     case "ContactsAndFaults":
                         ContactsAndFaultsAccess thisContactsAndFaultsAccess = (ContactsAndFaultsAccess)anEntry.Value;
@@ -396,45 +396,45 @@ namespace ncgmpToolbar.Forms
                         }
                         ContactsAndFaultsAccess.SaveContactsAndFaults();
                         break;
-                    case "OtherLines":
-                        OtherLinesAccess thisOtherLinesAccess = (OtherLinesAccess)anEntry.Value;
-                        foreach (KeyValuePair<string, OtherLinesAccess.OtherLine> OtherLinesToUpdate in thisOtherLinesAccess.OtherLinesDictionary)
+                    case "GeologicLines":
+                        GeologicLinesAccess thisGeologicLinesAccess = (GeologicLinesAccess)anEntry.Value;
+                        foreach (KeyValuePair<string, GeologicLinesAccess.GeologicLine> GeologicLinesToUpdate in thisGeologicLinesAccess.GeologicLinesDictionary)
                         {
-                            OtherLinesAccess.OtherLine thisOtherLine = (OtherLinesAccess.OtherLine)OtherLinesToUpdate.Value;
-                            thisOtherLine.DataSourceID = dataSourceID;
-                            OtherLinesAccess.UpdateOtherLine(thisOtherLine);
+                            GeologicLinesAccess.GeologicLine thisGeologicLine = (GeologicLinesAccess.GeologicLine)GeologicLinesToUpdate.Value;
+                            thisGeologicLine.DataSourceID = dataSourceID;
+                            GeologicLinesAccess.UpdateGeologicLine(thisGeologicLine);
                         }
-                        OtherLinesAccess.SaveOtherLines();
+                        GeologicLinesAccess.SaveGeologicLines();
                         break;
-                    case "StationPoints":
-                        StationPointsAccess thisStationPointsAccess = (StationPointsAccess)anEntry.Value;
-                        foreach (KeyValuePair<string, StationPointsAccess.StationPoint> StationPointsToUpdate in thisStationPointsAccess.StationPointsDictionary)
+                    case "Stations":
+                        StationsAccess thisStationsAccess = (StationsAccess)anEntry.Value;
+                        foreach (KeyValuePair<string, StationsAccess.Station> StationsToUpdate in thisStationsAccess.StationsDictionary)
                         {
-                            StationPointsAccess.StationPoint thisStationPoint = (StationPointsAccess.StationPoint)StationPointsToUpdate.Value;
-                            thisStationPoint.DataSourceID = dataSourceID;
-                            StationPointsAccess.UpdateStationPoint(thisStationPoint);
+                            StationsAccess.Station thisStation = (StationsAccess.Station)StationsToUpdate.Value;
+                            thisStation.DataSourceID = dataSourceID;
+                            StationsAccess.UpdateStation(thisStation);
                         }
-                        StationPointsAccess.SaveStationPoints();
+                        StationsAccess.SaveStations();
                         break;
-                    case "SamplePoints":
-                        SamplePointsAccess thisSamplePointsAccess = (SamplePointsAccess)anEntry.Value;
-                        foreach (KeyValuePair<string, SamplePointsAccess.SamplePoint> SamplePointsToUpdate in thisSamplePointsAccess.SamplePointsDictionary)
+                    case "GenericSamples":
+                        GenericSamplesAccess thisGenericSamplesAccess = (GenericSamplesAccess)anEntry.Value;
+                        foreach (KeyValuePair<string, GenericSamplesAccess.GenericSample> GenericSamplesToUpdate in thisGenericSamplesAccess.GenericSamplesDictionary)
                         {
-                            SamplePointsAccess.SamplePoint thisSamplePoint = (SamplePointsAccess.SamplePoint)SamplePointsToUpdate.Value;
-                            thisSamplePoint.DataSourceID = dataSourceID;
-                            SamplePointsAccess.UpdateSamplePoint(thisSamplePoint);
+                            GenericSamplesAccess.GenericSample thisGenericSample = (GenericSamplesAccess.GenericSample)GenericSamplesToUpdate.Value;
+                            thisGenericSample.DataSourceID = dataSourceID;
+                            GenericSamplesAccess.UpdateGenericSample(thisGenericSample);
                         }
-                        SamplePointsAccess.SaveSamplePoints();
+                        GenericSamplesAccess.SaveGenericSamples();
                         break;
-                    case "OrientationDataPoints":
-                        OrientationDataPointsAccess thisOrientationDataPointsAccess = (OrientationDataPointsAccess)anEntry.Value;
-                        foreach (KeyValuePair<string, OrientationDataPointsAccess.OrientationDataPoint> OrientationDataPointsToUpdate in thisOrientationDataPointsAccess.OrientationDataPointsDictionary)
+                    case "OrientationPoints":
+                        OrientationPointsAccess thisOrientationPointsAccess = (OrientationPointsAccess)anEntry.Value;
+                        foreach (KeyValuePair<string, OrientationPointsAccess.OrientationPoint> OrientationPointsToUpdate in thisOrientationPointsAccess.OrientationPointsDictionary)
                         {
-                            OrientationDataPointsAccess.OrientationDataPoint thisOrientationDataPoint = (OrientationDataPointsAccess.OrientationDataPoint)OrientationDataPointsToUpdate.Value;
-                            thisOrientationDataPoint.DataSourceID = dataSourceID;
-                            OrientationDataPointsAccess.UpdateOrientationDataPoint(thisOrientationDataPoint);
+                            OrientationPointsAccess.OrientationPoint thisOrientationPoint = (OrientationPointsAccess.OrientationPoint)OrientationPointsToUpdate.Value;
+                            thisOrientationPoint.DataSourceID = dataSourceID;
+                            OrientationPointsAccess.UpdateOrientationPoint(thisOrientationPoint);
                         }
-                        OrientationDataPointsAccess.SaveOrientationDataPoints();
+                        OrientationPointsAccess.SaveOrientationPoints();
                         break;
                     case "Glossary":
                         GlossaryAccess thisGlossaryAccess = (GlossaryAccess)anEntry.Value;
@@ -446,16 +446,16 @@ namespace ncgmpToolbar.Forms
                         }
                         GlossaryAccess.SaveGlossary();
                         break;
-                    case "Notes":
-                        NotesAccess thisNotesAccess = (NotesAccess)anEntry.Value;
-                        foreach (KeyValuePair<string, NotesAccess.Note> NotesToUpdate in thisNotesAccess.NotesDictionary)
-                        {
-                            NotesAccess.Note thisNote = (NotesAccess.Note)NotesToUpdate.Value;
-                            thisNote.DataSourceID = dataSourceID;
-                            NotesAccess.UpdateNote(thisNote);
-                        }
-                        NotesAccess.SaveNotes();
-                        break;
+                    //case "Notes":
+                    //    NotesAccess thisNotesAccess = (NotesAccess)anEntry.Value;
+                    //    foreach (KeyValuePair<string, NotesAccess.Note> NotesToUpdate in thisNotesAccess.NotesDictionary)
+                    //    {
+                    //        NotesAccess.Note thisNote = (NotesAccess.Note)NotesToUpdate.Value;
+                    //        thisNote.DataSourceID = dataSourceID;
+                    //        NotesAccess.UpdateNote(thisNote);
+                    //    }
+                    //    NotesAccess.SaveNotes();
+                    //    break;
                     case "RelatedDocuments":
                         RelatedDocumentsAccess thisRelatedDocumentsAccess = (RelatedDocumentsAccess)anEntry.Value;
                         foreach (KeyValuePair<string, RelatedDocumentsAccess.RelatedDocument> RelatedDocumentsToUpdate in thisRelatedDocumentsAccess.RelatedDocumentsDictionary)
@@ -523,7 +523,7 @@ namespace ncgmpToolbar.Forms
                             double LocationConfidenceMeters;
                             bool result = double.TryParse(dummyFeature.get_Value(templateFC.FindField("LocationConfidenceMeters")).ToString(), out LocationConfidenceMeters);
                             string Notes = dummyFeature.get_Value(templateFC.FindField("Notes")).ToString();
-                            string Symbol = dummyFeature.get_Value(templateFC.FindField("Symbol")).ToString();
+                            string RuleID = dummyFeature.get_Value(templateFC.FindField("RuleID")).ToString();
                             string Type = dummyFeature.get_Value(templateFC.FindField("Type")).ToString();
                             int IsConcealed = 0;
                             if (contactsAndFaultsFL.FeatureClass.Equals(templateFC) == true)
@@ -557,7 +557,7 @@ namespace ncgmpToolbar.Forms
                                         thisContactsAndFault.Label = Label;
                                         thisContactsAndFault.LocationConfidenceMeters = LocationConfidenceMeters;
                                         thisContactsAndFault.Notes = Notes;
-                                        thisContactsAndFault.Symbol = Symbol;
+                                        thisContactsAndFault.RuleID = RuleID;
                                         thisContactsAndFault.Type = Type;
                                         thisContactsAndFault.IsConcealed = IsConcealed;
                                         
@@ -576,7 +576,7 @@ namespace ncgmpToolbar.Forms
                                     // Copy the features into the templateFC using the selected template as a guide
 
                                     // Build DataAccess Classes for target FeatureClasses
-                                    OtherLinesAccess OtherLinesInserter = new OtherLinesAccess(m_theWorkspace);
+                                    GeologicLinesAccess GeologicLinesInserter = new GeologicLinesAccess(m_theWorkspace);
 
                                     // Find the target FeatureClass Name
                                     string tableName = (templateFC as IDataset).Name;
@@ -605,13 +605,13 @@ namespace ncgmpToolbar.Forms
                                         // Create the new feature in the template FeatureClass
                                         switch (parsedTableName)
                                         {
-                                            case "OtherLines":
-                                                // Insert the new OtherLines
-                                                OtherLinesInserter.NewOtherLine(Type, LocationConfidenceMeters, ExistenceConfidence, IdentityConfidence, Label, Notes, DataSourceID, Symbol, Shape);
-                                                OtherLinesInserter.SaveOtherLines();
+                                            case "GeologicLines":
+                                                // Insert the new GeologicLines
+                                                GeologicLinesInserter.NewGeologicLine(Type, LocationConfidenceMeters, ExistenceConfidence, IdentityConfidence, Label, Notes, DataSourceID, RuleID, Shape);
+                                                GeologicLinesInserter.SaveGeologicLines();
 
                                                 // Clear out the dictionary so lines don't get added more than once.
-                                                OtherLinesInserter.ClearOtherLines();
+                                                GeologicLinesInserter.ClearGeologicLines();
 
                                                 // Delete the old one
                                                 ContactsAndFaultsRemover.DeleteContactsAndFaults(thisContactsAndFault);
@@ -630,22 +630,22 @@ namespace ncgmpToolbar.Forms
                     }
                     #endregion                    
                     
-                    #region OtherLines
-                    IFeatureLayer OtherLinesFL = commonFunctions.FindFeatureLayer(m_theWorkspace, "OtherLines");
-                    if (OtherLinesFL != null)
+                    #region GeologicLines
+                    IFeatureLayer GeologicLinesFL = commonFunctions.FindFeatureLayer(m_theWorkspace, "GeologicLines");
+                    if (GeologicLinesFL != null)
                     {
-                        // Found OtherLines. Check for a selection
-                        IFeatureSelection selectedFeatures = OtherLinesFL as IFeatureSelection;
+                        // Found GeologicLines. Check for a selection
+                        IFeatureSelection selectedFeatures = GeologicLinesFL as IFeatureSelection;
                         if (selectedFeatures.SelectionSet.Count > 0)
                         {
-                            // OtherLines were selected. Pass the selection into a cursor.
+                            // GeologicLines were selected. Pass the selection into a cursor.
                             ISelectionSet featureSelectionSet = selectedFeatures.SelectionSet;
                             ICursor theCursor;
                             featureSelectionSet.Search(null, false, out theCursor);
                             IFeatureCursor theFeatureCursor = (IFeatureCursor)theCursor;
 
                             // Some variables to declare before the loops
-                            int idFld = theFeatureCursor.FindField("OtherLines_ID");
+                            int idFld = theFeatureCursor.FindField("GeologicLines_ID");
                             IFeature theFeature;
                             string thisId;
 
@@ -658,7 +658,7 @@ namespace ncgmpToolbar.Forms
                             double LocationConfidenceMeters;
                             bool result = double.TryParse(dummyFeature.get_Value(templateFC.FindField("LocationConfidenceMeters")).ToString(), out LocationConfidenceMeters);
                             string Notes = dummyFeature.get_Value(templateFC.FindField("Notes")).ToString();
-                            string Symbol = dummyFeature.get_Value(templateFC.FindField("Symbol")).ToString();
+                            string RuleID = dummyFeature.get_Value(templateFC.FindField("RuleID")).ToString();
                             string Type = dummyFeature.get_Value(templateFC.FindField("Type")).ToString();
                             int IsConcealed = 0;
                             if (templateFC.Equals(commonFunctions.OpenFeatureClass(m_theWorkspace, "ContactsAndFaults")) == true)
@@ -671,39 +671,39 @@ namespace ncgmpToolbar.Forms
                             dummyFeature.Delete();
                             ArcMap.Editor.StopOperation("Remove Dummy Feature");
 
-                            //Is the FeatureTemplate also for OtherLines?
-                            switch (OtherLinesFL.FeatureClass.Equals(templateFC))
+                            //Is the FeatureTemplate also for GeologicLines?
+                            switch (GeologicLinesFL.FeatureClass.Equals(templateFC))
                             {
                                 case true:
                                     // Update the features to the FeatureTemplate
-                                    OtherLinesAccess OtherLinesUpdater = new OtherLinesAccess(m_theWorkspace);
+                                    GeologicLinesAccess GeologicLinesUpdater = new GeologicLinesAccess(m_theWorkspace);
                                     
                                     theFeature = theFeatureCursor.NextFeature();
                                     while (theFeature != null)
                                     {
-                                        // Find the OtherLines feature to update
+                                        // Find the GeologicLines feature to update
                                         thisId = theFeature.get_Value(idFld).ToString();
-                                        OtherLinesUpdater.AddOtherLines("OtherLines_ID = '" + thisId + "'");
-                                        OtherLinesAccess.OtherLine thisOtherLine = OtherLinesUpdater.OtherLinesDictionary[thisId];
+                                        GeologicLinesUpdater.AddGeologicLines("GeologicLines_ID = '" + thisId + "'");
+                                        GeologicLinesAccess.GeologicLine thisGeologicLine = GeologicLinesUpdater.GeologicLinesDictionary[thisId];
 
                                         // Assign values from the FeatureTemplate
-                                        thisOtherLine.ExistenceConfidence = ExistenceConfidence;
-                                        thisOtherLine.IdentityConfidence = IdentityConfidence;
-                                        thisOtherLine.Label = Label;
-                                        thisOtherLine.LocationConfidenceMeters = LocationConfidenceMeters;
-                                        thisOtherLine.Notes = Notes;
-                                        thisOtherLine.Symbol = Symbol;
-                                        thisOtherLine.Type = Type;
+                                        thisGeologicLine.ExistenceConfidence = ExistenceConfidence;
+                                        thisGeologicLine.IdentityConfidence = IdentityConfidence;
+                                        thisGeologicLine.Label = Label;
+                                        thisGeologicLine.LocationConfidenceMeters = LocationConfidenceMeters;
+                                        thisGeologicLine.Notes = Notes;
+                                        thisGeologicLine.RuleID = RuleID;
+                                        thisGeologicLine.Type = Type;
 
                                         // Update the feature
-                                        OtherLinesUpdater.UpdateOtherLine(thisOtherLine);
+                                        GeologicLinesUpdater.UpdateGeologicLine(thisGeologicLine);
 
                                         // Increment the cursor
                                         theFeature = theFeatureCursor.NextFeature();
                                     }
 
                                     // Save changes
-                                    OtherLinesUpdater.SaveOtherLines();
+                                    GeologicLinesUpdater.SaveGeologicLines();
                                     break;
                                 case false:
                                     // Copy the features into the templateFC using the selected template as a guide
@@ -719,35 +719,35 @@ namespace ncgmpToolbar.Forms
                                     string parsedDbName, parsedOwnerName, parsedTableName;
                                     nameParser.ParseTableName(tableName, out parsedDbName, out parsedOwnerName, out parsedTableName);
 
-                                    // Will need to remove the selected feature from OtherLines
-                                    OtherLinesAccess OtherLinesRemover = new OtherLinesAccess(m_theWorkspace);
+                                    // Will need to remove the selected feature from GeologicLines
+                                    GeologicLinesAccess GeologicLinesRemover = new GeologicLinesAccess(m_theWorkspace);
 
-                                    // Loop through the selected OtherLines
+                                    // Loop through the selected GeologicLines
                                     theFeature = theFeatureCursor.NextFeature();
                                     while (theFeature != null)
                                     {
-                                        // Find the OtherLines feature to remove
+                                        // Find the GeologicLines feature to remove
                                         thisId = theFeature.get_Value(idFld).ToString();
-                                        OtherLinesRemover.AddOtherLines("OtherLines_ID = '" + thisId + "'");
-                                        OtherLinesAccess.OtherLine thisOtherLine = OtherLinesRemover.OtherLinesDictionary[thisId];
+                                        GeologicLinesRemover.AddGeologicLines("GeologicLines_ID = '" + thisId + "'");
+                                        GeologicLinesAccess.GeologicLine thisGeologicLine = GeologicLinesRemover.GeologicLinesDictionary[thisId];
 
                                         // Setup attributes
-                                        string DataSourceID = thisOtherLine.DataSourceID;
-                                        IPolyline Shape = thisOtherLine.Shape;
+                                        string DataSourceID = thisGeologicLine.DataSourceID;
+                                        IPolyline Shape = thisGeologicLine.Shape;
 
                                         // Create the new feature in the template FeatureClass
                                         switch (parsedTableName)
                                         {
                                             case "ContactsAndFaults":
-                                                // Insert the new OtherLines
-                                                ContactsAndFaultsInserter.NewContactsAndFault(Type, IsConcealed, LocationConfidenceMeters, ExistenceConfidence, IdentityConfidence, Label, Notes, DataSourceID, Symbol, Shape);
+                                                // Insert the new GeologicLines
+                                                ContactsAndFaultsInserter.NewContactsAndFault(Type, IsConcealed, LocationConfidenceMeters, ExistenceConfidence, IdentityConfidence, Label, Notes, DataSourceID, RuleID, Shape);
                                                 ContactsAndFaultsInserter.SaveContactsAndFaults();
 
                                                 // Clear out the dictionary so lines don't get added more than once.
                                                 ContactsAndFaultsInserter.ClearContactsAndFaults();
 
                                                 // Delete the old one
-                                                OtherLinesRemover.DeleteOtherLines(thisOtherLine);
+                                                GeologicLinesRemover.DeleteGeologicLines(thisGeologicLine);
                                                 break;
                                             default:
                                                 // This would happen if there's some other polyline featuretemplate selected. Just need to exit gracefully.
@@ -767,22 +767,22 @@ namespace ncgmpToolbar.Forms
                 case esriGeometryType.esriGeometryPoint:
                     // Look for features selected in point FeatureClasses
                     //  Note: I don't care about FeatureTemplates in Station or Sample featureclasses.
-                    #region OrientationDataPoints
-                    IFeatureLayer OrientationDataPointsFL = commonFunctions.FindFeatureLayer(m_theWorkspace, "OrientationDataPoints");
-                    if (OrientationDataPointsFL != null)
+                    #region OrientationPoints
+                    IFeatureLayer OrientationPointsFL = commonFunctions.FindFeatureLayer(m_theWorkspace, "OrientationPoints");
+                    if (OrientationPointsFL != null)
                     {
-                        // Found OrientationDataPoints. Check for a selection
-                        IFeatureSelection selectedFeatures = OrientationDataPointsFL as IFeatureSelection;
+                        // Found OrientationPoints. Check for a selection
+                        IFeatureSelection selectedFeatures = OrientationPointsFL as IFeatureSelection;
                         if (selectedFeatures.SelectionSet.Count > 0)
                         {
-                            // OrientationDataPoints were selected. Pass the selection into a cursor.
+                            // OrientationPoints were selected. Pass the selection into a cursor.
                             ISelectionSet featureSelectionSet = selectedFeatures.SelectionSet;
                             ICursor theCursor;
                             featureSelectionSet.Search(null, false, out theCursor);
                             IFeatureCursor theFeatureCursor = (IFeatureCursor)theCursor;
 
                             // Some variables to declare before the loops
-                            int idFld = theFeatureCursor.FindField("OrientationDataPoints_ID");
+                            int idFld = theFeatureCursor.FindField("OrientationPoints_ID");
                             IFeature theFeature;
                             string thisId;
 
@@ -797,48 +797,48 @@ namespace ncgmpToolbar.Forms
                             double OrientationConfidenceDegrees;
                             result = double.TryParse(dummyFeature.get_Value(templateFC.FindField("OrientationConfidenceDegrees")).ToString(), out OrientationConfidenceDegrees);
                             string Notes = dummyFeature.get_Value(templateFC.FindField("Notes")).ToString();
-                            int Symbol;
-                            result = int.TryParse(dummyFeature.get_Value(templateFC.FindField("Symbol")).ToString(), out Symbol);
+                            int RuleID;
+                            result = int.TryParse(dummyFeature.get_Value(templateFC.FindField("RuleID")).ToString(), out RuleID);
 
                             // Destroy the dummy feature - must happen within an edit operation
                             ArcMap.Editor.StartOperation();
                             dummyFeature.Delete();
                             ArcMap.Editor.StopOperation("Remove Dummy Feature");
 
-                            //Is the FeatureTemplate also for OrientationDataPoints?
-                            switch (OrientationDataPointsFL.FeatureClass.Equals(templateFC))
+                            //Is the FeatureTemplate also for OrientationPoints?
+                            switch (OrientationPointsFL.FeatureClass.Equals(templateFC))
                             {
                                 case true:
                                     // Update the features to the FeatureTemplate
-                                    OrientationDataPointsAccess OrientationDataPointsUpdater = new OrientationDataPointsAccess(m_theWorkspace);                                    
+                                    OrientationPointsAccess OrientationPointsUpdater = new OrientationPointsAccess(m_theWorkspace);                                    
 
                                     theFeature = theFeatureCursor.NextFeature();
                                     while (theFeature != null)
                                     {
-                                        // Find the OrientationDataPoints feature to update
+                                        // Find the OrientationPoints feature to update
                                         thisId = theFeature.get_Value(idFld).ToString();
-                                        OrientationDataPointsUpdater.AddOrientationDataPoints("OrientationDataPoints_ID = '" + thisId + "'");
-                                        OrientationDataPointsAccess.OrientationDataPoint thisOrientationDataPoint = OrientationDataPointsUpdater.OrientationDataPointsDictionary[thisId];
+                                        OrientationPointsUpdater.AddOrientationPoints("OrientationPoints_ID = '" + thisId + "'");
+                                        OrientationPointsAccess.OrientationPoint thisOrientationPoint = OrientationPointsUpdater.OrientationPointsDictionary[thisId];
 
                                         // Assign values from the FeatureTemplate
                                         
-                                        thisOrientationDataPoint.Type = Type;
-                                        thisOrientationDataPoint.IdentityConfidence = IdentityConfidence;
-                                        thisOrientationDataPoint.Label = Label;
-                                        thisOrientationDataPoint.PlotAtScale = PlotAtScale;
-                                        thisOrientationDataPoint.OrientationConfidenceDegrees = OrientationConfidenceDegrees;
-                                        thisOrientationDataPoint.Notes = Notes;
-                                        thisOrientationDataPoint.Symbol = Symbol;
+                                        thisOrientationPoint.Type = Type;
+                                        thisOrientationPoint.IdentityConfidence = IdentityConfidence;
+                                        thisOrientationPoint.Label = Label;
+                                        thisOrientationPoint.PlotAtScale = PlotAtScale;
+                                        thisOrientationPoint.OrientationConfidenceDegrees = OrientationConfidenceDegrees;
+                                        thisOrientationPoint.Notes = Notes;
+                                        thisOrientationPoint.RuleID = RuleID;
 
                                         // Update the feature
-                                        OrientationDataPointsUpdater.UpdateOrientationDataPoint(thisOrientationDataPoint);
+                                        OrientationPointsUpdater.UpdateOrientationPoint(thisOrientationPoint);
 
                                         // Increment the cursor
                                         theFeature = theFeatureCursor.NextFeature();
                                     }
 
                                     // Save changes
-                                    OrientationDataPointsUpdater.SaveOrientationDataPoints();
+                                    OrientationPointsUpdater.SaveOrientationPoints();
                                     break;
                                 case false:
                                     // User needs to select an appropriate feature template
@@ -922,7 +922,7 @@ namespace ncgmpToolbar.Forms
                                     // Copy the features into the templateFC using the selected template as a guide
 
                                     // Build DataAccess Classes for target FeatureClasses
-                                    OverlayPolysAccess OverlayPolysInserter = new OverlayPolysAccess(m_theWorkspace);
+                                    OtherPolysAccess OtherPolysInserter = new OtherPolysAccess(m_theWorkspace);
 
                                     // Find the target FeatureClass Name
                                     string tableName = (templateFC as IDataset).Name;
@@ -951,13 +951,13 @@ namespace ncgmpToolbar.Forms
                                         // Create the new feature in the template FeatureClass
                                         switch (parsedTableName)
                                         {
-                                            case "OverlayPolys":
-                                                // Insert the new OtherLines
-                                                OverlayPolysInserter.NewOverlayPoly(MapUnit, IdentityConfidence, Label, Notes, DataSourceID, Symbol, Shape);
-                                                OverlayPolysInserter.SaveOverlayPolys();
+                                            case "OtherPolys":
+                                                // Insert the new GeologicLines
+                                                OtherPolysInserter.NewOtherPoly(MapUnit, IdentityConfidence, Label, Notes, DataSourceID, Symbol, Shape);
+                                                OtherPolysInserter.SaveOtherPolys();
 
                                                 // Clear out the dictionary so lines don't get added more than once.
-                                                OverlayPolysInserter.ClearOverlayPolys();
+                                                OtherPolysInserter.ClearOtherPolys();
 
                                                 // Delete the old one
                                                 MapUnitPolysRemover.DeleteMapUnitPolys(thisMapUnitPoly);
@@ -976,22 +976,22 @@ namespace ncgmpToolbar.Forms
                     }
                     #endregion
 
-                    #region OverlayPolys
-                    IFeatureLayer OverlayPolysFL = commonFunctions.FindFeatureLayer(m_theWorkspace, "OverlayPolys");
-                    if (OverlayPolysFL != null)
+                    #region OtherPolys
+                    IFeatureLayer OtherPolysFL = commonFunctions.FindFeatureLayer(m_theWorkspace, "OtherPolys");
+                    if (OtherPolysFL != null)
                     {
-                        // Found OverlayPolys. Check for a selection
-                        IFeatureSelection selectedFeatures = OverlayPolysFL as IFeatureSelection;
+                        // Found OtherPolys. Check for a selection
+                        IFeatureSelection selectedFeatures = OtherPolysFL as IFeatureSelection;
                         if (selectedFeatures.SelectionSet.Count > 0)
                         {
-                            // OverlayPolys were selected. Pass the selection into a cursor.
+                            // OtherPolys were selected. Pass the selection into a cursor.
                             ISelectionSet featureSelectionSet = selectedFeatures.SelectionSet;
                             ICursor theCursor;
                             featureSelectionSet.Search(null, false, out theCursor);
                             IFeatureCursor theFeatureCursor = (IFeatureCursor)theCursor;
 
                             // Some variables to declare before the loops
-                            int idFld = theFeatureCursor.FindField("OverlayPolys_ID");
+                            int idFld = theFeatureCursor.FindField("OtherPolys_ID");
                             IFeature theFeature;
                             string thisId;
 
@@ -1009,37 +1009,37 @@ namespace ncgmpToolbar.Forms
                             dummyFeature.Delete();
                             ArcMap.Editor.StopOperation("Remove Dummy Feature");
 
-                            //Is the FeatureTemplate also for OverlayPolys?
-                            switch (OverlayPolysFL.FeatureClass.Equals(templateFC))
+                            //Is the FeatureTemplate also for OtherPolys?
+                            switch (OtherPolysFL.FeatureClass.Equals(templateFC))
                             {
                                 case true:
                                     // Update the features to the FeatureTemplate
-                                    OverlayPolysAccess OverlayPolysUpdater = new OverlayPolysAccess(m_theWorkspace);                                    
+                                    OtherPolysAccess OtherPolysUpdater = new OtherPolysAccess(m_theWorkspace);                                    
 
                                     theFeature = theFeatureCursor.NextFeature();
                                     while (theFeature != null)
                                     {
-                                        // Find the OverlayPolys feature to update
+                                        // Find the OtherPolys feature to update
                                         thisId = theFeature.get_Value(idFld).ToString();
-                                        OverlayPolysUpdater.AddOverlayPolys("OverlayPolys_ID = '" + thisId + "'");
-                                        OverlayPolysAccess.OverlayPoly thisOverlayPoly = OverlayPolysUpdater.OverlayPolysDictionary[thisId];
+                                        OtherPolysUpdater.AddOtherPolys("OtherPolys_ID = '" + thisId + "'");
+                                        OtherPolysAccess.OtherPoly thisOtherPoly = OtherPolysUpdater.OtherPolysDictionary[thisId];
 
                                         // Assign values from the FeatureTemplate
-                                        thisOverlayPoly.MapUnit = MapUnit;
-                                        thisOverlayPoly.IdentityConfidence = IdentityConfidence;
-                                        thisOverlayPoly.Label = Label;
-                                        thisOverlayPoly.Notes = Notes;
-                                        thisOverlayPoly.Symbol = Symbol;
+                                        thisOtherPoly.MapUnit = MapUnit;
+                                        thisOtherPoly.IdentityConfidence = IdentityConfidence;
+                                        thisOtherPoly.Label = Label;
+                                        thisOtherPoly.Notes = Notes;
+                                        thisOtherPoly.Symbol = Symbol;
 
                                         // Update the feature
-                                        OverlayPolysUpdater.UpdateOverlayPoly(thisOverlayPoly);
+                                        OtherPolysUpdater.UpdateOtherPoly(thisOtherPoly);
 
                                         // Increment the cursor
                                         theFeature = theFeatureCursor.NextFeature();
                                     }
 
                                     // Save changes
-                                    OverlayPolysUpdater.SaveOverlayPolys();
+                                    OtherPolysUpdater.SaveOtherPolys();
                                     break;
                                 case false:
                                     // Copy the features into the templateFC using the selected template as a guide
@@ -1055,27 +1055,27 @@ namespace ncgmpToolbar.Forms
                                     string parsedDbName, parsedOwnerName, parsedTableName;
                                     nameParser.ParseTableName(tableName, out parsedDbName, out parsedOwnerName, out parsedTableName);
 
-                                    // Will need to remove the selected feature from OverlayPolys
-                                    OverlayPolysAccess OverlayPolysRemover = new OverlayPolysAccess(m_theWorkspace);
+                                    // Will need to remove the selected feature from OtherPolys
+                                    OtherPolysAccess OtherPolysRemover = new OtherPolysAccess(m_theWorkspace);
 
-                                    // Loop through the selected OverlayPolys
+                                    // Loop through the selected OtherPolys
                                     theFeature = theFeatureCursor.NextFeature();
                                     while (theFeature != null)
                                     {
-                                        // Find the OverlayPolys feature to remove
+                                        // Find the OtherPolys feature to remove
                                         thisId = theFeature.get_Value(idFld).ToString();
-                                        OverlayPolysRemover.AddOverlayPolys("OverlayPolys_ID = '" + thisId + "'");
-                                        OverlayPolysAccess.OverlayPoly thisOverlayPoly = OverlayPolysRemover.OverlayPolysDictionary[thisId];
+                                        OtherPolysRemover.AddOtherPolys("OtherPolys_ID = '" + thisId + "'");
+                                        OtherPolysAccess.OtherPoly thisOtherPoly = OtherPolysRemover.OtherPolysDictionary[thisId];
 
                                         // Setup attributes                                        
-                                        string DataSourceID = thisOverlayPoly.DataSourceID;
-                                        IPolygon Shape = thisOverlayPoly.Shape;
+                                        string DataSourceID = thisOtherPoly.DataSourceID;
+                                        IPolygon Shape = thisOtherPoly.Shape;
 
                                         // Create the new feature in the template FeatureClass
                                         switch (parsedTableName)
                                         {
                                             case "MapUnitPolys":
-                                                // Insert the new OtherLines
+                                                // Insert the new GeologicLines
                                                 MapUnitPolysInserter.NewMapUnitPoly(MapUnit, IdentityConfidence, Label, Notes, DataSourceID, Symbol, Shape);
                                                 MapUnitPolysInserter.SaveMapUnitPolys();
 
@@ -1083,7 +1083,7 @@ namespace ncgmpToolbar.Forms
                                                 MapUnitPolysInserter.ClearMapUnitPolys();
 
                                                 // Delete the old one
-                                                OverlayPolysRemover.DeleteOverlayPolys(thisOverlayPoly);
+                                                OtherPolysRemover.DeleteOtherPolys(thisOtherPoly);
                                                 break;
                                             default:
                                                 // This would happen if there's some other polygon featuretemplate selected. Just need to exit gracefully.
@@ -1132,32 +1132,32 @@ namespace ncgmpToolbar.Forms
                             sqlWhereClause += aRecord.Key + "' OR " + parsedTableName + "_ID = '";
                         }
                         break;
-                    case "OtherLines":
-                        foreach (KeyValuePair<string, OtherLinesAccess.OtherLine> aRecord in (anEntry.Value as OtherLinesAccess).OtherLinesDictionary)
+                    case "GeologicLines":
+                        foreach (KeyValuePair<string, GeologicLinesAccess.GeologicLine> aRecord in (anEntry.Value as GeologicLinesAccess).GeologicLinesDictionary)
 	                    {
                             sqlWhereClause += aRecord.Key + "' OR " + parsedTableName + "_ID = '";
                         }
                         break;
-                    case "OverlayPolys":
-                        foreach (KeyValuePair<string, OverlayPolysAccess.OverlayPoly> aRecord in (anEntry.Value as OverlayPolysAccess).OverlayPolysDictionary)
+                    case "OtherPolys":
+                        foreach (KeyValuePair<string, OtherPolysAccess.OtherPoly> aRecord in (anEntry.Value as OtherPolysAccess).OtherPolysDictionary)
 	                    {
                             sqlWhereClause += aRecord.Key + "' OR " + parsedTableName + "_ID = '";
                         }
                         break;
-                    case "OrientationDataPoints":
-                        foreach (KeyValuePair<string, OrientationDataPointsAccess.OrientationDataPoint> aRecord in (anEntry.Value as OrientationDataPointsAccess).OrientationDataPointsDictionary)
+                    case "OrientationPoints":
+                        foreach (KeyValuePair<string, OrientationPointsAccess.OrientationPoint> aRecord in (anEntry.Value as OrientationPointsAccess).OrientationPointsDictionary)
 	                    {
                             sqlWhereClause += aRecord.Key + "' OR " + parsedTableName + "_ID = '";
                         }
                         break;
-                    case "SamplePoints":
-                        foreach (KeyValuePair<string, SamplePointsAccess.SamplePoint> aRecord in (anEntry.Value as SamplePointsAccess).SamplePointsDictionary)
+                    case "GenericSamples":
+                        foreach (KeyValuePair<string, GenericSamplesAccess.GenericSample> aRecord in (anEntry.Value as GenericSamplesAccess).GenericSamplesDictionary)
 	                    {
                             sqlWhereClause += aRecord.Key + "' OR " + parsedTableName + "_ID = '";
                         }
                         break;
-                    case "StationPoints":
-                        foreach (KeyValuePair<string, StationPointsAccess.StationPoint> aRecord in (anEntry.Value as StationPointsAccess).StationPointsDictionary)
+                    case "Stations":
+                        foreach (KeyValuePair<string, StationsAccess.Station> aRecord in (anEntry.Value as StationsAccess).StationsDictionary)
 	                    {
                             sqlWhereClause += aRecord.Key + "' OR " + parsedTableName + "_ID = '";
                         }
@@ -1182,7 +1182,7 @@ namespace ncgmpToolbar.Forms
                         break;
                     case "Notes":
                         foreach (KeyValuePair<string, NotesAccess.Note> aRecord in (anEntry.Value as NotesAccess).NotesDictionary)
-	                    {
+                        {
                             sqlWhereClause += aRecord.Key + "' OR " + parsedTableName + "_ID = '";
                         }
                         break;

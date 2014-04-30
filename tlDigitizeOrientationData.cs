@@ -143,9 +143,9 @@ namespace ncgmpToolbar
                             return;
                         }
 
-                        // Make sure that the template puts features into the OrientationDataPoints FeatureClass
+                        // Make sure that the template puts features into the OrientationPoints FeatureClass
                         IFeatureClass templateFC = ((IFeatureLayer)theCurrentTemplate.Layer).FeatureClass;
-                        if (templateFC.Equals(commonFunctions.OpenFeatureClass(ArcMap.Editor.EditWorkspace, "OrientationDataPoints")))
+                        if (templateFC.Equals(commonFunctions.OpenFeatureClass(ArcMap.Editor.EditWorkspace, "OrientationPoints")))
                         {                           
                             try
                             {
@@ -166,8 +166,8 @@ namespace ncgmpToolbar
                                 double OrientConf;
                                 result = double.TryParse(tempFeature.get_Value(templateFC.FindField("OrientationConfidenceDegrees")).ToString(), out OrientConf);
                                 
-                                int Symbol;
-                                result = int.TryParse(tempFeature.get_Value(templateFC.FindField("Symbol")).ToString(), out Symbol);                                
+                                int RuleID;
+                                result = int.TryParse(tempFeature.get_Value(templateFC.FindField("RuleID")).ToString(), out RuleID);                                
          
                                 string DataSourceID = commonFunctions.GetCurrentDataSourceID();
 
@@ -181,9 +181,9 @@ namespace ncgmpToolbar
                                 tempFeature.Delete();
 
                                 // Create the new feature
-                                OrientationDataPointsAccess OdpAccess = new OrientationDataPointsAccess(ArcMap.Editor.EditWorkspace);
-                                OdpAccess.NewOrientationDataPoint(StationID, Type, IDConf, Label, Plot, (double)theStrike, (double)theDip, OrientConf, Notes, DataSourceID, SymbolRot, Symbol, Shape);
-                                OdpAccess.SaveOrientationDataPoints();
+                                OrientationPointsAccess OdpAccess = new OrientationPointsAccess(ArcMap.Editor.EditWorkspace);
+                                OdpAccess.NewOrientationPoint(StationID, Type, IDConf, Label, Plot, (double)theStrike, (double)theDip, OrientConf, Notes, DataSourceID, SymbolRot, RuleID, Shape);
+                                OdpAccess.SaveOrientationPoints();
 
                                 // Refresh the Active View
                                 ArcMap.Document.ActiveView.PartialRefresh(esriViewDrawPhase.esriViewGeography, theCurrentTemplate.Layer, null);

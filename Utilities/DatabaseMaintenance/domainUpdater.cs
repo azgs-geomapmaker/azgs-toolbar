@@ -20,7 +20,8 @@ namespace ncgmpToolbar.Utilities.DatabaseMaintenance
             UpdateCodedValueDomain(theWorkspace, "d_DataSources", "DataSources", "DataSources_ID", "Source");
 
             // Update StationIDs if the database has that capability
-            if (ncgmpChecks.IsAzgsStationAddinPresent(theWorkspace) == true) { UpdateCodedValueDomain(theWorkspace, "d_StationIDs", "StationPoints", "StationPoints_ID", "FieldID"); }          
+            //if (ncgmpChecks.IsAzgsStationAddinPresent(theWorkspace) == true) { 
+            UpdateCodedValueDomain(theWorkspace, "d_StationIDs", "Stations", "Stations_ID", "FieldID"); //}          
         }
 
         private static void UpdateCodedValueDomain(IWorkspace theWorkspace, string DomainName, string SourceClassName, string CodeFieldName, string ValueFieldName)

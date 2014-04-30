@@ -165,15 +165,15 @@ namespace ncgmpToolbar
                 MessageBox.Show("The selected database is not a valid NCGMP database.", "NCGMP Toolbar");
                 goto findDatabase;
             }
-            else
-            {
-                isValid = ncgmpChecks.IsSysInfoPresent(openedWorkspace);
-                if (isValid == false)
-                {
-                    MessageBox.Show("In order to use these tools, the NCGMP database must contain a SysInfo table.", "NCGMP Toolbar");
-                    goto findDatabase;
-                }
-            }
+            //else
+            //{
+            //    isValid = ncgmpChecks.IsSysInfoPresent(openedWorkspace);
+            //    if (isValid == false)
+            //    {
+            //        MessageBox.Show("In order to use these tools, the NCGMP database must contain a SysInfo table.", "NCGMP Toolbar");
+            //        goto findDatabase;
+            //    }
+            //}
             #endregion
             
             // Show the copy form
@@ -211,7 +211,7 @@ namespace ncgmpToolbar
                 targetDmu.NewDescriptionOfMapUnit(sourceDmuEntry.MapUnit, sourceDmuEntry.Name, sourceDmuEntry.FullName, sourceDmuEntry.Label, 
                     sourceDmuEntry.Age, sourceDmuEntry.Description, thisHierachyKey, 
                     sourceDmuEntry.ParagraphStyle, sourceDmuEntry.AreaFillRGB, sourceDmuEntry.AreaFillPatternDescription, 
-                    commonFunctions.GetCurrentDataSourceID(), sourceDmuEntry.GeneralLithologyTerm, sourceDmuEntry.GeneralLithologyConfidence);
+                    commonFunctions.GetCurrentDataSourceID(), sourceDmuEntry.GeneralLithology, sourceDmuEntry.GeneralLithologyConfidence);
 
                 newValue++;
             }

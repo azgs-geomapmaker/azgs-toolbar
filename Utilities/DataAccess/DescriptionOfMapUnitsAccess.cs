@@ -35,7 +35,7 @@ namespace ncgmpToolbar.Utilities.DataAccess
             public string AreaFillRGB;
             public string DescriptionSourceID;
             public string AreaFillPatternDescription;
-            public string GeneralLithologyTerm;
+            public string GeneralLithology;
             public string GeneralLithologyConfidence;
             public bool RequiresUpdate;
         }
@@ -65,7 +65,7 @@ namespace ncgmpToolbar.Utilities.DataAccess
             int rgbFld = m_DescriptionOfMapUnitsTable.FindField("AreaFillRGB");
             int patFld = m_DescriptionOfMapUnitsTable.FindField("AreaFillPatternDescription");
             int dsFld = m_DescriptionOfMapUnitsTable.FindField("DescriptionSourceID");
-            int glFld = m_DescriptionOfMapUnitsTable.FindField("GeneralLithologyTerm");
+            int glFld = m_DescriptionOfMapUnitsTable.FindField("GeneralLithology");
             int glConfFld = m_DescriptionOfMapUnitsTable.FindField("GeneralLithologyConfidence");
 
             ICursor theCursor;
@@ -95,7 +95,7 @@ namespace ncgmpToolbar.Utilities.DataAccess
                 anDescriptionOfMapUnit.AreaFillRGB = theRow.get_Value(rgbFld).ToString();
                 anDescriptionOfMapUnit.AreaFillPatternDescription = theRow.get_Value(patFld).ToString();
                 anDescriptionOfMapUnit.DescriptionSourceID = theRow.get_Value(dsFld).ToString();
-                anDescriptionOfMapUnit.GeneralLithologyTerm = theRow.get_Value(glFld).ToString();
+                anDescriptionOfMapUnit.GeneralLithology = theRow.get_Value(glFld).ToString();
                 anDescriptionOfMapUnit.GeneralLithologyConfidence = theRow.get_Value(glConfFld).ToString();
                 anDescriptionOfMapUnit.RequiresUpdate = true;
 
@@ -108,7 +108,7 @@ namespace ncgmpToolbar.Utilities.DataAccess
         public string NewDescriptionOfMapUnit(string MapUnit, string Name, string FullName,
             string Label, string Age, string Description, string HierarchyKey, string ParagraphStyle,
             string AreaFillRGB, string AreaFillPatternDescription, string DescriptionSourceID,
-            string GeneralLitholgyTerm, string GeneralLithologyConfidence)
+            string GeneralLithology, string GeneralLithologyConfidence)
         {
             DescriptionOfMapUnit newDescriptionOfMapUnit = new DescriptionOfMapUnit();
 
@@ -125,7 +125,7 @@ namespace ncgmpToolbar.Utilities.DataAccess
             newDescriptionOfMapUnit.AreaFillRGB = AreaFillRGB;
             newDescriptionOfMapUnit.AreaFillPatternDescription = AreaFillPatternDescription;
             newDescriptionOfMapUnit.DescriptionSourceID = DescriptionSourceID;
-            newDescriptionOfMapUnit.GeneralLithologyTerm = GeneralLitholgyTerm;
+            newDescriptionOfMapUnit.GeneralLithology = GeneralLithology;
             newDescriptionOfMapUnit.GeneralLithologyConfidence = GeneralLithologyConfidence;
             newDescriptionOfMapUnit.RequiresUpdate = false;
 
@@ -156,7 +156,7 @@ namespace ncgmpToolbar.Utilities.DataAccess
             int rgbFld = m_DescriptionOfMapUnitsTable.FindField("AreaFillRGB");
             int patFld = m_DescriptionOfMapUnitsTable.FindField("AreaFillPatternDescription");
             int dsFld = m_DescriptionOfMapUnitsTable.FindField("DescriptionSourceID");
-            int glFld = m_DescriptionOfMapUnitsTable.FindField("GeneralLithologyTerm");
+            int glFld = m_DescriptionOfMapUnitsTable.FindField("GeneralLithology");
             int glConfFld = m_DescriptionOfMapUnitsTable.FindField("GeneralLithologyConfidence");
 
             IEditor theEditor = ArcMap.Editor;
@@ -191,7 +191,7 @@ namespace ncgmpToolbar.Utilities.DataAccess
                             theRowBuffer.set_Value(rgbFld, thisDescriptionOfMapUnit.AreaFillRGB);
                             theRowBuffer.set_Value(patFld, thisDescriptionOfMapUnit.AreaFillPatternDescription);
                             theRowBuffer.set_Value(dsFld, thisDescriptionOfMapUnit.DescriptionSourceID);
-                            theRowBuffer.set_Value(glFld, thisDescriptionOfMapUnit.GeneralLithologyTerm);
+                            theRowBuffer.set_Value(glFld, thisDescriptionOfMapUnit.GeneralLithology);
                             theRowBuffer.set_Value(glConfFld, thisDescriptionOfMapUnit.GeneralLithologyConfidence);
 
                             insertCursor.InsertRow(theRowBuffer);
@@ -229,7 +229,7 @@ namespace ncgmpToolbar.Utilities.DataAccess
                     theRow.set_Value(rgbFld, thisDescriptionOfMapUnit.AreaFillRGB);
                     theRow.set_Value(patFld, thisDescriptionOfMapUnit.AreaFillPatternDescription);
                     theRow.set_Value(dsFld, thisDescriptionOfMapUnit.DescriptionSourceID);
-                    theRow.set_Value(glFld, thisDescriptionOfMapUnit.GeneralLithologyTerm);
+                    theRow.set_Value(glFld, thisDescriptionOfMapUnit.GeneralLithology);
                     theRow.set_Value(glConfFld, thisDescriptionOfMapUnit.GeneralLithologyConfidence);
 
                     updateCursor.UpdateRow(theRow);

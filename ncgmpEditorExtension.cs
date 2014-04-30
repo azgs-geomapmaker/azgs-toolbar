@@ -81,11 +81,11 @@ namespace ncgmpToolbar
             m_EditWorkspace = theEditor.EditWorkspace;
             m_DatabaseIsValid = ncgmpChecks.IsWorkspaceMinNCGMPCompliant(m_EditWorkspace);
 
-            // Check that the SysInfo table is present.
-            if (m_DatabaseIsValid == true)
-            {
-                m_DatabaseIsValid = ncgmpChecks.IsSysInfoPresent(m_EditWorkspace);
-            }
+            //// Check that the SysInfo table is present.
+            //if (m_DatabaseIsValid == true)
+            //{
+            //    m_DatabaseIsValid = ncgmpChecks.IsSysInfoPresent(m_EditWorkspace);
+            //}
 
             // Open the SysInfo Table, Look for ProjectID values
             if (m_DatabaseIsValid == true)
@@ -103,7 +103,7 @@ namespace ncgmpToolbar
 
                 // Check other Database-validity things
                 m_DatabaseUsesRepresentation = ncgmpChecks.AreRepresentationsUsed(m_EditWorkspace);
-                m_DatabaseHasStations = ncgmpChecks.IsAzgsStationAddinPresent(m_EditWorkspace);                               
+                //m_DatabaseHasStations = ncgmpChecks.IsAzgsStationAddinPresent(m_EditWorkspace);                               
             }
 
             // From http://resources.esri.com/help/9.3/ArcGISDesktop/ArcObjects/esrigeodatabase/IWorkspaceEditControl.htm
@@ -152,7 +152,7 @@ namespace ncgmpToolbar
             #region "Calculate SymbolRotation"
             if (m_DatabaseUsesRepresentation == true)
             {
-                if (parsedTableName == "OrientationDataPoints")
+                if (parsedTableName == "OrientationPoints")
                 {
                     // Get the Azimuth from the feature
                     int Azimuth;
@@ -210,7 +210,7 @@ namespace ncgmpToolbar
             #region "Calculate SymbolRotation"
             if (m_DatabaseUsesRepresentation == true)
             {
-                if (parsedTableName == "OrientationDataPoints")
+                if (parsedTableName == "OrientationPoints")
                 {
                     // Get the Azimuth from the feature - this is ugly -- why is this m_identifier a double?
                     int Azimuth = (int)Math.Round((double)theRow.get_Value(theTable.FindField("Azimuth")), 0);
@@ -227,8 +227,8 @@ namespace ncgmpToolbar
 
             if (adjustLocations == true)
             {
-                #region "Adjust Samples/OrientationDataPoints to Match Stations"
-                if (parsedTableName == "StationPoints")
+                #region "Adjust Samples/OrientationPoints to Match Stations"
+                if (parsedTableName == "Stations")
                 {
                     // Cast the obj as a Feature in order to access Geometry information
                     IFeature theStation = (IFeature)obj;
@@ -248,11 +248,11 @@ namespace ncgmpToolbar
                         aSample = (IFeature)relatedSamples.Next();
                     }
 
-                    // Find related OrientationDataPoints
-                    IRelationshipClass stationStructureLink = commonFunctions.OpenRelationshipClass(m_EditWorkspace, "StationOrientationDataPointsLink");
+                    // Find related OrientationPoints
+                    IRelationshipClass stationStructureLink = commonFunctions.OpenRelationshipClass(m_EditWorkspace, "StationOrientationPointsLink");
                     ESRI.ArcGIS.esriSystem.ISet relatedStructures = stationStructureLink.GetObjectsRelatedToObject(obj);
 
-                    // Loop through the related OrientationDataPoints and set their Geometry to that of the Station
+                    // Loop through the related OrientationPoints and set their Geometry to that of the Station
                     relatedStructures.Reset();
                     IFeature aStructure = (IFeature)relatedStructures.Next();
                     while (aStructure != null)
@@ -287,65 +287,65 @@ namespace ncgmpToolbar
             nameParser.ParseTableName(TableName, out parsedDbName, out parsedOwnerName, out parsedTableName);
             #endregion
 
-            #region "Delete Related Station Data"
-            if (parsedTableName == "StationPoints")
-            {
-                // Get the related information first, then prompt, then delete if that's what they want.
-                string stationName = (string)theRow.get_Value(theTable.FindField("FieldID"));
-                IRelationshipClass stationStructureLink = commonFunctions.OpenRelationshipClass(m_EditWorkspace, "StationOrientationDataPointsLink");
-                IRelationshipClass stationSamplesLink = commonFunctions.OpenRelationshipClass(m_EditWorkspace, "StationSampleLink");
-                IRelationshipClass stationNotesLink = commonFunctions.OpenRelationshipClass(m_EditWorkspace, "StationNotesLink");
-                IRelationshipClass stationDocsLink = commonFunctions.OpenRelationshipClass(m_EditWorkspace, "StationDocumentLink");
+        //    #region "Delete Related Station Data"
+        //    if (parsedTableName == "Stations")
+        //    {
+        //        // Get the related information first, then prompt, then delete if that's what they want.
+        //        string stationName = (string)theRow.get_Value(theTable.FindField("FieldID"));
+        //        IRelationshipClass stationStructureLink = commonFunctions.OpenRelationshipClass(m_EditWorkspace, "StationOrientationPointsLink");
+        //        IRelationshipClass stationSamplesLink = commonFunctions.OpenRelationshipClass(m_EditWorkspace, "StationSampleLink");
+        //        IRelationshipClass stationNotesLink = commonFunctions.OpenRelationshipClass(m_EditWorkspace, "StationNotesLink");
+        //        IRelationshipClass stationDocsLink = commonFunctions.OpenRelationshipClass(m_EditWorkspace, "StationDocumentLink");
 
-                ESRI.ArcGIS.esriSystem.ISet structureSet = stationStructureLink.GetObjectsRelatedToObject(obj);
-                ESRI.ArcGIS.esriSystem.ISet sampleSet = stationSamplesLink.GetObjectsRelatedToObject(obj);
-                ESRI.ArcGIS.esriSystem.ISet noteSet = stationNotesLink.GetObjectsRelatedToObject(obj);
-                ESRI.ArcGIS.esriSystem.ISet docSet = stationDocsLink.GetObjectsRelatedToObject(obj);
+        //        ESRI.ArcGIS.esriSystem.ISet structureSet = stationStructureLink.GetObjectsRelatedToObject(obj);
+        //        ESRI.ArcGIS.esriSystem.ISet sampleSet = stationSamplesLink.GetObjectsRelatedToObject(obj);
+        //        ESRI.ArcGIS.esriSystem.ISet noteSet = stationNotesLink.GetObjectsRelatedToObject(obj);
+        //        ESRI.ArcGIS.esriSystem.ISet docSet = stationDocsLink.GetObjectsRelatedToObject(obj);
 
-                string theMessage = ("Deleting Station " + stationName + " will also delete the following:");
-                theMessage += Environment.NewLine;
-                theMessage += structureSet.Count.ToString() + " structural observations";
-                theMessage += Environment.NewLine;
-                theMessage += sampleSet.Count.ToString() + " sample locations";
-                theMessage += Environment.NewLine;
-                theMessage += noteSet.Count.ToString() + " recorded notes";
-                theMessage += Environment.NewLine;
-                theMessage += docSet.Count.ToString() + " related document links";
-                theMessage += Environment.NewLine;
-                theMessage += Environment.NewLine;
-                theMessage += "Are you sure you want to do this?";
+        //        string theMessage = ("Deleting Station " + stationName + " will also delete the following:");
+        //        theMessage += Environment.NewLine;
+        //        theMessage += structureSet.Count.ToString() + " structural observations";
+        //        theMessage += Environment.NewLine;
+        //        theMessage += sampleSet.Count.ToString() + " sample locations";
+        //        theMessage += Environment.NewLine;
+        //        theMessage += noteSet.Count.ToString() + " recorded notes";
+        //        theMessage += Environment.NewLine;
+        //        theMessage += docSet.Count.ToString() + " related document links";
+        //        theMessage += Environment.NewLine;
+        //        theMessage += Environment.NewLine;
+        //        theMessage += "Are you sure you want to do this?";
 
-                // Probably would be wise to warn them first...
-                System.Windows.Forms.DialogResult result = System.Windows.Forms.MessageBox.Show(theMessage, "NCGMP Tools", System.Windows.Forms.MessageBoxButtons.YesNo);
-                if (result == System.Windows.Forms.DialogResult.Yes)
-                {
-                    IFeature theFeature = (IFeature)structureSet.Next();
-                    while (theFeature != null)
-                    {
-                        theFeature.Delete();
-                        theFeature = (IFeature)structureSet.Next();
-                    }
-                    theFeature = (IFeature)sampleSet.Next();
-                    while (theFeature != null)
-                    {
-                        theFeature.Delete();
-                        theFeature = (IFeature)sampleSet.Next();
-                    }
-                    theFeature = (IFeature)noteSet.Next();
-                    while (theFeature != null)
-                    {
-                        theFeature.Delete();
-                        theFeature = (IFeature)noteSet.Next();
-                    }
-                    theFeature = (IFeature)docSet.Next();
-                    while (theFeature != null)
-                    {
-                        theFeature.Delete();
-                        theFeature = (IFeature)docSet.Next();
-                    }
-                }
-            }
-            #endregion
+        //        // Probably would be wise to warn them first...
+        //        System.Windows.Forms.DialogResult result = System.Windows.Forms.MessageBox.Show(theMessage, "NCGMP Tools", System.Windows.Forms.MessageBoxButtons.YesNo);
+        //        if (result == System.Windows.Forms.DialogResult.Yes)
+        //        {
+        //            IFeature theFeature = (IFeature)structureSet.Next();
+        //            while (theFeature != null)
+        //            {
+        //                theFeature.Delete();
+        //                theFeature = (IFeature)structureSet.Next();
+        //            }
+        //            theFeature = (IFeature)sampleSet.Next();
+        //            while (theFeature != null)
+        //            {
+        //                theFeature.Delete();
+        //                theFeature = (IFeature)sampleSet.Next();
+        //            }
+        //            theFeature = (IFeature)noteSet.Next();
+        //            while (theFeature != null)
+        //            {
+        //                theFeature.Delete();
+        //                theFeature = (IFeature)noteSet.Next();
+        //            }
+        //            theFeature = (IFeature)docSet.Next();
+        //            while (theFeature != null)
+        //            {
+        //                theFeature.Delete();
+        //                theFeature = (IFeature)docSet.Next();
+        //            }
+        //        }
+        //    }
+        //    #endregion
         }
 
         void OnStopEditing(bool save)
