@@ -118,7 +118,6 @@
     <Compile Include="btnAddEditDataSource.cs" />
     <Compile Include="btnApplySelectedDefaults.cs" />
     <Compile Include="btnDatabaseMaintenance.cs" />
-    <Compile Include="btnNewNcgmpDatabase.cs" />
     <Compile Include="btnOpenNcgmpDatabase.cs" />
     <Compile Include="btnShowMapUnitLegendEditor.cs" />
     <Compile Include="btnTheTestingButton.cs" />
@@ -198,13 +197,13 @@
     <Compile Include="Utilities\DataAccess\GlossaryAccess.cs" />
     <Compile Include="Utilities\DataAccess\MapUnitPolysAccess.cs" />
     <Compile Include="Utilities\DataAccess\NotesAccess.cs" />
-    <Compile Include="Utilities\DataAccess\OrientationDataPointsAccess.cs" />
-    <Compile Include="Utilities\DataAccess\OtherLinesAccess.cs" />
-    <Compile Include="Utilities\DataAccess\OverlayPolysAccess.cs" />
+    <Compile Include="Utilities\DataAccess\OrientationPointsAccess.cs" />
+    <Compile Include="Utilities\DataAccess\GeologicLinesAccess.cs" />
+    <Compile Include="Utilities\DataAccess\OtherPolysAccess.cs" />
     <Compile Include="Utilities\DataAccess\RelatedDocumentsAccess.cs" />
-    <Compile Include="Utilities\DataAccess\SamplePointsAccess.cs" />
+    <Compile Include="Utilities\DataAccess\GenericSamplesAccess.cs" />
     <Compile Include="Utilities\DataAccess\StandardLithologyAccess.cs" />
-    <Compile Include="Utilities\DataAccess\StationPointsAccess.cs" />
+    <Compile Include="Utilities\DataAccess\StationsAccess.cs" />
     <Compile Include="Utilities\DataAccess\sysInfo.cs" />
     <Compile Include="Utilities\DatabaseMaintenance\databaseExporter.cs" />
     <Compile Include="Utilities\DatabaseMaintenance\dataSourceChecker.cs" />
@@ -328,18 +327,8 @@
     <Content Include="Images\page_copy.png" />
     <Content Include="Images\pencil.png" />
     <Content Include="Images\SibDrop.jpg" />
-    <None Include="Resources\ZONE11.XML" />
-    <None Include="Resources\FULL-12-3-10.XML" />
-    <None Include="Resources\FULL-12-7-10.XML" />
     <AddInContent Include="Images\tlDrawPolygonLegend.png" />
     <AddInContent Include="Images\tlDrawPolygonLegend.cur" />
-    <None Include="Resources\9-20-11.xml" />
-    <None Include="Resources\FULL-5-11-12.XML" />
-    <Content Include="Resources\full-9-29-10.xml" />
-    <Content Include="Resources\minRequired.xml" />
-    <Content Include="Resources\stations.xml" />
-    <Content Include="Resources\topology.xml" />
-    <Content Include="Resources\topologyRepresentations.xml" />
   </ItemGroup>
   <PropertyGroup>
     <ZipFileExtension>esriAddIn</ZipFileExtension>

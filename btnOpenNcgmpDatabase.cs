@@ -81,23 +81,24 @@ namespace ncgmpToolbar
                 MessageBox.Show("The selected database is not a valid NCGMP database.", "NCGMP Toolbar");
                 goto findDatabase;
             }
-            else
-            {
-                isValid = ncgmpChecks.IsSysInfoPresent(openedWorkspace);
-                if (isValid == false)
-                {
-                    MessageBox.Show("In order to use these tools, the NCGMP database must contain a SysInfo table.", "NCGMP Toolbar");
-                    goto findDatabase;
-                }
-            }
+            //else
+            //{
+            //    isValid = ncgmpChecks.IsSysInfoPresent(openedWorkspace);
+            //    if (isValid == false)
+            //    {
+            //        MessageBox.Show("In order to use these tools, the NCGMP database must contain a SysInfo table.", "NCGMP Toolbar");
+            //        goto findDatabase;
+            //    }
+            //}
 
-            bool isTopologyUsed = ncgmpChecks.IsTopologyUsed(openedWorkspace);
-            bool hasStationTables = ncgmpChecks.IsAzgsStationAddinPresent(openedWorkspace);
-            bool hasStandardLithtables = ncgmpChecks.IsStandardLithAddinPresent(openedWorkspace);
+            //bool isTopologyUsed = ncgmpChecks.IsTopologyUsed(openedWorkspace);
+            //bool hasStationTables = ncgmpChecks.IsAzgsStationAddinPresent(openedWorkspace);
+            //bool hasStandardLithtables = ncgmpChecks.IsStandardLithAddinPresent(openedWorkspace);
             bool hasRepresentations = ncgmpChecks.AreRepresentationsUsed(openedWorkspace);
 
             // Add FeatureClasses and tables to the ArcMap Project
-            AddLayersToMap(openedWorkspace, isTopologyUsed, hasStationTables, hasRepresentations);
+            AddLayersToMap(openedWorkspace, hasRepresentations); // isTopologyUsed, hasStationTables, 
+
 
             // Populate the Data Sources combobox
 
@@ -107,7 +108,7 @@ namespace ncgmpToolbar
         {
         }
 
-        private void AddLayersToMap(IWorkspace ValidNcgmpDatabase, bool hasTopologyStuff, bool hasStationFunction, bool useRepresentation)
+        private void AddLayersToMap(IWorkspace ValidNcgmpDatabase, bool useRepresentation) // bool hasTopologyStuff, bool hasStationFunction, 
         {
             // Get references to the map for adding layers and tables
             IMxDocument MxDoc = (IMxDocument)ArcMap.Document;
@@ -118,10 +119,14 @@ namespace ncgmpToolbar
             IGroupLayer GeoMapGroupLayer = new GroupLayerClass();
             GeoMapGroupLayer.Name = "Geologic Map";
 
-            if (hasTopologyStuff == true)
+            // Create a group layer
+            IGroupLayer StationGroupLayer = new GroupLayerClass();
+            StationGroupLayer.Name = "Observation Data";
+
+            //if (hasTopologyStuff == true)
             {
                 #region "GeologicMapTopology"
-                ITopology geoMapTopo = commonFunctions.OpenTopology(ValidNcgmpDatabase,"GeologicMapTopology");
+                ITopology geoMapTopo = commonFunctions.OpenTopology(ValidNcgmpDatabase, "GeologicMapTopology");
                 ITopologyLayer geoMapTopoTL = new TopologyLayerClass();
                 geoMapTopoTL.Topology = geoMapTopo;
 
@@ -141,223 +146,171 @@ namespace ncgmpToolbar
                 GeoMapGroupLayer.Add(geoMapTopoL);
 
                 #endregion
-            }                
-
-            if (hasStationFunction == true)
-            {
-                // Create a Group layer
-                IGroupLayer stationGroupLayer = new GroupLayerClass();
-                stationGroupLayer.Name = "Station Data";
-
-                #region "StationPoints"
-                // Open a FeatureClass, set it to a FeatureLayer
-                IFeatureClass stationFC = commonFunctions.OpenFeatureClass(ValidNcgmpDatabase, "StationPoints");
-                IFeatureLayer stationFL = new FeatureLayerClass();
-                stationFL.FeatureClass = stationFC;
-                
-                // Configure the FeatureLayer
-                stationFL.Name = "Stations";
-                stationFL.DisplayField = "FieldID";
-                
-                // Collapse the legend for this layer
-                ILegendInfo stationLegendInfo = (ILegendInfo)stationFL;
-                ILegendGroup stationLegendGroup = stationLegendInfo.get_LegendGroup(0);
-                stationLegendGroup.Visible = false;
-
-                // Finally, add the layer to the group layer
-                stationGroupLayer.Add(stationFL);
-
-                #endregion
-
-                // Repeat for all these FeatureClasses
-                #region "SamplePoints"
-                IFeatureClass sampleFC = commonFunctions.OpenFeatureClass(ValidNcgmpDatabase, "SamplePoints");
-                IFeatureLayer sampleFL = new FeatureLayerClass();
-                sampleFL.FeatureClass = sampleFC;
-
-                sampleFL.Name = "Samples";
-                sampleFL.DisplayField = "FieldID";
-
-                ILegendInfo sampleLegendInfo = (ILegendInfo)sampleFL;
-                ILegendGroup sampleLegendGroup = sampleLegendInfo.get_LegendGroup(0);
-                sampleLegendGroup.Visible = false;
-
-                stationGroupLayer.Add(sampleFL);
-
-                #endregion
-
-                #region "OrientationDataPoints"
-                IFeatureClass structureFC = commonFunctions.OpenFeatureClass(ValidNcgmpDatabase, "OrientationDataPoints");
-                IFeatureLayer structureFL = new FeatureLayerClass();
-                structureFL.FeatureClass = structureFC;
-
-                structureFL.Name = "Orientation Data";
-                structureFL.DisplayField = "Type";
-
-                // Symbology, if representations are present
-                if (useRepresentation == true)
-                {
-                    // FeatureLayer must be cast as a GeoFeatureLayer in order to access the Renderer
-                    IGeoFeatureLayer structureGeoFL = (IGeoFeatureLayer)structureFL;
-                    
-                    // Create a RepresentationClassRenderer, assign the appropriate RepresentationClass to it
-                    IRepresentationRenderer structureRepRend = new RepresentationRendererClass();
-                    structureRepRend.RepresentationClass = commonFunctions.GetRepClass(ValidNcgmpDatabase, "r_OrientationDataPoints");
-
-                    // Assign the RepresentationClassRenderer to the GeoFeatureLayer
-                    structureGeoFL.Renderer = (IFeatureRenderer)structureRepRend;
-
-                    // Assign generic FeatureTemplates
-                    commonFunctions.BuildGenericTemplates(ValidNcgmpDatabase, structureFL as ILayer, "OrientationDataPoints");
-                }
-
-                ILegendInfo structureLegendInfo = (ILegendInfo)structureFL;
-                ILegendGroup structureLegendGroup = structureLegendInfo.get_LegendGroup(0);
-                structureLegendGroup.Visible = false;
-
-                stationGroupLayer.Add(structureFL);
-                
-                #endregion
-
-                // Add the Group Layer to the main layer
-                stationGroupLayer.Expanded = true;
-                GeoMapGroupLayer.Add(stationGroupLayer);
-
-                #region "Notes Table"
-                ITable notesTable = commonFunctions.OpenTable(ValidNcgmpDatabase, "Notes");
-                IStandaloneTable notesStandalone = new StandaloneTableClass();
-                notesStandalone.Table = notesTable;
-
-                notesStandalone.Name = "Notes";
-                notesStandalone.DisplayField = "Type";
-
-                thisMapTables.AddStandaloneTable(notesStandalone);
-
-                #endregion
-
-                #region "RelatedDocuments Table"
-                ITable relatedDocsTable = commonFunctions.OpenTable(ValidNcgmpDatabase, "RelatedDocuments");
-                IStandaloneTable relatedDocsStandalone = new StandaloneTableClass();
-                relatedDocsStandalone.Table = relatedDocsTable;
-
-                relatedDocsStandalone.Name = "Related Documents";
-                relatedDocsStandalone.DisplayField = "Type";
-
-                thisMapTables.AddStandaloneTable(relatedDocsStandalone);
-
-                #endregion
             }
-
-            if (hasTopologyStuff == true)
             {
-                #region "OtherLines"
-                IFeatureClass otherLinesFC = commonFunctions.OpenFeatureClass(ValidNcgmpDatabase, "OtherLines");
-                IFeatureLayer otherLinesFL = new FeatureLayerClass();
-                otherLinesFL.FeatureClass = otherLinesFC;
+                #region "OrientationPoints"
+                IFeatureClass orientationPointsFC = commonFunctions.OpenFeatureClass(ValidNcgmpDatabase, "OrientationPoints");
+                IFeatureLayer orientationPointsFL = new FeatureLayerClass();
+                orientationPointsFL.FeatureClass = orientationPointsFC;
 
-                otherLinesFL.Name = "Other Lines";
-                otherLinesFL.DisplayField = "Type";
+                orientationPointsFL.Name = "Orientation Points";
+                orientationPointsFL.DisplayField = "Type";
 
                 if (useRepresentation == true)
                 {
-                    IGeoFeatureLayer otherLinesGeoFL = (IGeoFeatureLayer)otherLinesFL;
+                    // Set the layer renderer to use representations
+                    IGeoFeatureLayer orientationPointsGeoFL = (IGeoFeatureLayer)orientationPointsFL;
 
-                    IRepresentationRenderer otherLinesRepRend = new RepresentationRendererClass();
-                    otherLinesRepRend.RepresentationClass = commonFunctions.GetRepClass(ValidNcgmpDatabase, "r_OtherLines");
+                    IRepresentationRenderer orientationPointsRepRend = new RepresentationRendererClass();
+                    orientationPointsRepRend.RepresentationClass = commonFunctions.GetRepClass(ValidNcgmpDatabase, "OrientationPoints_Rep");
 
-                    otherLinesGeoFL.Renderer = (IFeatureRenderer)otherLinesRepRend;
+                    orientationPointsGeoFL.Renderer = (IFeatureRenderer)orientationPointsRepRend;
 
-                    commonFunctions.BuildGenericTemplates(ValidNcgmpDatabase, otherLinesFL as ILayer, "OtherLines");
+                    commonFunctions.BuildGenericTemplates(ValidNcgmpDatabase, orientationPointsFL as ILayer, "OrientationPoints");
                 }
 
-                ILegendInfo otherLinesLegendInfo = (ILegendInfo)otherLinesFL;
-                ILegendGroup otherLinesLegendGroup = otherLinesLegendInfo.get_LegendGroup(0);
-                otherLinesLegendGroup.Visible = false;
+                ILegendInfo orientationPointsLegendInfo = (ILegendInfo)orientationPointsFL;
+                ILegendGroup orientationPointsLegendGroup = orientationPointsLegendInfo.get_LegendGroup(0);
+                orientationPointsLegendGroup.Visible = false;
 
-                GeoMapGroupLayer.Add(otherLinesFL);
+                StationGroupLayer.Add(orientationPointsFL);
 
-                #endregion                
-                     
+                #endregion
+                
+                #region "ObservationData"
+                string[] arr = new string[4]; // Initialize
+                arr[0] = "Stations";               // Element 1
+                arr[1] = "GenericPoints";               // Element 2
+                arr[2] = "GenericSamples";             // Element 3
+                arr[3] = "GeochronPoints";              // Element 4
+
+                foreach (string s in arr)
+                {
+                    IFeatureClass FC = commonFunctions.OpenFeatureClass(ValidNcgmpDatabase, s);
+                    IFeatureLayer FL = new FeatureLayerClass();
+                    FL.FeatureClass = FC;
+
+                    FL.Name = s;
+                    FL.Visible = false;
+
+                    ILegendInfo LegendInfo = (ILegendInfo)FL;
+                    ILegendGroup LegendGroup = LegendInfo.get_LegendGroup(0);
+                    LegendGroup.Visible = false;
+
+                    StationGroupLayer.Add(FL);
+                }
+
+                #endregion
+                
             }
 
-            #region "ContactsAndFaults"
-            IFeatureClass contactsAndFaultsFC = commonFunctions.OpenFeatureClass(ValidNcgmpDatabase, "ContactsAndFaults");
-            IFeatureLayer contactsAndFaultsFL = new FeatureLayerClass();
-            contactsAndFaultsFL.FeatureClass = contactsAndFaultsFC;
+            //add station group layer to map document
+            GeoMapGroupLayer.Add(StationGroupLayer);
 
-            contactsAndFaultsFL.Name = "Contacts and Faults";
-            contactsAndFaultsFL.DisplayField = "Type";
+            { 
+                #region "LinesWithoutRepresentations"
+                string[] arr = new string[2]; // Initialize
+                arr[0] = "CartographicLines";               // Element 1
+                arr[1] = "IsoValueLines";               // Element 2
 
-            if (useRepresentation == true)
-            {
-                // Set the layer renderer to use representations
-                IGeoFeatureLayer contactsAndFaultsGeoFL = (IGeoFeatureLayer)contactsAndFaultsFL;
+                foreach (string s in arr)
+                {
+                    IFeatureClass FC = commonFunctions.OpenFeatureClass(ValidNcgmpDatabase, s);
+                    IFeatureLayer FL = new FeatureLayerClass();
+                    FL.FeatureClass = FC;
 
-                IRepresentationRenderer contactsAndFaultsRepRend = new RepresentationRendererClass();
-                contactsAndFaultsRepRend.RepresentationClass = commonFunctions.GetRepClass(ValidNcgmpDatabase, "r_ContactsAndFaults");
+                    FL.Name = s;
+                    FL.Visible = false;
 
-                contactsAndFaultsGeoFL.Renderer = (IFeatureRenderer)contactsAndFaultsRepRend;
+                    ILegendInfo LegendInfo = (ILegendInfo)FL;
+                    ILegendGroup LegendGroup = LegendInfo.get_LegendGroup(0);
+                    LegendGroup.Visible = false;
 
-                commonFunctions.BuildGenericTemplates(ValidNcgmpDatabase, contactsAndFaultsFL as ILayer, "ContactsAndFaults");
-            }
-
-            ILegendInfo contactsAndFaultsLegendInfo = (ILegendInfo)contactsAndFaultsFL;
-            ILegendGroup contactsAndFaultsLegendGroup = contactsAndFaultsLegendInfo.get_LegendGroup(0);
-            contactsAndFaultsLegendGroup.Visible = false;
-
-            GeoMapGroupLayer.Add(contactsAndFaultsFL);
-
-            #endregion
-
-            if (hasTopologyStuff == true)
-            {
-                #region "OverlayPolys"
-                IFeatureClass overlayPolysFC = commonFunctions.OpenFeatureClass(ValidNcgmpDatabase, "OverlayPolys");
-                IFeatureLayer overlayPolysFL = new FeatureLayerClass();
-                overlayPolysFL.FeatureClass = overlayPolysFC;
-
-                overlayPolysFL.Name = "Overlay Polygons";
-                overlayPolysFL.DisplayField = "MapUnit";
-
-                ILegendInfo overlayPolysLegendInfo = (ILegendInfo)overlayPolysFL;
-                ILegendGroup overlayPolysLegendGroup = overlayPolysLegendInfo.get_LegendGroup(0);
-                overlayPolysLegendGroup.Visible = false;
-
-                GeoMapGroupLayer.Add(overlayPolysFL);
+                    GeoMapGroupLayer.Add(FL);
+                }
 
                 #endregion
             }
-
-            #region "MapUnitPolys"
-            IFeatureClass mapUnitPolysFC = commonFunctions.OpenFeatureClass(ValidNcgmpDatabase, "MapUnitPolys");
-            IFeatureLayer mapUnitPolysFL = new FeatureLayerClass();
-            mapUnitPolysFL.FeatureClass = mapUnitPolysFC;
-
-            mapUnitPolysFL.Name = "Distribution of Map Units";
-            mapUnitPolysFL.DisplayField = "MapUnit";
-
-            ILegendInfo mapUnitPolysLegendInfo = (ILegendInfo)mapUnitPolysFL;
-            ILegendGroup mapUnitPolysLegendGroup = mapUnitPolysLegendInfo.get_LegendGroup(0);
-            mapUnitPolysLegendGroup.Visible = false;
-
-            GeoMapGroupLayer.Add(mapUnitPolysFL);
-            #endregion
-
-            if (hasTopologyStuff == true)
             {
-                #region "DataSourcePolys"
-                IFeatureClass dataSourcePolysFC = commonFunctions.OpenFeatureClass(ValidNcgmpDatabase, "DataSourcePolys");
-                IFeatureLayer dataSourcePolysFL = new FeatureLayerClass();
-                dataSourcePolysFL.FeatureClass = dataSourcePolysFC;
+                #region "LinesWithRepresentations"
+                string[] arr = new string[2]; // Initialize
+                arr[0] = "GeologicLines";               // Element 1
+                arr[1] = "ContactsAndFaults";               // Element 2
 
-                dataSourcePolysFL.Name = "Data Source Polys";
-                dataSourcePolysFL.DisplayField = "DataSourceID";
+                foreach (string s in arr)
+                {
+                    IFeatureClass FC = commonFunctions.OpenFeatureClass(ValidNcgmpDatabase, s);
+                    IFeatureLayer FL = new FeatureLayerClass();
+                    FL.FeatureClass = FC;
 
-                ILegendInfo dataSourcePolysLegendInfo = (ILegendInfo)dataSourcePolysFL;
-                ILegendGroup dataSourcePolysLegendGroup = dataSourcePolysLegendInfo.get_LegendGroup(0);
-                dataSourcePolysLegendGroup.Visible = false;
+                    FL.Name = s;
 
-                GeoMapGroupLayer.Add(dataSourcePolysFL);
+                    if (useRepresentation == true)
+                    {
+                        // Set the layer renderer to use representations
+                        IGeoFeatureLayer GeoFL = (IGeoFeatureLayer)FL;
+
+                        IRepresentationRenderer RepRend = new RepresentationRendererClass();
+                        RepRend.RepresentationClass = commonFunctions.GetRepClass(ValidNcgmpDatabase, s + "_Rep");
+
+                        GeoFL.Renderer = (IFeatureRenderer)RepRend;
+
+                        commonFunctions.BuildGenericTemplates(ValidNcgmpDatabase, FL as ILayer, s);
+                    }
+
+                    ILegendInfo LegendInfo = (ILegendInfo)FL;
+                    ILegendGroup LegendGroup = LegendInfo.get_LegendGroup(0);
+                    LegendGroup.Visible = false;
+
+                    GeoMapGroupLayer.Add(FL);
+                }
+
+                #endregion
+            }
+            {
+                #region "Polygons"
+                string[] arr = new string[3]; // Initialize
+                arr[0] = "DataSourcePolys";               // Element 1
+                arr[1] = "MapUnitPolys";               // Element 2
+                arr[2] = "OtherPolys";               // Element 3
+
+                foreach (string s in arr)
+                {
+                    IFeatureClass FC = commonFunctions.OpenFeatureClass(ValidNcgmpDatabase, s);
+                    IFeatureLayer FL = new FeatureLayerClass();
+                    FL.FeatureClass = FC;
+
+                    FL.Name = s;
+
+                    ILegendInfo LegendInfo = (ILegendInfo)FL;
+                    ILegendGroup LegendGroup = LegendInfo.get_LegendGroup(0);
+                    LegendGroup.Visible = false;
+
+                    GeoMapGroupLayer.Add(FL);
+                }
+
+                #endregion
+            }
+            {
+                #region "Tables"
+                string[] arr = new string[7]; // Initialize
+                arr[0] = "DataSources";               // Element 1
+                arr[1] = "DescriptionOfMapUnits";               // Element 2
+                arr[2] = "ExtendedAttributes";             // Element 3
+                arr[3] = "GeologicEvents";              // Element 4
+                arr[4] = "Glossary";              // Element 5
+                arr[5] = "Notes";              // Element 6
+                arr[6] = "StandardLithology";              // Element 7
+                foreach (string s in arr)
+                {
+                    ITable Table = commonFunctions.OpenTable(ValidNcgmpDatabase, s);
+                    IStandaloneTable Standalone = new StandaloneTableClass();
+                    Standalone.Table = Table;
+
+                    Standalone.Name = s;
+
+                    thisMapTables.AddStandaloneTable(Standalone);
+                }
 
                 #endregion
             }

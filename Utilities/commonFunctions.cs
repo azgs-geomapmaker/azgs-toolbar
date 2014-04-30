@@ -163,387 +163,387 @@ namespace ncgmpToolbar.Utilities
             switch (FeatureClassName)
             {
                 case "ContactsAndFaults":
-                    // Accurate Contact
+                    // Accurate contact
                     newTemplate = templateFactory.Create("contact, accurate", FeatureClassLayer);
-                    newTemplate.SetDefaultValue("Type", "Contact", false);
-                    newTemplate.SetDefaultValue("IsConcealed", 0, false);
-                    newTemplate.SetDefaultValue("ExistenceConfidence", "Standard Confidence", false);
-                    newTemplate.SetDefaultValue("IdentityConfidence", "Standard Confidence", false);
+                    newTemplate.SetDefaultValue("Type", "contact", false);
+                    newTemplate.SetDefaultValue("IsConcealed", "N", false);
+                    newTemplate.SetDefaultValue("ExistenceConfidence", "certain", false);
+                    newTemplate.SetDefaultValue("IdentityConfidence", "certain", false);
                     newTemplate.SetDefaultValue("LocationConfidenceMeters", 0, false);
-                    newTemplate.SetDefaultValue("Symbol", 1, false);
+                    newTemplate.SetDefaultValue("RuleID", 1, false);
                     templateArray.Add(newTemplate);
 
-                    // Approximate Contact
+                    // Approximate contact
                     newTemplate = templateFactory.Create("contact, approximate", FeatureClassLayer);
-                    newTemplate.SetDefaultValue("Type", "Contact", false);
-                    newTemplate.SetDefaultValue("IsConcealed", 0, false);
-                    newTemplate.SetDefaultValue("ExistenceConfidence", "Standard Confidence", false);
-                    newTemplate.SetDefaultValue("IdentityConfidence", "Standard Confidence", false);
+                    newTemplate.SetDefaultValue("Type", "contact", false);
+                    newTemplate.SetDefaultValue("IsConcealed", "N", false);
+                    newTemplate.SetDefaultValue("ExistenceConfidence", "certain", false);
+                    newTemplate.SetDefaultValue("IdentityConfidence", "certain", false);
                     newTemplate.SetDefaultValue("LocationConfidenceMeters", 0, false);
-                    newTemplate.SetDefaultValue("Symbol", 3, false);
+                    newTemplate.SetDefaultValue("RuleID", 3, false);
                     templateArray.Add(newTemplate);
 
-                    // Concealed Contact
+                    // Concealed contact
                     newTemplate = templateFactory.Create("contact, concealed", FeatureClassLayer);
-                    newTemplate.SetDefaultValue("Type", "Contact", false);
-                    newTemplate.SetDefaultValue("IsConcealed", 1, false);
-                    newTemplate.SetDefaultValue("ExistenceConfidence", "Standard Confidence", false);
-                    newTemplate.SetDefaultValue("IdentityConfidence", "Standard Confidence", false);
+                    newTemplate.SetDefaultValue("Type", "contact", false);
+                    newTemplate.SetDefaultValue("IsConcealed", "Y", false);
+                    newTemplate.SetDefaultValue("ExistenceConfidence", "certain", false);
+                    newTemplate.SetDefaultValue("IdentityConfidence", "certain", false);
                     newTemplate.SetDefaultValue("LocationConfidenceMeters", 0, false);
-                    newTemplate.SetDefaultValue("Symbol", 265, false);
+                    newTemplate.SetDefaultValue("RuleID", 265, false);
                     templateArray.Add(newTemplate);
 
-                    // Gradational Contact
+                    // Gradational contact
                     newTemplate = templateFactory.Create("contact, gradational", FeatureClassLayer);
-                    newTemplate.SetDefaultValue("Type", "Contact", false);
-                    newTemplate.SetDefaultValue("IsConcealed", 0, false);
-                    newTemplate.SetDefaultValue("ExistenceConfidence", "Standard Confidence", false);
-                    newTemplate.SetDefaultValue("IdentityConfidence", "Standard Confidence", false);
+                    newTemplate.SetDefaultValue("Type", "contact", false);
+                    newTemplate.SetDefaultValue("IsConcealed", "N", false);
+                    newTemplate.SetDefaultValue("ExistenceConfidence", "certain", false);
+                    newTemplate.SetDefaultValue("IdentityConfidence", "certain", false);
                     newTemplate.SetDefaultValue("LocationConfidenceMeters", 0, false);
-                    newTemplate.SetDefaultValue("Symbol", 17, false);
+                    newTemplate.SetDefaultValue("RuleID", 17, false);
                     templateArray.Add(newTemplate);
 
-                    // Accurate Fault
+                    // Accurate fault
                     newTemplate = templateFactory.Create("fault, accurate", FeatureClassLayer);
-                    newTemplate.SetDefaultValue("Type", "Fault", false);
-                    newTemplate.SetDefaultValue("IsConcealed", 0, false);
-                    newTemplate.SetDefaultValue("ExistenceConfidence", "Standard Confidence", false);
-                    newTemplate.SetDefaultValue("IdentityConfidence", "Standard Confidence", false);
+                    newTemplate.SetDefaultValue("Type", "fault", false);
+                    newTemplate.SetDefaultValue("IsConcealed", "N", false);
+                    newTemplate.SetDefaultValue("ExistenceConfidence", "certain", false);
+                    newTemplate.SetDefaultValue("IdentityConfidence", "certain", false);
                     newTemplate.SetDefaultValue("LocationConfidenceMeters", 0, false);
-                    newTemplate.SetDefaultValue("Symbol", 118, false);
+                    newTemplate.SetDefaultValue("RuleID", 118, false);
                     templateArray.Add(newTemplate);
 
-                    // Approximate Fault
+                    // Approximate fault
                     newTemplate = templateFactory.Create("fault, approximate", FeatureClassLayer);
-                    newTemplate.SetDefaultValue("Type", "Fault", false);
-                    newTemplate.SetDefaultValue("IsConcealed", 0, false);
-                    newTemplate.SetDefaultValue("ExistenceConfidence", "Standard Confidence", false);
-                    newTemplate.SetDefaultValue("IdentityConfidence", "Standard Confidence", false);
+                    newTemplate.SetDefaultValue("Type", "fault", false);
+                    newTemplate.SetDefaultValue("IsConcealed", "N", false);
+                    newTemplate.SetDefaultValue("ExistenceConfidence", "certain", false);
+                    newTemplate.SetDefaultValue("IdentityConfidence", "certain", false);
                     newTemplate.SetDefaultValue("LocationConfidenceMeters", 0, false);
-                    newTemplate.SetDefaultValue("Symbol", 120, false);
+                    newTemplate.SetDefaultValue("RuleID", 120, false);
                     templateArray.Add(newTemplate);
 
-                    // Concealed Fault
+                    // Concealed fault
                     newTemplate = templateFactory.Create("fault, concealed", FeatureClassLayer);
-                    newTemplate.SetDefaultValue("Type", "Fault", false);
-                    newTemplate.SetDefaultValue("IsConcealed", 1, false);
-                    newTemplate.SetDefaultValue("ExistenceConfidence", "Standard Confidence", false);
-                    newTemplate.SetDefaultValue("IdentityConfidence", "Standard Confidence", false);
+                    newTemplate.SetDefaultValue("Type", "fault", false);
+                    newTemplate.SetDefaultValue("IsConcealed", "Y", false);
+                    newTemplate.SetDefaultValue("ExistenceConfidence", "certain", false);
+                    newTemplate.SetDefaultValue("IdentityConfidence", "certain", false);
                     newTemplate.SetDefaultValue("LocationConfidenceMeters", 0, false);
-                    newTemplate.SetDefaultValue("Symbol", 273, false);
+                    newTemplate.SetDefaultValue("RuleID", 273, false);
                     templateArray.Add(newTemplate);
 
-                    // Accurate High-angle normal fault
+                    // Accurate high angle normal fault
                     newTemplate = templateFactory.Create("high-angle normal fault, accurate", FeatureClassLayer);
-                    newTemplate.SetDefaultValue("Type", "High-angle normal fault", false);
-                    newTemplate.SetDefaultValue("IsConcealed", 0, false);
-                    newTemplate.SetDefaultValue("ExistenceConfidence", "Standard Confidence", false);
-                    newTemplate.SetDefaultValue("IdentityConfidence", "Standard Confidence", false);
+                    newTemplate.SetDefaultValue("Type", "high angle normal fault", false);
+                    newTemplate.SetDefaultValue("IsConcealed", "N", false);
+                    newTemplate.SetDefaultValue("ExistenceConfidence", "certain", false);
+                    newTemplate.SetDefaultValue("IdentityConfidence", "certain", false);
                     newTemplate.SetDefaultValue("LocationConfidenceMeters", 0, false);
-                    newTemplate.SetDefaultValue("Symbol", 126, false);
+                    newTemplate.SetDefaultValue("RuleID", 126, false);
                     templateArray.Add(newTemplate);
 
-                    // Approximate High-angle normal fault
+                    // Approximate high angle normal fault
                     newTemplate = templateFactory.Create("high-angle normal fault, approximate", FeatureClassLayer);
-                    newTemplate.SetDefaultValue("Type", "High-angle normal fault", false);
-                    newTemplate.SetDefaultValue("IsConcealed", 0, false);
-                    newTemplate.SetDefaultValue("ExistenceConfidence", "Standard Confidence", false);
-                    newTemplate.SetDefaultValue("IdentityConfidence", "Standard Confidence", false);
+                    newTemplate.SetDefaultValue("Type", "high angle normal fault", false);
+                    newTemplate.SetDefaultValue("IsConcealed", "N", false);
+                    newTemplate.SetDefaultValue("ExistenceConfidence", "certain", false);
+                    newTemplate.SetDefaultValue("IdentityConfidence", "certain", false);
                     newTemplate.SetDefaultValue("LocationConfidenceMeters", 0, false);
-                    newTemplate.SetDefaultValue("Symbol", 128, false);
+                    newTemplate.SetDefaultValue("RuleID", 128, false);
                     templateArray.Add(newTemplate);
 
-                    // Concealed High-angle normal fault
+                    // Concealed high angle normal fault
                     newTemplate = templateFactory.Create("high-angle normal fault, concealed", FeatureClassLayer);
-                    newTemplate.SetDefaultValue("Type", "High-angle normal fault", false);
-                    newTemplate.SetDefaultValue("IsConcealed", 1, false);
-                    newTemplate.SetDefaultValue("ExistenceConfidence", "Standard Confidence", false);
-                    newTemplate.SetDefaultValue("IdentityConfidence", "Standard Confidence", false);
+                    newTemplate.SetDefaultValue("Type", "high angle normal fault", false);
+                    newTemplate.SetDefaultValue("IsConcealed", "Y", false);
+                    newTemplate.SetDefaultValue("ExistenceConfidence", "certain", false);
+                    newTemplate.SetDefaultValue("IdentityConfidence", "certain", false);
                     newTemplate.SetDefaultValue("LocationConfidenceMeters", 0, false);
-                    newTemplate.SetDefaultValue("Symbol", 275, false);
+                    newTemplate.SetDefaultValue("RuleID", 275, false);
                     templateArray.Add(newTemplate);
 
-                    // Accurate Thrust fault
+                    // Accurate thrust fault
                     newTemplate = templateFactory.Create("thrust fault, accurate", FeatureClassLayer);
-                    newTemplate.SetDefaultValue("Type", "Thrust fault", false);
-                    newTemplate.SetDefaultValue("IsConcealed", 0, false);
-                    newTemplate.SetDefaultValue("ExistenceConfidence", "Standard Confidence", false);
-                    newTemplate.SetDefaultValue("IdentityConfidence", "Standard Confidence", false);
+                    newTemplate.SetDefaultValue("Type", "thrust fault", false);
+                    newTemplate.SetDefaultValue("IsConcealed", "N", false);
+                    newTemplate.SetDefaultValue("ExistenceConfidence", "certain", false);
+                    newTemplate.SetDefaultValue("IdentityConfidence", "certain", false);
                     newTemplate.SetDefaultValue("LocationConfidenceMeters", 0, false);
-                    newTemplate.SetDefaultValue("Symbol", 206, false);
+                    newTemplate.SetDefaultValue("RuleID", 206, false);
                     templateArray.Add(newTemplate);
 
-                    // Approximate Thrust fault
+                    // Approximate thrust fault
                     newTemplate = templateFactory.Create("thrust fault, approximate", FeatureClassLayer);
-                    newTemplate.SetDefaultValue("Type", "Thrust fault", false);
-                    newTemplate.SetDefaultValue("IsConcealed", 0, false);
-                    newTemplate.SetDefaultValue("ExistenceConfidence", "Standard Confidence", false);
-                    newTemplate.SetDefaultValue("IdentityConfidence", "Standard Confidence", false);
+                    newTemplate.SetDefaultValue("Type", "thrust fault", false);
+                    newTemplate.SetDefaultValue("IsConcealed", "N", false);
+                    newTemplate.SetDefaultValue("ExistenceConfidence", "certain", false);
+                    newTemplate.SetDefaultValue("IdentityConfidence", "certain", false);
                     newTemplate.SetDefaultValue("LocationConfidenceMeters", 0, false);
-                    newTemplate.SetDefaultValue("Symbol", 208, false);
+                    newTemplate.SetDefaultValue("RuleID", 208, false);
                     templateArray.Add(newTemplate);
 
-                    // Concealed Thrust fault
+                    // Concealed thrust fault
                     newTemplate = templateFactory.Create("thrust fault, concealed", FeatureClassLayer);
-                    newTemplate.SetDefaultValue("Type", "Thrust fault", false);
-                    newTemplate.SetDefaultValue("IsConcealed", 1, false);
-                    newTemplate.SetDefaultValue("ExistenceConfidence", "Standard Confidence", false);
-                    newTemplate.SetDefaultValue("IdentityConfidence", "Standard Confidence", false);
+                    newTemplate.SetDefaultValue("Type", "thrust fault", false);
+                    newTemplate.SetDefaultValue("IsConcealed", "Y", false);
+                    newTemplate.SetDefaultValue("ExistenceConfidence", "certain", false);
+                    newTemplate.SetDefaultValue("IdentityConfidence", "certain", false);
                     newTemplate.SetDefaultValue("LocationConfidenceMeters", 0, false);
-                    newTemplate.SetDefaultValue("Symbol", 295, false);
+                    newTemplate.SetDefaultValue("RuleID", 295, false);
                     templateArray.Add(newTemplate);
 
-                    // Accurate Right-lateral strike slip fault
-                    newTemplate = templateFactory.Create("right-lateral strike slip fault, accurate", FeatureClassLayer);
-                    newTemplate.SetDefaultValue("Type", "Right-lateral strike slip fault", false);
-                    newTemplate.SetDefaultValue("IsConcealed", 0, false);
-                    newTemplate.SetDefaultValue("ExistenceConfidence", "Standard Confidence", false);
-                    newTemplate.SetDefaultValue("IdentityConfidence", "Standard Confidence", false);
+                    // Accurate right lateral strike slip fault
+                    newTemplate = templateFactory.Create("right lateral strike slip fault, accurate", FeatureClassLayer);
+                    newTemplate.SetDefaultValue("Type", "right lateral strike slip fault", false);
+                    newTemplate.SetDefaultValue("IsConcealed", "N", false);
+                    newTemplate.SetDefaultValue("ExistenceConfidence", "certain", false);
+                    newTemplate.SetDefaultValue("IdentityConfidence", "certain", false);
                     newTemplate.SetDefaultValue("LocationConfidenceMeters", 0, false);
-                    newTemplate.SetDefaultValue("Symbol", 174, false);
+                    newTemplate.SetDefaultValue("RuleID", 174, false);
                     templateArray.Add(newTemplate);
 
-                    // Approximate Right-lateral strike slip fault
-                    newTemplate = templateFactory.Create("right-lateral strike slip fault, approximate", FeatureClassLayer);
-                    newTemplate.SetDefaultValue("Type", "Right-lateral strike slip fault", false);
-                    newTemplate.SetDefaultValue("IsConcealed", 0, false);
-                    newTemplate.SetDefaultValue("ExistenceConfidence", "Standard Confidence", false);
-                    newTemplate.SetDefaultValue("IdentityConfidence", "Standard Confidence", false);
+                    // Approximate right lateral strike slip fault
+                    newTemplate = templateFactory.Create("right lateral strike slip fault, approximate", FeatureClassLayer);
+                    newTemplate.SetDefaultValue("Type", "right lateral strike slip fault", false);
+                    newTemplate.SetDefaultValue("IsConcealed", "N", false);
+                    newTemplate.SetDefaultValue("ExistenceConfidence", "certain", false);
+                    newTemplate.SetDefaultValue("IdentityConfidence", "certain", false);
                     newTemplate.SetDefaultValue("LocationConfidenceMeters", 0, false);
-                    newTemplate.SetDefaultValue("Symbol", 176, false);
+                    newTemplate.SetDefaultValue("RuleID", 176, false);
                     templateArray.Add(newTemplate);
 
-                    // Concealed Right-lateral strike slip fault
-                    newTemplate = templateFactory.Create("right-lateral strike slip fault, concealed", FeatureClassLayer);
-                    newTemplate.SetDefaultValue("Type", "Right-lateral strike slip fault", false);
-                    newTemplate.SetDefaultValue("IsConcealed", 1, false);
-                    newTemplate.SetDefaultValue("ExistenceConfidence", "Standard Confidence", false);
-                    newTemplate.SetDefaultValue("IdentityConfidence", "Standard Confidence", false);
+                    // Concealed right lateral strike slip fault
+                    newTemplate = templateFactory.Create("right lateral strike slip fault, concealed", FeatureClassLayer);
+                    newTemplate.SetDefaultValue("Type", "right lateral strike slip fault", false);
+                    newTemplate.SetDefaultValue("IsConcealed", "Y", false);
+                    newTemplate.SetDefaultValue("ExistenceConfidence", "certain", false);
+                    newTemplate.SetDefaultValue("IdentityConfidence", "certain", false);
                     newTemplate.SetDefaultValue("LocationConfidenceMeters", 0, false);
-                    newTemplate.SetDefaultValue("Symbol", 287, false);
+                    newTemplate.SetDefaultValue("RuleID", 287, false);
                     templateArray.Add(newTemplate);
 
-                    // Accurate Left-lateral strike slip fault
+                    // Accurate left lateral strike slip fault
                     newTemplate = templateFactory.Create("left-lateral strike slip fault, accurate", FeatureClassLayer);
-                    newTemplate.SetDefaultValue("Type", "Left-lateral strike slip fault", false);
-                    newTemplate.SetDefaultValue("IsConcealed", 0, false);
-                    newTemplate.SetDefaultValue("ExistenceConfidence", "Standard Confidence", false);
-                    newTemplate.SetDefaultValue("IdentityConfidence", "Standard Confidence", false);
+                    newTemplate.SetDefaultValue("Type", "left lateral strike slip fault", false);
+                    newTemplate.SetDefaultValue("IsConcealed", "N", false);
+                    newTemplate.SetDefaultValue("ExistenceConfidence", "certain", false);
+                    newTemplate.SetDefaultValue("IdentityConfidence", "certain", false);
                     newTemplate.SetDefaultValue("LocationConfidenceMeters", 0, false);
-                    newTemplate.SetDefaultValue("Symbol", 182, false);
+                    newTemplate.SetDefaultValue("RuleID", 182, false);
                     templateArray.Add(newTemplate);
 
-                    // Approximate Left-lateral strike slip fault
+                    // Approximate left lateral strike slip fault
                     newTemplate = templateFactory.Create("left-lateral strike slip fault, approximate", FeatureClassLayer);
-                    newTemplate.SetDefaultValue("Type", "Left-lateral strike slip fault", false);
-                    newTemplate.SetDefaultValue("IsConcealed", 0, false);
-                    newTemplate.SetDefaultValue("ExistenceConfidence", "Standard Confidence", false);
-                    newTemplate.SetDefaultValue("IdentityConfidence", "Standard Confidence", false);
+                    newTemplate.SetDefaultValue("Type", "left lateral strike slip fault", false);
+                    newTemplate.SetDefaultValue("IsConcealed", "N", false);
+                    newTemplate.SetDefaultValue("ExistenceConfidence", "certain", false);
+                    newTemplate.SetDefaultValue("IdentityConfidence", "certain", false);
                     newTemplate.SetDefaultValue("LocationConfidenceMeters", 0, false);
-                    newTemplate.SetDefaultValue("Symbol", 184, false);
+                    newTemplate.SetDefaultValue("RuleID", 184, false);
                     templateArray.Add(newTemplate);
 
-                    // Concealed Left-lateral strike slip fault
+                    // Concealed left lateral strike slip fault
                     newTemplate = templateFactory.Create("left-lateral strike slip fault, concealed", FeatureClassLayer);
-                    newTemplate.SetDefaultValue("Type", "Left-lateral strike slip fault", false);
-                    newTemplate.SetDefaultValue("IsConcealed", 1, false);
-                    newTemplate.SetDefaultValue("ExistenceConfidence", "Standard Confidence", false);
-                    newTemplate.SetDefaultValue("IdentityConfidence", "Standard Confidence", false);
+                    newTemplate.SetDefaultValue("Type", "left lateral strike slip fault", false);
+                    newTemplate.SetDefaultValue("IsConcealed", "Y", false);
+                    newTemplate.SetDefaultValue("ExistenceConfidence", "certain", false);
+                    newTemplate.SetDefaultValue("IdentityConfidence", "certain", false);
                     newTemplate.SetDefaultValue("LocationConfidenceMeters", 0, false);
-                    newTemplate.SetDefaultValue("Symbol", 289, false);
+                    newTemplate.SetDefaultValue("RuleID", 289, false);
                     templateArray.Add(newTemplate);
                     break;
 
-                case "OtherLines":
+                case "GeologicLines":
                     // Pink Dike
                     newTemplate = templateFactory.Create("dike, pink", FeatureClassLayer);
-                    newTemplate.SetDefaultValue("Type", "Dike", false);
-                    newTemplate.SetDefaultValue("ExistenceConfidence", "Standard Confidence", false);
-                    newTemplate.SetDefaultValue("IdentityConfidence", "Standard Confidence", false);
+                    newTemplate.SetDefaultValue("Type", "felsic dike", false);
+                    newTemplate.SetDefaultValue("ExistenceConfidence", "certain", false);
+                    newTemplate.SetDefaultValue("IdentityConfidence", "certain", false);
                     newTemplate.SetDefaultValue("LocationConfidenceMeters", 0, false);
-                    newTemplate.SetDefaultValue("Symbol", 321, false);
+                    newTemplate.SetDefaultValue("RuleID", 321, false);
                     templateArray.Add(newTemplate);
 
                     // Blue Dike
                     newTemplate = templateFactory.Create("dike, blue", FeatureClassLayer);
-                    newTemplate.SetDefaultValue("Type", "Dike", false);
-                    newTemplate.SetDefaultValue("ExistenceConfidence", "Standard Confidence", false);
-                    newTemplate.SetDefaultValue("IdentityConfidence", "Standard Confidence", false);
+                    newTemplate.SetDefaultValue("Type", "mafic dike", false);
+                    newTemplate.SetDefaultValue("ExistenceConfidence", "certain", false);
+                    newTemplate.SetDefaultValue("IdentityConfidence", "certain", false);
                     newTemplate.SetDefaultValue("LocationConfidenceMeters", 0, false);
-                    newTemplate.SetDefaultValue("Symbol", 325, false);
+                    newTemplate.SetDefaultValue("RuleID", 325, false);
                     templateArray.Add(newTemplate);
 
                     // Purple Dike
                     newTemplate = templateFactory.Create("dike, purple", FeatureClassLayer);
-                    newTemplate.SetDefaultValue("Type", "Dike", false);
-                    newTemplate.SetDefaultValue("ExistenceConfidence", "Standard Confidence", false);
-                    newTemplate.SetDefaultValue("IdentityConfidence", "Standard Confidence", false);
+                    newTemplate.SetDefaultValue("Type", "pegmatite dike", false);
+                    newTemplate.SetDefaultValue("ExistenceConfidence", "certain", false);
+                    newTemplate.SetDefaultValue("IdentityConfidence", "certain", false);
                     newTemplate.SetDefaultValue("LocationConfidenceMeters", 0, false);
-                    newTemplate.SetDefaultValue("Symbol", 323, false);
+                    newTemplate.SetDefaultValue("RuleID", 323, false);
                     templateArray.Add(newTemplate);
 
                     // Anticline
                     newTemplate = templateFactory.Create("anticline, accurate", FeatureClassLayer);
-                    newTemplate.SetDefaultValue("Type", "Anticline", false);
-                    newTemplate.SetDefaultValue("ExistenceConfidence", "Standard Confidence", false);
-                    newTemplate.SetDefaultValue("IdentityConfidence", "Standard Confidence", false);
+                    newTemplate.SetDefaultValue("Type", "anticline", false);
+                    newTemplate.SetDefaultValue("ExistenceConfidence", "certain", false);
+                    newTemplate.SetDefaultValue("IdentityConfidence", "certain", false);
                     newTemplate.SetDefaultValue("LocationConfidenceMeters", 0, false);
-                    newTemplate.SetDefaultValue("Symbol", 1, false);
+                    newTemplate.SetDefaultValue("RuleID", 1, false);
                     templateArray.Add(newTemplate);
 
                     // Syncline
                     newTemplate = templateFactory.Create("syncline, accurate", FeatureClassLayer);
-                    newTemplate.SetDefaultValue("Type", "Syncline", false);
-                    newTemplate.SetDefaultValue("ExistenceConfidence", "Standard Confidence", false);
-                    newTemplate.SetDefaultValue("IdentityConfidence", "Standard Confidence", false);
+                    newTemplate.SetDefaultValue("Type", "syncline", false);
+                    newTemplate.SetDefaultValue("ExistenceConfidence", "certain", false);
+                    newTemplate.SetDefaultValue("IdentityConfidence", "certain", false);
                     newTemplate.SetDefaultValue("LocationConfidenceMeters", 0, false);
-                    newTemplate.SetDefaultValue("Symbol", 97, false);
+                    newTemplate.SetDefaultValue("RuleID", 97, false);
                     templateArray.Add(newTemplate);
                     break;
 
-                case "OrientationDataPoints":
+                case "OrientationPoints":
                     // bedding, approximate
                     newTemplate = templateFactory.Create("bedding, approximate", FeatureClassLayer);
-                    newTemplate.SetDefaultValue("Type", "Bedding fabric", false);
-                    newTemplate.SetDefaultValue("IdentityConfidence", "Standard Confidence", false);
+                    newTemplate.SetDefaultValue("Type", "bedding fabric", false);
+                    newTemplate.SetDefaultValue("IdentityConfidence", "certain", false);
                     newTemplate.SetDefaultValue("PlotAtScale", 24000, false);
-                    newTemplate.SetDefaultValue("Symbol", 53, false);
+                    newTemplate.SetDefaultValue("RuleID", 53, false);
                     templateArray.Add(newTemplate);
 
                     // bedding, horizontal
                     newTemplate = templateFactory.Create("bedding, horizontal", FeatureClassLayer);
-                    newTemplate.SetDefaultValue("Type", "Bedding fabric", false);
-                    newTemplate.SetDefaultValue("IdentityConfidence", "Standard Confidence", false);
+                    newTemplate.SetDefaultValue("Type", "bedding fabric", false);
+                    newTemplate.SetDefaultValue("IdentityConfidence", "certain", false);
                     newTemplate.SetDefaultValue("PlotAtScale", 24000, false);
-                    newTemplate.SetDefaultValue("Symbol", 21, false);
+                    newTemplate.SetDefaultValue("RuleID", 21, false);
                     templateArray.Add(newTemplate);
 
                     // bedding, inclined
                     newTemplate = templateFactory.Create("bedding, inclined", FeatureClassLayer);
-                    newTemplate.SetDefaultValue("Type", "Bedding fabric", false);
-                    newTemplate.SetDefaultValue("IdentityConfidence", "Standard Confidence", false);
+                    newTemplate.SetDefaultValue("Type", "bedding fabric", false);
+                    newTemplate.SetDefaultValue("IdentityConfidence", "certain", false);
                     newTemplate.SetDefaultValue("PlotAtScale", 24000, false);
-                    newTemplate.SetDefaultValue("Symbol", 22, false);
+                    newTemplate.SetDefaultValue("RuleID", 22, false);
                     templateArray.Add(newTemplate);
 
                     // bedding, transposed
                     newTemplate = templateFactory.Create("bedding, transposed", FeatureClassLayer);
-                    newTemplate.SetDefaultValue("Type", "Transposed bedding layering", false);
-                    newTemplate.SetDefaultValue("IdentityConfidence", "Standard Confidence", false);
+                    newTemplate.SetDefaultValue("Type", "transposed bedding layering", false);
+                    newTemplate.SetDefaultValue("IdentityConfidence", "certain", false);
                     newTemplate.SetDefaultValue("PlotAtScale", 24000, false);
-                    newTemplate.SetDefaultValue("Symbol", 142, false);
+                    newTemplate.SetDefaultValue("RuleID", 142, false);
                     templateArray.Add(newTemplate);
 
                     // cleavage
                     newTemplate = templateFactory.Create("cleavage", FeatureClassLayer);
-                    newTemplate.SetDefaultValue("Type", "Cleavage", false);
-                    newTemplate.SetDefaultValue("IdentityConfidence", "Standard Confidence", false);
+                    newTemplate.SetDefaultValue("Type", "cleavage", false);
+                    newTemplate.SetDefaultValue("IdentityConfidence", "certain", false);
                     newTemplate.SetDefaultValue("PlotAtScale", 24000, false);
-                    newTemplate.SetDefaultValue("Symbol", 68, false);
+                    newTemplate.SetDefaultValue("RuleID", 68, false);
                     templateArray.Add(newTemplate);
 
                     // contact dip
                     newTemplate = templateFactory.Create("contact dip", FeatureClassLayer);
-                    newTemplate.SetDefaultValue("Type", "Contact dip", false);
-                    newTemplate.SetDefaultValue("IdentityConfidence", "Standard Confidence", false);
+                    newTemplate.SetDefaultValue("Type", "contact dip", false);
+                    newTemplate.SetDefaultValue("IdentityConfidence", "certain", false);
                     newTemplate.SetDefaultValue("PlotAtScale", 24000, false);
-                    newTemplate.SetDefaultValue("Symbol", 398, false);
+                    newTemplate.SetDefaultValue("RuleID", 398, false);
                     templateArray.Add(newTemplate);
 
                     // fault attitude
                     newTemplate = templateFactory.Create("fault attitude", FeatureClassLayer);
-                    newTemplate.SetDefaultValue("Type", "Fault attitude", false);
-                    newTemplate.SetDefaultValue("IdentityConfidence", "Standard Confidence", false);
+                    newTemplate.SetDefaultValue("Type", "fault attitude", false);
+                    newTemplate.SetDefaultValue("IdentityConfidence", "certain", false);
                     newTemplate.SetDefaultValue("PlotAtScale", 24000, false);
-                    newTemplate.SetDefaultValue("Symbol", 395, false);
+                    newTemplate.SetDefaultValue("RuleID", 395, false);
                     templateArray.Add(newTemplate);
 
                     // fault attitude, no fault trace
                     newTemplate = templateFactory.Create("fault attitude (no fault trace)", FeatureClassLayer);
-                    newTemplate.SetDefaultValue("Type", "Fault attitude", false);
-                    newTemplate.SetDefaultValue("IdentityConfidence", "Standard Confidence", false);
+                    newTemplate.SetDefaultValue("Type", "fault attitude", false);
+                    newTemplate.SetDefaultValue("IdentityConfidence", "certain", false);
                     newTemplate.SetDefaultValue("PlotAtScale", 24000, false);
-                    newTemplate.SetDefaultValue("Symbol", 396, false);
+                    newTemplate.SetDefaultValue("RuleID", 396, false);
                     templateArray.Add(newTemplate);
 
                     // foliation, eutaxitic
                     newTemplate = templateFactory.Create("foliation, eutaxitic", FeatureClassLayer);
-                    newTemplate.SetDefaultValue("Type", "Eutaxitic foliation", false);
-                    newTemplate.SetDefaultValue("IdentityConfidence", "Standard Confidence", false);
+                    newTemplate.SetDefaultValue("Type", "eutaxitic foliation", false);
+                    newTemplate.SetDefaultValue("IdentityConfidence", "certain", false);
                     newTemplate.SetDefaultValue("PlotAtScale", 24000, false);
-                    newTemplate.SetDefaultValue("Symbol", 128, false);
+                    newTemplate.SetDefaultValue("RuleID", 128, false);
                     templateArray.Add(newTemplate);
 
                     // foliation, generic
                     newTemplate = templateFactory.Create("foliation, generic", FeatureClassLayer);
-                    newTemplate.SetDefaultValue("Type", "Foliation", false);
-                    newTemplate.SetDefaultValue("IdentityConfidence", "Standard Confidence", false);
+                    newTemplate.SetDefaultValue("Type", "foliation", false);
+                    newTemplate.SetDefaultValue("IdentityConfidence", "certain", false);
                     newTemplate.SetDefaultValue("PlotAtScale", 24000, false);
-                    newTemplate.SetDefaultValue("Symbol", 136, false);
+                    newTemplate.SetDefaultValue("RuleID", 136, false);
                     templateArray.Add(newTemplate);
 
                     // foliation, gneissic layering
                     newTemplate = templateFactory.Create("foliation, gneissic layering", FeatureClassLayer);
-                    newTemplate.SetDefaultValue("Type", "Gneissic layering", false);
-                    newTemplate.SetDefaultValue("IdentityConfidence", "Standard Confidence", false);
+                    newTemplate.SetDefaultValue("Type", "gneissic layering", false);
+                    newTemplate.SetDefaultValue("IdentityConfidence", "certain", false);
                     newTemplate.SetDefaultValue("PlotAtScale", 24000, false);
-                    newTemplate.SetDefaultValue("Symbol", 181, false);
+                    newTemplate.SetDefaultValue("RuleID", 181, false);
                     templateArray.Add(newTemplate);
 
                     // foliation, mylonitic
                     newTemplate = templateFactory.Create("foliation, mylonitic", FeatureClassLayer);
-                    newTemplate.SetDefaultValue("Type", "Generic mylonitic foliation", false);
-                    newTemplate.SetDefaultValue("IdentityConfidence", "Standard Confidence", false);
+                    newTemplate.SetDefaultValue("Type", "generic mylonitic foliation", false);
+                    newTemplate.SetDefaultValue("IdentityConfidence", "certain", false);
                     newTemplate.SetDefaultValue("PlotAtScale", 24000, false);
-                    newTemplate.SetDefaultValue("Symbol", 381, false);
+                    newTemplate.SetDefaultValue("RuleID", 381, false);
                     templateArray.Add(newTemplate);
 
                     // joint
                     newTemplate = templateFactory.Create("joint", FeatureClassLayer);
-                    newTemplate.SetDefaultValue("Type", "Joint fabric", false);
-                    newTemplate.SetDefaultValue("IdentityConfidence", "Standard Confidence", false);
+                    newTemplate.SetDefaultValue("Type", "joint fabric", false);
+                    newTemplate.SetDefaultValue("IdentityConfidence", "certain", false);
                     newTemplate.SetDefaultValue("PlotAtScale", 24000, false);
-                    newTemplate.SetDefaultValue("Symbol", 3, false);
+                    newTemplate.SetDefaultValue("RuleID", 3, false);
                     templateArray.Add(newTemplate);
 
                     // lineation, horizontal
                     newTemplate = templateFactory.Create("lineation, horizontal", FeatureClassLayer);
-                    newTemplate.SetDefaultValue("Type", "Lineation", false);
-                    newTemplate.SetDefaultValue("IdentityConfidence", "Standard Confidence", false);
+                    newTemplate.SetDefaultValue("Type", "lineation", false);
+                    newTemplate.SetDefaultValue("IdentityConfidence", "certain", false);
                     newTemplate.SetDefaultValue("PlotAtScale", 24000, false);
-                    newTemplate.SetDefaultValue("Symbol", 199, false);
+                    newTemplate.SetDefaultValue("RuleID", 199, false);
                     templateArray.Add(newTemplate);
 
                     // lineation, generic (arrowhead)
                     newTemplate = templateFactory.Create("lineation, generic (arrowhead)", FeatureClassLayer);
-                    newTemplate.SetDefaultValue("Type", "Lineation", false);
-                    newTemplate.SetDefaultValue("IdentityConfidence", "Standard Confidence", false);
+                    newTemplate.SetDefaultValue("Type", "lineation", false);
+                    newTemplate.SetDefaultValue("IdentityConfidence", "certain", false);
                     newTemplate.SetDefaultValue("PlotAtScale", 24000, false);
-                    newTemplate.SetDefaultValue("Symbol", 195, false);
+                    newTemplate.SetDefaultValue("RuleID", 195, false);
                     templateArray.Add(newTemplate);
 
                     // lineation, generic (no arrowhead)
                     newTemplate = templateFactory.Create("lineation, generic (no arrowhead)", FeatureClassLayer);
-                    newTemplate.SetDefaultValue("Type", "Lineation", false);
-                    newTemplate.SetDefaultValue("IdentityConfidence", "Standard Confidence", false);
+                    newTemplate.SetDefaultValue("Type", "lineation", false);
+                    newTemplate.SetDefaultValue("IdentityConfidence", "certain", false);
                     newTemplate.SetDefaultValue("PlotAtScale", 24000, false);
-                    newTemplate.SetDefaultValue("Symbol", 384, false);
+                    newTemplate.SetDefaultValue("RuleID", 384, false);
                     templateArray.Add(newTemplate);
 
                     // Slickenline, horizontal
                     newTemplate = templateFactory.Create("slickenline, horizontal", FeatureClassLayer);
-                    newTemplate.SetDefaultValue("Type", "Slickenline", false);
-                    newTemplate.SetDefaultValue("IdentityConfidence", "Standard Confidence", false);
+                    newTemplate.SetDefaultValue("Type", "slickenline", false);
+                    newTemplate.SetDefaultValue("IdentityConfidence", "certain", false);
                     newTemplate.SetDefaultValue("PlotAtScale", 24000, false);
-                    newTemplate.SetDefaultValue("Symbol", 213, false);
+                    newTemplate.SetDefaultValue("RuleID", 213, false);
                     templateArray.Add(newTemplate);
 
                     // Slickenline, inclined
                     newTemplate = templateFactory.Create("slickenline, inclined", FeatureClassLayer);
-                    newTemplate.SetDefaultValue("Type", "Slickenline", false);
-                    newTemplate.SetDefaultValue("IdentityConfidence", "Standard Confidence", false);
+                    newTemplate.SetDefaultValue("Type", "slickenline", false);
+                    newTemplate.SetDefaultValue("IdentityConfidence", "certain", false);
                     newTemplate.SetDefaultValue("PlotAtScale", 24000, false);
-                    newTemplate.SetDefaultValue("Symbol", 211, false);
+                    newTemplate.SetDefaultValue("RuleID", 211, false);
                     templateArray.Add(newTemplate);
                     break;
             }
@@ -606,9 +606,9 @@ namespace ncgmpToolbar.Utilities
                     continue;
                 }
 
-                // Make a Simple Fill Symbol
+                // Make a Simple Fill RuleID
                 ISimpleFillSymbol theSymbol = new SimpleFillSymbolClass();
-                //theSymbol.Style = esriSimpleFillStyle.esriSFSSolid;
+                //theRuleID.Style = esriSimpleFillStyle.esriSFSSolid;
 
                 // Get the right color
                 IColor symbolColor = new RgbColorClass();
@@ -676,7 +676,7 @@ namespace ncgmpToolbar.Utilities
                 // Set the Template's default values
                 newTemplate.SetDefaultValue("MapUnit", dmuEntry.MapUnit, false);
                 newTemplate.SetDefaultValue("Label", dmuEntry.Label, false);
-                newTemplate.SetDefaultValue("IdentityConfidence", "Standard Confidence", false);
+                newTemplate.SetDefaultValue("IdentityConfidence", "certain", false);
 
                 // Add the template to the array
                 templateArray.Add(newTemplate);
