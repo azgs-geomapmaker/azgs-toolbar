@@ -103,7 +103,7 @@ namespace ncgmpToolbar.Forms
             string OrientationPointsSearch = "OrientationPoints_ID = '";
             string GlossarySearch = "Glossary_ID = '";
             //string NotesSearch = "Notes_ID = '";
-            string RelatedDocumentsSearch = "RelatedDocuments_ID = '";
+            //string RelatedDocumentsSearch = "RelatedDocuments_ID = '";
             string DataSourcesSearch = "DataSources_ID = '";
             string DescriptionOfMapUnitsSearch = "DescriptionOfMapUnits_ID = '";
 
@@ -117,7 +117,7 @@ namespace ncgmpToolbar.Forms
 
             // Loop through the features to build queries to find the features
             IRow thisFeature = selectionEnum.Next() as IRow;
-            
+
             while (thisFeature != null)
             {
                 // Get the Table Name
@@ -127,7 +127,7 @@ namespace ncgmpToolbar.Forms
                 ISQLSyntax nameParser = (ISQLSyntax)m_theWorkspace;
                 string parsedDbName, parsedOwnerName, parsedTableName;
                 nameParser.ParseTableName(tableName, out parsedDbName, out parsedOwnerName, out parsedTableName);
-                
+
 
                 // Build the SQL Where Clause depending on the table...
                 switch (parsedTableName)
@@ -152,7 +152,7 @@ namespace ncgmpToolbar.Forms
                         break;
                     case "OrientationPoints":
                         OrientationPointsSearch += thisFeature.get_Value(thisFeature.Table.FindField("OrientationPoints_ID")) + "' OR OrientationPoints_ID = '";
-                        break;                    
+                        break;
                 }
 
                 // Iterate the enumeration
@@ -246,7 +246,7 @@ namespace ncgmpToolbar.Forms
                 // Find the selection
                 ITableSelection selectedRows = thisTable as ITableSelection;
                 ISelectionSet theSelection = selectedRows.SelectionSet;
-                
+
                 // Iterate if there are no selected rows
                 if (theSelection.Count == 0) { continue; }
 
@@ -265,9 +265,9 @@ namespace ncgmpToolbar.Forms
                         //case "Notes":
                         //    NotesSearch += theRow.get_Value(thisTable.Table.FindField("Notes_ID")) + "' OR Notes_ID = '";
                         //    break;
-                        case "RelatedDocuments":
-                            RelatedDocumentsSearch += theRow.get_Value(thisTable.Table.FindField("RelatedDocuments_ID")) + "' OR RelatedDocuments_ID = '";
-                            break;
+                        //case "RelatedDocuments":
+                        //    RelatedDocumentsSearch += theRow.get_Value(thisTable.Table.FindField("RelatedDocuments_ID")) + "' OR RelatedDocuments_ID = '";
+                        //    break;
                         case "DataSources":
                             DataSourcesSearch += theRow.get_Value(thisTable.Table.FindField("DataSources_ID")) + "' OR DataSources_ID = '";
                             break;
@@ -302,14 +302,14 @@ namespace ncgmpToolbar.Forms
             //    dataAccessClasses.Add("Notes", NotesRecords);
             //}
 
-            // RelatedDocuments
-            if (RelatedDocumentsSearch != "RelatedDocuments_ID = '")
-            {
-                RelatedDocumentsSearch = RelatedDocumentsSearch.Remove(RelatedDocumentsSearch.Length - 27);
-                RelatedDocumentsAccess RelatedDocumentsRecords = new RelatedDocumentsAccess(m_theWorkspace);
-                RelatedDocumentsRecords.AddRelatedDocuments(RelatedDocumentsSearch);
-                dataAccessClasses.Add("RelatedDocuments", RelatedDocumentsRecords);
-            }
+            //// RelatedDocuments
+            //if (RelatedDocumentsSearch != "RelatedDocuments_ID = '")
+            //{
+            //    RelatedDocumentsSearch = RelatedDocumentsSearch.Remove(RelatedDocumentsSearch.Length - 27);
+            //    RelatedDocumentsAccess RelatedDocumentsRecords = new RelatedDocumentsAccess(m_theWorkspace);
+            //    RelatedDocumentsRecords.AddRelatedDocuments(RelatedDocumentsSearch);
+            //    dataAccessClasses.Add("RelatedDocuments", RelatedDocumentsRecords);
+            //}
 
             // DataSources
             if (DataSourcesSearch != "DataSources_ID = '")
@@ -356,7 +356,7 @@ namespace ncgmpToolbar.Forms
             OrientationPointsAccess OrientationPointsAccess = new OrientationPointsAccess(m_theWorkspace);
             GlossaryAccess GlossaryAccess = new GlossaryAccess(m_theWorkspace);
             //NotesAccess NotesAccess = new NotesAccess(m_theWorkspace);
-            RelatedDocumentsAccess RelatedDocumentsAccess = new RelatedDocumentsAccess(m_theWorkspace);
+            //RelatedDocumentsAccess RelatedDocumentsAccess = new RelatedDocumentsAccess(m_theWorkspace);
             DescriptionOfMapUnitsAccess DescriptionOfMapUnitsAccess = new DescriptionOfMapUnitsAccess(m_theWorkspace);
 
             // Loop through the dictionary
@@ -456,16 +456,16 @@ namespace ncgmpToolbar.Forms
                     //    }
                     //    NotesAccess.SaveNotes();
                     //    break;
-                    case "RelatedDocuments":
-                        RelatedDocumentsAccess thisRelatedDocumentsAccess = (RelatedDocumentsAccess)anEntry.Value;
-                        foreach (KeyValuePair<string, RelatedDocumentsAccess.RelatedDocument> RelatedDocumentsToUpdate in thisRelatedDocumentsAccess.RelatedDocumentsDictionary)
-                        {
-                            RelatedDocumentsAccess.RelatedDocument thisRelatedDocument = (RelatedDocumentsAccess.RelatedDocument)RelatedDocumentsToUpdate.Value;
-                            thisRelatedDocument.DataSourceID = dataSourceID;
-                            RelatedDocumentsAccess.UpdateRelatedDocument(thisRelatedDocument);
-                        }
-                        RelatedDocumentsAccess.SaveRelatedDocuments();
-                        break;
+                    //case "RelatedDocuments":
+                    //    RelatedDocumentsAccess thisRelatedDocumentsAccess = (RelatedDocumentsAccess)anEntry.Value;
+                    //    foreach (KeyValuePair<string, RelatedDocumentsAccess.RelatedDocument> RelatedDocumentsToUpdate in thisRelatedDocumentsAccess.RelatedDocumentsDictionary)
+                    //    {
+                    //        RelatedDocumentsAccess.RelatedDocument thisRelatedDocument = (RelatedDocumentsAccess.RelatedDocument)RelatedDocumentsToUpdate.Value;
+                    //        thisRelatedDocument.DataSourceID = dataSourceID;
+                    //        RelatedDocumentsAccess.UpdateRelatedDocument(thisRelatedDocument);
+                    //    }
+                    //    RelatedDocumentsAccess.SaveRelatedDocuments();
+                    //    break;
                     case "DescriptionOfMapUnits":
                         DescriptionOfMapUnitsAccess thisDescriptionOfMapUnitsAccess = (DescriptionOfMapUnitsAccess)anEntry.Value;
                         foreach (KeyValuePair<string, DescriptionOfMapUnitsAccess.DescriptionOfMapUnit> DescriptionOfMapUnitsToUpdate in thisDescriptionOfMapUnitsAccess.DescriptionOfMapUnitsDictionary)
@@ -475,9 +475,9 @@ namespace ncgmpToolbar.Forms
                             DescriptionOfMapUnitsAccess.UpdateDescriptionOfMapUnit(thisDescriptionOfMapUnit);
                         }
                         DescriptionOfMapUnitsAccess.SaveDescriptionOfMapUnits();
-                        break;   
+                        break;
                 }
-            }            
+            }
         }
 
         private void ApplyFeatureTemplates()
@@ -541,7 +541,7 @@ namespace ncgmpToolbar.Forms
                             {
                                 case true:
                                     // Update the features to the FeatureTemplate
-                                    ContactsAndFaultsAccess ContactsAndFaultsUpdater = new ContactsAndFaultsAccess(m_theWorkspace);                                    
+                                    ContactsAndFaultsAccess ContactsAndFaultsUpdater = new ContactsAndFaultsAccess(m_theWorkspace);
 
                                     theFeature = theFeatureCursor.NextFeature();
                                     while (theFeature != null)
@@ -560,7 +560,7 @@ namespace ncgmpToolbar.Forms
                                         thisContactsAndFault.RuleID = RuleID;
                                         thisContactsAndFault.Type = Type;
                                         thisContactsAndFault.IsConcealed = IsConcealed;
-                                        
+
 
                                         // Update the feature
                                         ContactsAndFaultsUpdater.UpdateContactsAndFault(thisContactsAndFault);
@@ -628,8 +628,8 @@ namespace ncgmpToolbar.Forms
                             }
                         }
                     }
-                    #endregion                    
-                    
+                    #endregion
+
                     #region GeologicLines
                     IFeatureLayer GeologicLinesFL = commonFunctions.FindFeatureLayer(m_theWorkspace, "GeologicLines");
                     if (GeologicLinesFL != null)
@@ -677,7 +677,7 @@ namespace ncgmpToolbar.Forms
                                 case true:
                                     // Update the features to the FeatureTemplate
                                     GeologicLinesAccess GeologicLinesUpdater = new GeologicLinesAccess(m_theWorkspace);
-                                    
+
                                     theFeature = theFeatureCursor.NextFeature();
                                     while (theFeature != null)
                                     {
@@ -793,7 +793,7 @@ namespace ncgmpToolbar.Forms
                             string IdentityConfidence = dummyFeature.get_Value(templateFC.FindField("IdentityConfidence")).ToString();
                             string Label = dummyFeature.get_Value(templateFC.FindField("Label")).ToString();
                             int PlotAtScale;
-                            bool result = int.TryParse(dummyFeature.get_Value(templateFC.FindField("PlotAtScale")).ToString(), out PlotAtScale);                            
+                            bool result = int.TryParse(dummyFeature.get_Value(templateFC.FindField("PlotAtScale")).ToString(), out PlotAtScale);
                             double OrientationConfidenceDegrees;
                             result = double.TryParse(dummyFeature.get_Value(templateFC.FindField("OrientationConfidenceDegrees")).ToString(), out OrientationConfidenceDegrees);
                             string Notes = dummyFeature.get_Value(templateFC.FindField("Notes")).ToString();
@@ -810,7 +810,7 @@ namespace ncgmpToolbar.Forms
                             {
                                 case true:
                                     // Update the features to the FeatureTemplate
-                                    OrientationPointsAccess OrientationPointsUpdater = new OrientationPointsAccess(m_theWorkspace);                                    
+                                    OrientationPointsAccess OrientationPointsUpdater = new OrientationPointsAccess(m_theWorkspace);
 
                                     theFeature = theFeatureCursor.NextFeature();
                                     while (theFeature != null)
@@ -821,7 +821,7 @@ namespace ncgmpToolbar.Forms
                                         OrientationPointsAccess.OrientationPoint thisOrientationPoint = OrientationPointsUpdater.OrientationPointsDictionary[thisId];
 
                                         // Assign values from the FeatureTemplate
-                                        
+
                                         thisOrientationPoint.Type = Type;
                                         thisOrientationPoint.IdentityConfidence = IdentityConfidence;
                                         thisOrientationPoint.Label = Label;
@@ -891,7 +891,7 @@ namespace ncgmpToolbar.Forms
                             {
                                 case true:
                                     // Update the features to the FeatureTemplate
-                                    MapUnitPolysAccess MapUnitPolysUpdater = new MapUnitPolysAccess(m_theWorkspace);                                    
+                                    MapUnitPolysAccess MapUnitPolysUpdater = new MapUnitPolysAccess(m_theWorkspace);
 
                                     theFeature = theFeatureCursor.NextFeature();
                                     while (theFeature != null)
@@ -1014,7 +1014,7 @@ namespace ncgmpToolbar.Forms
                             {
                                 case true:
                                     // Update the features to the FeatureTemplate
-                                    OtherPolysAccess OtherPolysUpdater = new OtherPolysAccess(m_theWorkspace);                                    
+                                    OtherPolysAccess OtherPolysUpdater = new OtherPolysAccess(m_theWorkspace);
 
                                     theFeature = theFeatureCursor.NextFeature();
                                     while (theFeature != null)
@@ -1118,82 +1118,82 @@ namespace ncgmpToolbar.Forms
 
                 // Build an SQL query for the features/rows passed in
                 string sqlWhereClause = parsedTableName + "_ID = '";
-                switch(parsedTableName)
+                switch (parsedTableName)
                 {
                     case "MapUnitPolys":
                         foreach (KeyValuePair<string, MapUnitPolysAccess.MapUnitPoly> aRecord in (anEntry.Value as MapUnitPolysAccess).MapUnitPolysDictionary)
-	                    {
+                        {
                             sqlWhereClause += aRecord.Key + "' OR " + parsedTableName + "_ID = '";
                         }
                         break;
                     case "ContactsAndFaults":
                         foreach (KeyValuePair<string, ContactsAndFaultsAccess.ContactsAndFault> aRecord in (anEntry.Value as ContactsAndFaultsAccess).ContactsAndFaultsDictionary)
-	                    {
+                        {
                             sqlWhereClause += aRecord.Key + "' OR " + parsedTableName + "_ID = '";
                         }
                         break;
                     case "GeologicLines":
                         foreach (KeyValuePair<string, GeologicLinesAccess.GeologicLine> aRecord in (anEntry.Value as GeologicLinesAccess).GeologicLinesDictionary)
-	                    {
+                        {
                             sqlWhereClause += aRecord.Key + "' OR " + parsedTableName + "_ID = '";
                         }
                         break;
                     case "OtherPolys":
                         foreach (KeyValuePair<string, OtherPolysAccess.OtherPoly> aRecord in (anEntry.Value as OtherPolysAccess).OtherPolysDictionary)
-	                    {
+                        {
                             sqlWhereClause += aRecord.Key + "' OR " + parsedTableName + "_ID = '";
                         }
                         break;
                     case "OrientationPoints":
                         foreach (KeyValuePair<string, OrientationPointsAccess.OrientationPoint> aRecord in (anEntry.Value as OrientationPointsAccess).OrientationPointsDictionary)
-	                    {
+                        {
                             sqlWhereClause += aRecord.Key + "' OR " + parsedTableName + "_ID = '";
                         }
                         break;
                     case "GenericSamples":
                         foreach (KeyValuePair<string, GenericSamplesAccess.GenericSample> aRecord in (anEntry.Value as GenericSamplesAccess).GenericSamplesDictionary)
-	                    {
+                        {
                             sqlWhereClause += aRecord.Key + "' OR " + parsedTableName + "_ID = '";
                         }
                         break;
                     case "Stations":
                         foreach (KeyValuePair<string, StationsAccess.Station> aRecord in (anEntry.Value as StationsAccess).StationsDictionary)
-	                    {
+                        {
                             sqlWhereClause += aRecord.Key + "' OR " + parsedTableName + "_ID = '";
                         }
                         break;
                     case "DataSources":
                         foreach (KeyValuePair<string, DataSourcesAccess.Datasource> aRecord in (anEntry.Value as DataSourcesAccess).DataSourceCollection)
-	                    {
+                        {
                             sqlWhereClause += aRecord.Key + "' OR " + parsedTableName + "_ID = '";
                         }
                         break;
                     case "DescriptionOfMapUnits":
                         foreach (KeyValuePair<string, DescriptionOfMapUnitsAccess.DescriptionOfMapUnit> aRecord in (anEntry.Value as DescriptionOfMapUnitsAccess).DescriptionOfMapUnitsDictionary)
-	                    {
+                        {
                             sqlWhereClause += aRecord.Key + "' OR " + parsedTableName + "_ID = '";
                         }
                         break;
                     case "Glossary":
                         foreach (KeyValuePair<string, GlossaryAccess.Glossary> aRecord in (anEntry.Value as GlossaryAccess).GlossaryDictionary)
-	                    {
-                            sqlWhereClause += aRecord.Key + "' OR " + parsedTableName + "_ID = '";
-                        }
-                        break;
-                    case "Notes":
-                        foreach (KeyValuePair<string, NotesAccess.Note> aRecord in (anEntry.Value as NotesAccess).NotesDictionary)
                         {
                             sqlWhereClause += aRecord.Key + "' OR " + parsedTableName + "_ID = '";
                         }
                         break;
-                    case "RelatedDocuments":
-                        foreach (KeyValuePair<string, RelatedDocumentsAccess.RelatedDocument> aRecord in (anEntry.Value as RelatedDocumentsAccess).RelatedDocumentsDictionary)
-	                    {
-                            sqlWhereClause += aRecord.Key + "' OR " + parsedTableName + "_ID = '";
-                        }
-                        break;
+                    //case "Notes":
+                    //    foreach (KeyValuePair<string, NotesAccess.Note> aRecord in (anEntry.Value as NotesAccess).NotesDictionary)
+                    //    {
+                    //        sqlWhereClause += aRecord.Key + "' OR " + parsedTableName + "_ID = '";
+                    //    }
+                    //    break;
+                    //case "RelatedDocuments":
+                    //    foreach (KeyValuePair<string, RelatedDocumentsAccess.RelatedDocument> aRecord in (anEntry.Value as RelatedDocumentsAccess).RelatedDocumentsDictionary)
+                    //    {
+                    //        sqlWhereClause += aRecord.Key + "' OR " + parsedTableName + "_ID = '";
+                    //    }
+                    //    break;
                 }
-                
+
                 // Cleanup the string
                 sqlWhereClause = sqlWhereClause.Remove(sqlWhereClause.Length - (11 + parsedTableName.Length));
 
@@ -1227,7 +1227,7 @@ namespace ncgmpToolbar.Forms
                 {
                     ArcMap.Editor.StopOperation("Failed to update identifiers");
                 }
-            }            
+            }
         }
 
         private void BulkIdentifierCalc()
