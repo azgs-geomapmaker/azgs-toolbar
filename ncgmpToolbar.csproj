@@ -196,11 +196,9 @@
     <Compile Include="Utilities\DataAccess\GeologicEventsAccess.cs" />
     <Compile Include="Utilities\DataAccess\GlossaryAccess.cs" />
     <Compile Include="Utilities\DataAccess\MapUnitPolysAccess.cs" />
-    <Compile Include="Utilities\DataAccess\NotesAccess.cs" />
     <Compile Include="Utilities\DataAccess\OrientationPointsAccess.cs" />
     <Compile Include="Utilities\DataAccess\GeologicLinesAccess.cs" />
     <Compile Include="Utilities\DataAccess\OtherPolysAccess.cs" />
-    <Compile Include="Utilities\DataAccess\RelatedDocumentsAccess.cs" />
     <Compile Include="Utilities\DataAccess\GenericSamplesAccess.cs" />
     <Compile Include="Utilities\DataAccess\StandardLithologyAccess.cs" />
     <Compile Include="Utilities\DataAccess\StationsAccess.cs" />

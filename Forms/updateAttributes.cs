@@ -102,8 +102,6 @@ namespace ncgmpToolbar.Forms
             string GenericSamplesSearch = "GenericSamples_ID = '";
             string OrientationPointsSearch = "OrientationPoints_ID = '";
             string GlossarySearch = "Glossary_ID = '";
-            //string NotesSearch = "Notes_ID = '";
-            //string RelatedDocumentsSearch = "RelatedDocuments_ID = '";
             string DataSourcesSearch = "DataSources_ID = '";
             string DescriptionOfMapUnitsSearch = "DescriptionOfMapUnits_ID = '";
 
@@ -262,12 +260,6 @@ namespace ncgmpToolbar.Forms
                         case "Glossary":
                             GlossarySearch += theRow.get_Value(thisTable.Table.FindField("Glossary_ID")) + "' OR Glossary_ID = '";
                             break;
-                        //case "Notes":
-                        //    NotesSearch += theRow.get_Value(thisTable.Table.FindField("Notes_ID")) + "' OR Notes_ID = '";
-                        //    break;
-                        //case "RelatedDocuments":
-                        //    RelatedDocumentsSearch += theRow.get_Value(thisTable.Table.FindField("RelatedDocuments_ID")) + "' OR RelatedDocuments_ID = '";
-                        //    break;
                         case "DataSources":
                             DataSourcesSearch += theRow.get_Value(thisTable.Table.FindField("DataSources_ID")) + "' OR DataSources_ID = '";
                             break;
@@ -292,24 +284,6 @@ namespace ncgmpToolbar.Forms
                 GlossaryRecords.AddGlossary(GlossarySearch);
                 dataAccessClasses.Add("Glossary", GlossaryRecords);
             }
-
-            // Notes
-            //if (NotesSearch != "Notes_ID = '")
-            //{
-            //    NotesSearch = NotesSearch.Remove(NotesSearch.Length - 16);
-            //    NotesAccess NotesRecords = new NotesAccess(m_theWorkspace);
-            //    NotesRecords.AddNotes(NotesSearch);
-            //    dataAccessClasses.Add("Notes", NotesRecords);
-            //}
-
-            //// RelatedDocuments
-            //if (RelatedDocumentsSearch != "RelatedDocuments_ID = '")
-            //{
-            //    RelatedDocumentsSearch = RelatedDocumentsSearch.Remove(RelatedDocumentsSearch.Length - 27);
-            //    RelatedDocumentsAccess RelatedDocumentsRecords = new RelatedDocumentsAccess(m_theWorkspace);
-            //    RelatedDocumentsRecords.AddRelatedDocuments(RelatedDocumentsSearch);
-            //    dataAccessClasses.Add("RelatedDocuments", RelatedDocumentsRecords);
-            //}
 
             // DataSources
             if (DataSourcesSearch != "DataSources_ID = '")
@@ -355,8 +329,6 @@ namespace ncgmpToolbar.Forms
             GenericSamplesAccess GenericSamplesAccess = new GenericSamplesAccess(m_theWorkspace);
             OrientationPointsAccess OrientationPointsAccess = new OrientationPointsAccess(m_theWorkspace);
             GlossaryAccess GlossaryAccess = new GlossaryAccess(m_theWorkspace);
-            //NotesAccess NotesAccess = new NotesAccess(m_theWorkspace);
-            //RelatedDocumentsAccess RelatedDocumentsAccess = new RelatedDocumentsAccess(m_theWorkspace);
             DescriptionOfMapUnitsAccess DescriptionOfMapUnitsAccess = new DescriptionOfMapUnitsAccess(m_theWorkspace);
 
             // Loop through the dictionary
@@ -446,26 +418,6 @@ namespace ncgmpToolbar.Forms
                         }
                         GlossaryAccess.SaveGlossary();
                         break;
-                    //case "Notes":
-                    //    NotesAccess thisNotesAccess = (NotesAccess)anEntry.Value;
-                    //    foreach (KeyValuePair<string, NotesAccess.Note> NotesToUpdate in thisNotesAccess.NotesDictionary)
-                    //    {
-                    //        NotesAccess.Note thisNote = (NotesAccess.Note)NotesToUpdate.Value;
-                    //        thisNote.DataSourceID = dataSourceID;
-                    //        NotesAccess.UpdateNote(thisNote);
-                    //    }
-                    //    NotesAccess.SaveNotes();
-                    //    break;
-                    //case "RelatedDocuments":
-                    //    RelatedDocumentsAccess thisRelatedDocumentsAccess = (RelatedDocumentsAccess)anEntry.Value;
-                    //    foreach (KeyValuePair<string, RelatedDocumentsAccess.RelatedDocument> RelatedDocumentsToUpdate in thisRelatedDocumentsAccess.RelatedDocumentsDictionary)
-                    //    {
-                    //        RelatedDocumentsAccess.RelatedDocument thisRelatedDocument = (RelatedDocumentsAccess.RelatedDocument)RelatedDocumentsToUpdate.Value;
-                    //        thisRelatedDocument.DataSourceID = dataSourceID;
-                    //        RelatedDocumentsAccess.UpdateRelatedDocument(thisRelatedDocument);
-                    //    }
-                    //    RelatedDocumentsAccess.SaveRelatedDocuments();
-                    //    break;
                     case "DescriptionOfMapUnits":
                         DescriptionOfMapUnitsAccess thisDescriptionOfMapUnitsAccess = (DescriptionOfMapUnitsAccess)anEntry.Value;
                         foreach (KeyValuePair<string, DescriptionOfMapUnitsAccess.DescriptionOfMapUnit> DescriptionOfMapUnitsToUpdate in thisDescriptionOfMapUnitsAccess.DescriptionOfMapUnitsDictionary)
@@ -1180,18 +1132,6 @@ namespace ncgmpToolbar.Forms
                             sqlWhereClause += aRecord.Key + "' OR " + parsedTableName + "_ID = '";
                         }
                         break;
-                    //case "Notes":
-                    //    foreach (KeyValuePair<string, NotesAccess.Note> aRecord in (anEntry.Value as NotesAccess).NotesDictionary)
-                    //    {
-                    //        sqlWhereClause += aRecord.Key + "' OR " + parsedTableName + "_ID = '";
-                    //    }
-                    //    break;
-                    //case "RelatedDocuments":
-                    //    foreach (KeyValuePair<string, RelatedDocumentsAccess.RelatedDocument> aRecord in (anEntry.Value as RelatedDocumentsAccess).RelatedDocumentsDictionary)
-                    //    {
-                    //        sqlWhereClause += aRecord.Key + "' OR " + parsedTableName + "_ID = '";
-                    //    }
-                    //    break;
                 }
 
                 // Cleanup the string

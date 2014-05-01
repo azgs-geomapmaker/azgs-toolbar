@@ -41,6 +41,7 @@ As users create new features these fields are automatically populated. Similarly
 
 ### Development Setup
 Prerequisties: **ArcObjects SDK** (from the ArcGIS installation disc) and **Visual Studio**
+
 1. Clone this repository
 2. Open the project by double-clicking **ncgmpToolbar.sln**
 3. Configure a Debug session to open ArcMap automatically
