@@ -2,9 +2,9 @@
   <Name>ncgmpToolbar</Name>
   <AddInID>{39418d12-5d34-4602-9979-2a45d931026d}</AddInID>
   <Description>These set of tools ease the generation of geologic map data in the NCGMP format.</Description>
-  <Version>1.0.2</Version>
+  <Version>1.0.3</Version>
   <Image>Images\ncgmpToolbar.png</Image>
-  <Author>Ryan Clark, Genhan Chan, Janel Day</Author>
+  <Author>Ryan Clark, Genhan Chan, Janel Day, Jessica Good</Author>
   <Company>Arizona Geological Survey</Company>
   <Date>10/03/2013</Date>
   <Targets>

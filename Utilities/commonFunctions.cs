@@ -138,7 +138,9 @@ namespace ncgmpToolbar.Utilities
 
             while (thisFeatureLayer != null)
             {
-                if (((IFeatureLayer)thisFeatureLayer).FeatureClass.Equals(theFC)) { return (IFeatureLayer)thisFeatureLayer; }
+                if (((IFeatureLayer)thisFeatureLayer).FeatureClass != null)
+                    if (((IFeatureLayer)thisFeatureLayer).FeatureClass.Equals(theFC))
+                        return (IFeatureLayer)thisFeatureLayer;
                 thisFeatureLayer = theseLayers.Next();
             }
 

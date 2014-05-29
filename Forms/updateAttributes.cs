@@ -190,7 +190,7 @@ namespace ncgmpToolbar.Forms
             // GeologicLines
             if (GeologicLinesSearch != "GeologicLines_ID = '")
             {
-                GeologicLinesSearch = GeologicLinesSearch.Remove(GeologicLinesSearch.Length - 21);
+                GeologicLinesSearch = GeologicLinesSearch.Remove(GeologicLinesSearch.Length - 24);
                 GeologicLinesAccess GeologicLinesRecords = new GeologicLinesAccess(m_theWorkspace);
                 GeologicLinesRecords.AddGeologicLines(GeologicLinesSearch);
                 dataAccessClasses.Add("GeologicLines", GeologicLinesRecords);
@@ -199,7 +199,7 @@ namespace ncgmpToolbar.Forms
             // Stations
             if (StationsSearch != "Stations_ID = '")
             {
-                StationsSearch = StationsSearch.Remove(StationsSearch.Length - 24);
+                StationsSearch = StationsSearch.Remove(StationsSearch.Length - 19);
                 StationsAccess StationsRecords = new StationsAccess(m_theWorkspace);
                 StationsRecords.AddStations(StationsSearch);
                 dataAccessClasses.Add("Stations", StationsRecords);
@@ -234,7 +234,11 @@ namespace ncgmpToolbar.Forms
             {
                 // Get one of the tables
                 IStandaloneTable thisTable = tableCollection.StandaloneTable[i];
-                string tableName = (thisTable.Table as IDataset).Name;
+                string tableName = null;
+                if (thisTable.Table == null)
+                    tableName = thisTable.Name;
+                else
+                    tableName = (thisTable.Table as IDataset).Name;
 
                 // Parse the table name in order to strip out unneccessary bits of SDE tables
                 ISQLSyntax nameParser = (ISQLSyntax)m_theWorkspace;
@@ -246,7 +250,11 @@ namespace ncgmpToolbar.Forms
                 ISelectionSet theSelection = selectedRows.SelectionSet;
 
                 // Iterate if there are no selected rows
-                if (theSelection.Count == 0) { continue; }
+                if (theSelection == null)
+                    continue;
+                else
+                    if (theSelection.Count == 0)    
+                        continue;
 
                 // Loop through selected rows, build the where clauses up.
                 ICursor theCursor;
@@ -471,6 +479,7 @@ namespace ncgmpToolbar.Forms
                             theCurrentTemplate.SetDefaultValues(dummyFeature);
                             string ExistenceConfidence = dummyFeature.get_Value(templateFC.FindField("ExistenceConfidence")).ToString();
                             string IdentityConfidence = dummyFeature.get_Value(templateFC.FindField("IdentityConfidence")).ToString();
+                            string Symbol = dummyFeature.get_Value(templateFC.FindField("Symbol")).ToString();
                             string Label = dummyFeature.get_Value(templateFC.FindField("Label")).ToString();
                             double LocationConfidenceMeters;
                             bool result = double.TryParse(dummyFeature.get_Value(templateFC.FindField("LocationConfidenceMeters")).ToString(), out LocationConfidenceMeters);
@@ -506,6 +515,7 @@ namespace ncgmpToolbar.Forms
                                         // Assign values from the FeatureTemplate
                                         thisContactsAndFault.ExistenceConfidence = ExistenceConfidence;
                                         thisContactsAndFault.IdentityConfidence = IdentityConfidence;
+                                        thisContactsAndFault.Symbol = Symbol;
                                         thisContactsAndFault.Label = Label;
                                         thisContactsAndFault.LocationConfidenceMeters = LocationConfidenceMeters;
                                         thisContactsAndFault.Notes = Notes;
@@ -559,7 +569,7 @@ namespace ncgmpToolbar.Forms
                                         {
                                             case "GeologicLines":
                                                 // Insert the new GeologicLines
-                                                GeologicLinesInserter.NewGeologicLine(Type, LocationConfidenceMeters, ExistenceConfidence, IdentityConfidence, Label, Notes, DataSourceID, RuleID, Shape);
+                                                GeologicLinesInserter.NewGeologicLine(Type, LocationConfidenceMeters, ExistenceConfidence, IdentityConfidence, Symbol, Label, Notes, DataSourceID, RuleID, Shape);
                                                 GeologicLinesInserter.SaveGeologicLines();
 
                                                 // Clear out the dictionary so lines don't get added more than once.
@@ -606,6 +616,7 @@ namespace ncgmpToolbar.Forms
                             theCurrentTemplate.SetDefaultValues(dummyFeature);
                             string ExistenceConfidence = dummyFeature.get_Value(templateFC.FindField("ExistenceConfidence")).ToString();
                             string IdentityConfidence = dummyFeature.get_Value(templateFC.FindField("IdentityConfidence")).ToString();
+                            string Symbol = dummyFeature.get_Value(templateFC.FindField("Symbol")).ToString();
                             string Label = dummyFeature.get_Value(templateFC.FindField("Label")).ToString();
                             double LocationConfidenceMeters;
                             bool result = double.TryParse(dummyFeature.get_Value(templateFC.FindField("LocationConfidenceMeters")).ToString(), out LocationConfidenceMeters);
@@ -639,13 +650,22 @@ namespace ncgmpToolbar.Forms
                                         GeologicLinesAccess.GeologicLine thisGeologicLine = GeologicLinesUpdater.GeologicLinesDictionary[thisId];
 
                                         // Assign values from the FeatureTemplate
-                                        thisGeologicLine.ExistenceConfidence = ExistenceConfidence;
-                                        thisGeologicLine.IdentityConfidence = IdentityConfidence;
-                                        thisGeologicLine.Label = Label;
-                                        thisGeologicLine.LocationConfidenceMeters = LocationConfidenceMeters;
-                                        thisGeologicLine.Notes = Notes;
-                                        thisGeologicLine.RuleID = RuleID;
-                                        thisGeologicLine.Type = Type;
+                                        if (ExistenceConfidence != "")
+                                            thisGeologicLine.ExistenceConfidence = ExistenceConfidence;
+                                        if (IdentityConfidence != "")
+                                            thisGeologicLine.IdentityConfidence = IdentityConfidence;
+                                        if (Symbol != "")
+                                            thisGeologicLine.Symbol = Symbol;
+                                        if (Label != "")
+                                            thisGeologicLine.Label = Label;
+                                        if (LocationConfidenceMeters != 0.0)
+                                            thisGeologicLine.LocationConfidenceMeters = LocationConfidenceMeters;
+                                        if (Notes != "")
+                                            thisGeologicLine.Notes = Notes;
+                                        if (RuleID != "")
+                                            thisGeologicLine.RuleID = RuleID;
+                                        if (Type != "")
+                                            thisGeologicLine.Type = Type;
 
                                         // Update the feature
                                         GeologicLinesUpdater.UpdateGeologicLine(thisGeologicLine);
@@ -692,7 +712,7 @@ namespace ncgmpToolbar.Forms
                                         {
                                             case "ContactsAndFaults":
                                                 // Insert the new GeologicLines
-                                                ContactsAndFaultsInserter.NewContactsAndFault(Type, IsConcealed, LocationConfidenceMeters, ExistenceConfidence, IdentityConfidence, Label, Notes, DataSourceID, RuleID, Shape);
+                                                ContactsAndFaultsInserter.NewContactsAndFault(Type, IsConcealed, LocationConfidenceMeters, ExistenceConfidence, IdentityConfidence, Symbol, Label, Notes, DataSourceID, RuleID, Shape);
                                                 ContactsAndFaultsInserter.SaveContactsAndFaults();
 
                                                 // Clear out the dictionary so lines don't get added more than once.

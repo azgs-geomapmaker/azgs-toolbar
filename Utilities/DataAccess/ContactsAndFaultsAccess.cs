@@ -30,6 +30,7 @@ namespace ncgmpToolbar.Utilities.DataAccess
             public string ExistenceConfidence;
             public string IdentityConfidence;
             public string RuleID;
+            public string Symbol;
             public string Label;
             public string Notes;
             public string DataSourceID;
@@ -56,6 +57,7 @@ namespace ncgmpToolbar.Utilities.DataAccess
             int locConfFld = m_ContactsAndFaultsFC.FindField("LocationConfidenceMeters");
             int exConfFld = m_ContactsAndFaultsFC.FindField("ExistenceConfidence");
             int idConfFld = m_ContactsAndFaultsFC.FindField("IdentityConfidence");
+            int symbFld = m_ContactsAndFaultsFC.FindField("Symbol");
             int lblFld = m_ContactsAndFaultsFC.FindField("Label");
             int notesFld = m_ContactsAndFaultsFC.FindField("Notes");
             int dsFld = m_ContactsAndFaultsFC.FindField("DataSourceID");
@@ -76,6 +78,7 @@ namespace ncgmpToolbar.Utilities.DataAccess
                 anContactsAndFault.LocationConfidenceMeters = double.Parse(theFeature.get_Value(locConfFld).ToString());
                 anContactsAndFault.ExistenceConfidence = theFeature.get_Value(exConfFld).ToString();
                 anContactsAndFault.IdentityConfidence = theFeature.get_Value(idConfFld).ToString();
+                anContactsAndFault.Symbol = theFeature.get_Value(symbFld).ToString();
                 anContactsAndFault.Label = theFeature.get_Value(lblFld).ToString();
                 anContactsAndFault.Notes = theFeature.get_Value(notesFld).ToString();
                 anContactsAndFault.DataSourceID = theFeature.get_Value(dsFld).ToString();
@@ -90,7 +93,7 @@ namespace ncgmpToolbar.Utilities.DataAccess
         }
 
         public string NewContactsAndFault(string Type, int IsConcealed, double LocationConfidenceMeters, string ExistenceConfidence, string IdentityConfidence,
-            string Label, string Notes, string DataSourceID, string RuleID, IPolyline Shape)
+            string Symbol, string Label, string Notes, string DataSourceID, string RuleID, IPolyline Shape)
         {
             ContactsAndFault newContactsAndFault = new ContactsAndFault();
 
@@ -101,6 +104,7 @@ namespace ncgmpToolbar.Utilities.DataAccess
             newContactsAndFault.LocationConfidenceMeters = LocationConfidenceMeters;
             newContactsAndFault.ExistenceConfidence = ExistenceConfidence;
             newContactsAndFault.IdentityConfidence = IdentityConfidence;
+            newContactsAndFault.Symbol = Symbol;
             newContactsAndFault.Label = Label;
             newContactsAndFault.Notes = Notes;
             newContactsAndFault.DataSourceID = DataSourceID;
@@ -129,6 +133,7 @@ namespace ncgmpToolbar.Utilities.DataAccess
             int locConfFld = m_ContactsAndFaultsFC.FindField("LocationConfidenceMeters");
             int exConfFld = m_ContactsAndFaultsFC.FindField("ExistenceConfidence");
             int idConfFld = m_ContactsAndFaultsFC.FindField("IdentityConfidence");
+            int symbFld = m_ContactsAndFaultsFC.FindField("Symbol");
             int lblFld = m_ContactsAndFaultsFC.FindField("Label");
             int notesFld = m_ContactsAndFaultsFC.FindField("Notes");
             int dsFld = m_ContactsAndFaultsFC.FindField("DataSourceID");
@@ -160,6 +165,7 @@ namespace ncgmpToolbar.Utilities.DataAccess
                             theFeatureBuffer.set_Value(locConfFld, thisContactsAndFault.LocationConfidenceMeters);
                             theFeatureBuffer.set_Value(exConfFld, thisContactsAndFault.ExistenceConfidence);
                             theFeatureBuffer.set_Value(idConfFld, thisContactsAndFault.IdentityConfidence);
+                            theFeatureBuffer.set_Value(symbFld, thisContactsAndFault.Symbol);
                             theFeatureBuffer.set_Value(lblFld, thisContactsAndFault.Label);
                             theFeatureBuffer.set_Value(notesFld, thisContactsAndFault.Notes);
                             theFeatureBuffer.set_Value(dsFld, thisContactsAndFault.DataSourceID);

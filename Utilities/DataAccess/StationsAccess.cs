@@ -54,7 +54,11 @@ namespace ncgmpToolbar.Utilities.DataAccess
             int plotFld = m_StationsFC.FindField("PlotAtScale");
             int locConfFld = m_StationsFC.FindField("LocationConfidenceMeters");
             int latFld = m_StationsFC.FindField("Latitude");
+            if (latFld == -1)
+                latFld = m_StationsFC.FindField("MapY");
             int longFld = m_StationsFC.FindField("Longitude");
+            if (longFld == -1)
+                longFld = m_StationsFC.FindField("MapX");
             int dsFld = m_StationsFC.FindField("DataSourceID");
 
             IQueryFilter QF = new QueryFilterClass();
@@ -69,10 +73,14 @@ namespace ncgmpToolbar.Utilities.DataAccess
                 anStation.Stations_ID = theFeature.get_Value(idFld).ToString();
                 anStation.FieldID = theFeature.get_Value(fieldFld).ToString();
                 anStation.Label = theFeature.get_Value(lblFld).ToString();
-                anStation.PlotAtScale = int.Parse(theFeature.get_Value(plotFld).ToString());
-                anStation.LocationConfidenceMeters = double.Parse(theFeature.get_Value(locConfFld).ToString());
-                anStation.Latitude = double.Parse(theFeature.get_Value(latFld).ToString());
-                anStation.Longitude = double.Parse(theFeature.get_Value(longFld).ToString());
+                string plotFldStr = theFeature.get_Value(plotFld).ToString();
+                anStation.PlotAtScale = int.Parse(string.IsNullOrEmpty(plotFldStr) ? "-9999" : plotFldStr);
+                string locConfFldStr = theFeature.get_Value(locConfFld).ToString();
+                anStation.LocationConfidenceMeters = double.Parse(string.IsNullOrEmpty(locConfFldStr) ? "-9999" : locConfFldStr);
+                string latFldStr = theFeature.get_Value(latFld).ToString();
+                anStation.Latitude = double.Parse(string.IsNullOrEmpty(latFldStr) ? "-9999" : latFldStr);
+                string longFldStr = theFeature.get_Value(longFld).ToString();
+                anStation.Longitude = double.Parse(string.IsNullOrEmpty(longFldStr) ? "-9999" : longFldStr);
                 anStation.DataSourceID = theFeature.get_Value(dsFld).ToString();
                 anStation.Shape = (IPoint)theFeature.Shape;
                 anStation.RequiresUpdate = true;

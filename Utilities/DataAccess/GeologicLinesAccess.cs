@@ -29,6 +29,7 @@ namespace ncgmpToolbar.Utilities.DataAccess
             public string ExistenceConfidence;
             public string IdentityConfidence;
             public string RuleID;
+            public string Symbol;
             public string Label;
             public string Notes;
             public string DataSourceID;
@@ -54,6 +55,7 @@ namespace ncgmpToolbar.Utilities.DataAccess
             int locConfFld = m_GeologicLinesFC.FindField("LocationConfidenceMeters");
             int exConfFld = m_GeologicLinesFC.FindField("ExistenceConfidence");
             int idConfFld = m_GeologicLinesFC.FindField("IdentityConfidence");
+            int symbFld = m_GeologicLinesFC.FindField("Symbol");
             int lblFld = m_GeologicLinesFC.FindField("Label");
             int notesFld = m_GeologicLinesFC.FindField("Notes");
             int dsFld = m_GeologicLinesFC.FindField("DataSourceID");
@@ -70,9 +72,11 @@ namespace ncgmpToolbar.Utilities.DataAccess
                 GeologicLine anGeologicLine = new GeologicLine();
                 anGeologicLine.GeologicLines_ID = theFeature.get_Value(idFld).ToString();
                 anGeologicLine.Type = theFeature.get_Value(typeFld).ToString();
-                anGeologicLine.LocationConfidenceMeters = double.Parse(theFeature.get_Value(locConfFld).ToString());
+                string locConfFldStr = theFeature.get_Value(locConfFld).ToString();
+                anGeologicLine.LocationConfidenceMeters = double.Parse(string.IsNullOrEmpty(locConfFldStr) ? "-9999" : locConfFldStr);
                 anGeologicLine.ExistenceConfidence = theFeature.get_Value(exConfFld).ToString();
                 anGeologicLine.IdentityConfidence = theFeature.get_Value(idConfFld).ToString();
+                anGeologicLine.Symbol = theFeature.get_Value(symbFld).ToString();
                 anGeologicLine.Label = theFeature.get_Value(lblFld).ToString();
                 anGeologicLine.Notes = theFeature.get_Value(notesFld).ToString();
                 anGeologicLine.DataSourceID = theFeature.get_Value(dsFld).ToString();
@@ -87,7 +91,7 @@ namespace ncgmpToolbar.Utilities.DataAccess
         }
 
         public string NewGeologicLine(string Type, double LocationConfidenceMeters, string ExistenceConfidence, string IdentityConfidence,
-            string Label, string Notes, string DataSourceID, string RuleID, IPolyline Shape)
+            string Symbol, string Label, string Notes, string DataSourceID, string RuleID, IPolyline Shape)
         {
             GeologicLine newGeologicLine = new GeologicLine();
 
@@ -97,6 +101,7 @@ namespace ncgmpToolbar.Utilities.DataAccess
             newGeologicLine.LocationConfidenceMeters = LocationConfidenceMeters;
             newGeologicLine.ExistenceConfidence = ExistenceConfidence;
             newGeologicLine.IdentityConfidence = IdentityConfidence;
+            newGeologicLine.Symbol = Symbol;
             newGeologicLine.Label = Label;
             newGeologicLine.Notes = Notes;
             newGeologicLine.DataSourceID = DataSourceID;
@@ -124,6 +129,7 @@ namespace ncgmpToolbar.Utilities.DataAccess
             int locConfFld = m_GeologicLinesFC.FindField("LocationConfidenceMeters");
             int exConfFld = m_GeologicLinesFC.FindField("ExistenceConfidence");
             int idConfFld = m_GeologicLinesFC.FindField("IdentityConfidence");
+            int symbFld = m_GeologicLinesFC.FindField("Symbol");
             int lblFld = m_GeologicLinesFC.FindField("Label");
             int notesFld = m_GeologicLinesFC.FindField("Notes");
             int dsFld = m_GeologicLinesFC.FindField("DataSourceID");
@@ -154,6 +160,7 @@ namespace ncgmpToolbar.Utilities.DataAccess
                             theFeatureBuffer.set_Value(locConfFld, thisGeologicLine.LocationConfidenceMeters);
                             theFeatureBuffer.set_Value(exConfFld, thisGeologicLine.ExistenceConfidence);
                             theFeatureBuffer.set_Value(idConfFld, thisGeologicLine.IdentityConfidence);
+                            theFeatureBuffer.set_Value(symbFld, thisGeologicLine.Symbol);
                             theFeatureBuffer.set_Value(lblFld, thisGeologicLine.Label);
                             theFeatureBuffer.set_Value(notesFld, thisGeologicLine.Notes);
                             theFeatureBuffer.set_Value(dsFld, thisGeologicLine.DataSourceID);
@@ -171,7 +178,7 @@ namespace ncgmpToolbar.Utilities.DataAccess
                 if (updateWhereClause == "GeologicLines_ID = '") { return; }
 
                 theEditor.StartOperation();
-                updateWhereClause = updateWhereClause.Remove(updateWhereClause.Length - 21);
+                updateWhereClause = updateWhereClause.Remove(updateWhereClause.Length - 24);
 
                 IQueryFilter QF = new QueryFilterClass();
                 QF.WhereClause = updateWhereClause;
@@ -188,6 +195,7 @@ namespace ncgmpToolbar.Utilities.DataAccess
                     theFeature.set_Value(locConfFld, thisGeologicLine.LocationConfidenceMeters);
                     theFeature.set_Value(exConfFld, thisGeologicLine.ExistenceConfidence);
                     theFeature.set_Value(idConfFld, thisGeologicLine.IdentityConfidence);
+                    theFeature.set_Value(symbFld, thisGeologicLine.Symbol);
                     theFeature.set_Value(lblFld, thisGeologicLine.Label);
                     theFeature.set_Value(notesFld, thisGeologicLine.Notes);
                     theFeature.set_Value(dsFld, thisGeologicLine.DataSourceID);
