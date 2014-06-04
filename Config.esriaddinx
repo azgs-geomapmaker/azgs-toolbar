@@ -2,7 +2,7 @@
   <Name>ncgmpToolbar</Name>
   <AddInID>{39418d12-5d34-4602-9979-2a45d931026d}</AddInID>
   <Description>These set of tools ease the generation of geologic map data in the NCGMP format.</Description>
-  <Version>1.0.4</Version>
+  <Version>1.0.3</Version>
   <Image>Images\ncgmpToolbar.png</Image>
   <Author>Ryan Clark, Genhan Chan, Janel Day, Jessica Good</Author>
   <Company>Arizona Geological Survey</Company>
@@ -10,7 +10,7 @@
   <Targets>
     <Target name="Desktop" version="10.2" />
   </Targets>
-  <AddIn language="CLR4.0" library="ncgmpToolbar.dll" namespace="ncgmpToolbar">
+  <AddIn language="CLR" library="ncgmpToolbar.dll" namespace="ncgmpToolbar">
     <ArcMap>
       <Commands>
         <ComboBox id="Arizona_Geological_Survey_ncgmpToolbar_cmbDataSource" class="cmbDataSource" message="This combobox allows you to dynamically specify a data source. This data source, which is defined in the NCGMP DataSources table, will be automatically assigned to any new features you create." caption="Active Data Source" tip="Select an Active Data Source" category="NCGMP Tools" image="Images\cmbDataSource.png" editable="false" sizeString="WWWWWWWWWWWWWWWWWWWW" itemSizeString="WWWWWWWWWWWWWWWWWWWW" rows="10">
