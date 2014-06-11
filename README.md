@@ -50,6 +50,7 @@ Prerequisties: **ArcObjects SDK** (from the ArcGIS installation disc) and **Visu
  - Browse to the **ArcMap** executable
 4. Run **Build**, **Clean Solution** (This will clear the **/bin/Debug** folder)
 5. Click **Debug**, **Start Debugging** (This will build the **NCGMPToolbar.esriAddIn** in the **/bin/Debug** folder)
+6. Error logs are written to `C:\Users\<user name>\AppData\Local\Temp\NCGMPToolbarLog.txt`
 
 ### Prior Toolbar Version
 The original AZGS NCGMP Toolbar used an AZGS-modified version of the NCGMP schema. This toolbar is available by selecting the Tag **v0.9.9.2**.

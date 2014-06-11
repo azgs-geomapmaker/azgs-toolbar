@@ -21,7 +21,6 @@ namespace ncgmpToolbar
         public btnOpenNcgmpDatabase()
         {
         }
-
         protected override void OnClick()
         {
 
@@ -186,18 +185,28 @@ namespace ncgmpToolbar
 
                 foreach (string s in arr)
                 {
-                    IFeatureClass FC = commonFunctions.OpenFeatureClass(ValidNcgmpDatabase, s);
-                    IFeatureLayer FL = new FeatureLayerClass();
-                    FL.FeatureClass = FC;
+                    try
+                    {
+                        IFeatureClass FC = commonFunctions.OpenFeatureClass(ValidNcgmpDatabase, s);
+                        IFeatureLayer FL = new FeatureLayerClass();
+                        FL.FeatureClass = FC;
 
-                    FL.Name = s;
-                    FL.Visible = false;
+                        FL.Name = s;
+                        FL.Visible = false;
 
-                    ILegendInfo LegendInfo = (ILegendInfo)FL;
-                    ILegendGroup LegendGroup = LegendInfo.get_LegendGroup(0);
-                    LegendGroup.Visible = false;
+                        ILegendInfo LegendInfo = (ILegendInfo)FL;
+                        ILegendGroup LegendGroup = LegendInfo.get_LegendGroup(0);
+                        LegendGroup.Visible = false;
 
-                    StationGroupLayer.Add(FL);
+                        StationGroupLayer.Add(FL);
+                    }
+                    catch (Exception ex)
+                    {
+                        // Write exception to C:\Users\<user name>\AppData\Local\Temp\NCGMPToolbarLog.txt
+                        string path = Path.Combine(Environment.GetEnvironmentVariables()["LOCALAPPDATA"] as string, "Temp/NCGMPToolbarLog.txt");
+                        string message = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + " " + s + ": " + ex.Message + "\r\n";
+                        System.IO.File.AppendAllText(path, message);
+                    }
                 }
 
                 #endregion
@@ -215,18 +224,28 @@ namespace ncgmpToolbar
 
                 foreach (string s in arr)
                 {
-                    IFeatureClass FC = commonFunctions.OpenFeatureClass(ValidNcgmpDatabase, s);
-                    IFeatureLayer FL = new FeatureLayerClass();
-                    FL.FeatureClass = FC;
+                    try
+                    {
+                        IFeatureClass FC = commonFunctions.OpenFeatureClass(ValidNcgmpDatabase, s);
+                        IFeatureLayer FL = new FeatureLayerClass();
+                        FL.FeatureClass = FC;
 
-                    FL.Name = s;
-                    FL.Visible = false;
+                        FL.Name = s;
+                        FL.Visible = false;
 
-                    ILegendInfo LegendInfo = (ILegendInfo)FL;
-                    ILegendGroup LegendGroup = LegendInfo.get_LegendGroup(0);
-                    LegendGroup.Visible = false;
+                        ILegendInfo LegendInfo = (ILegendInfo)FL;
+                        ILegendGroup LegendGroup = LegendInfo.get_LegendGroup(0);
+                        LegendGroup.Visible = false;
 
-                    GeoMapGroupLayer.Add(FL);
+                        GeoMapGroupLayer.Add(FL);
+                    }
+                    catch (Exception ex)
+                    {
+                        // Write exception to C:\Users\<user name>\AppData\Local\Temp\NCGMPToolbarLog.txt
+                        string path = Path.Combine(Environment.GetEnvironmentVariables()["LOCALAPPDATA"] as string, "Temp/NCGMPToolbarLog.txt");
+                        string message = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + " " + s + ": " + ex.Message + "\r\n";
+                        System.IO.File.AppendAllText(path, message);
+                    }
                 }
 
                 #endregion
@@ -239,30 +258,39 @@ namespace ncgmpToolbar
 
                 foreach (string s in arr)
                 {
-                    IFeatureClass FC = commonFunctions.OpenFeatureClass(ValidNcgmpDatabase, s);
-                    IFeatureLayer FL = new FeatureLayerClass();
-                    FL.FeatureClass = FC;
+                    try {
+                        IFeatureClass FC = commonFunctions.OpenFeatureClass(ValidNcgmpDatabase, s);
+                        IFeatureLayer FL = new FeatureLayerClass();
+                        FL.FeatureClass = FC;
 
-                    FL.Name = s;
+                        FL.Name = s;
 
-                    if (useRepresentation == true)
-                    {
-                        // Set the layer renderer to use representations
-                        IGeoFeatureLayer GeoFL = (IGeoFeatureLayer)FL;
+                        if (useRepresentation == true)
+                        {
+                            // Set the layer renderer to use representations
+                            IGeoFeatureLayer GeoFL = (IGeoFeatureLayer)FL;
 
-                        IRepresentationRenderer RepRend = new RepresentationRendererClass();
-                        RepRend.RepresentationClass = commonFunctions.GetRepClass(ValidNcgmpDatabase, s + "_Rep");
+                            IRepresentationRenderer RepRend = new RepresentationRendererClass();
+                            RepRend.RepresentationClass = commonFunctions.GetRepClass(ValidNcgmpDatabase, s + "_Rep");
 
-                        GeoFL.Renderer = (IFeatureRenderer)RepRend;
+                            GeoFL.Renderer = (IFeatureRenderer)RepRend;
 
-                        commonFunctions.BuildGenericTemplates(ValidNcgmpDatabase, FL as ILayer, s);
+                            commonFunctions.BuildGenericTemplates(ValidNcgmpDatabase, FL as ILayer, s);
+                        }
+
+                        ILegendInfo LegendInfo = (ILegendInfo)FL;
+                        ILegendGroup LegendGroup = LegendInfo.get_LegendGroup(0);
+                        LegendGroup.Visible = false;
+
+                        GeoMapGroupLayer.Add(FL);
                     }
-
-                    ILegendInfo LegendInfo = (ILegendInfo)FL;
-                    ILegendGroup LegendGroup = LegendInfo.get_LegendGroup(0);
-                    LegendGroup.Visible = false;
-
-                    GeoMapGroupLayer.Add(FL);
+                    catch (Exception ex)
+                    {
+                        // Write exception to C:\Users\<user name>\AppData\Local\Temp\NCGMPToolbarLog.txt
+                        string path = Path.Combine(Environment.GetEnvironmentVariables()["LOCALAPPDATA"] as string, "Temp/NCGMPToolbarLog.txt");
+                        string message = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + " " + s + ": " + ex.Message + "\r\n";
+                        System.IO.File.AppendAllText(path, message);
+                    }
                 }
 
                 #endregion
@@ -276,17 +304,26 @@ namespace ncgmpToolbar
 
                 foreach (string s in arr)
                 {
-                    IFeatureClass FC = commonFunctions.OpenFeatureClass(ValidNcgmpDatabase, s);
-                    IFeatureLayer FL = new FeatureLayerClass();
-                    FL.FeatureClass = FC;
+                    try {
+                        IFeatureClass FC = commonFunctions.OpenFeatureClass(ValidNcgmpDatabase, s);
+                        IFeatureLayer FL = new FeatureLayerClass();
+                        FL.FeatureClass = FC;
 
-                    FL.Name = s;
+                        FL.Name = s;
 
-                    ILegendInfo LegendInfo = (ILegendInfo)FL;
-                    ILegendGroup LegendGroup = LegendInfo.get_LegendGroup(0);
-                    LegendGroup.Visible = false;
+                        ILegendInfo LegendInfo = (ILegendInfo)FL;
+                        ILegendGroup LegendGroup = LegendInfo.get_LegendGroup(0);
+                        LegendGroup.Visible = false;
 
-                    GeoMapGroupLayer.Add(FL);
+                        GeoMapGroupLayer.Add(FL);
+                    }
+                    catch (Exception ex)
+                    {
+                        // Write exception to C:\Users\<user name>\AppData\Local\Temp\NCGMPToolbarLog.txt
+                        string path = Path.Combine(Environment.GetEnvironmentVariables()["LOCALAPPDATA"] as string, "Temp/NCGMPToolbarLog.txt");
+                        string message = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + " " + s + ": " + ex.Message + "\r\n";
+                        System.IO.File.AppendAllText(path, message);
+                    }
                 }
 
                 #endregion
@@ -303,13 +340,22 @@ namespace ncgmpToolbar
                 arr[6] = "StandardLithology";              // Element 7
                 foreach (string s in arr)
                 {
-                    ITable Table = commonFunctions.OpenTable(ValidNcgmpDatabase, s);
-                    IStandaloneTable Standalone = new StandaloneTableClass();
-                    Standalone.Table = Table;
+                    try {
+                        ITable Table = commonFunctions.OpenTable(ValidNcgmpDatabase, s);
+                        IStandaloneTable Standalone = new StandaloneTableClass();
+                        Standalone.Table = Table;
 
-                    Standalone.Name = s;
+                        Standalone.Name = s;
 
-                    thisMapTables.AddStandaloneTable(Standalone);
+                        thisMapTables.AddStandaloneTable(Standalone);
+                    }
+                    catch (Exception ex)
+                    {
+                        // Write exception to C:\Users\<user name>\AppData\Local\Temp\NCGMPToolbarLog.txt
+                        string path = Path.Combine(Environment.GetEnvironmentVariables()["LOCALAPPDATA"] as string, "Temp/NCGMPToolbarLog.txt");
+                        string message = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + " " + s + ": " + ex.Message + "\r\n";
+                        System.IO.File.AppendAllText(path, message);
+                    }
                 }
 
                 #endregion
