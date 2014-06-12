@@ -147,6 +147,7 @@ namespace ncgmpToolbar
                     pathToOpen = openedObject.FullName;
                     break;
                 case "Spatial Database Connection":
+                case "Database Connection":
                     wsFact = new SdeWorkspaceFactoryClass();
                     IGxRemoteDatabaseFolder remoteDatabaseFolder = (IGxRemoteDatabaseFolder)openedObject.Parent;
                     pathToOpen = remoteDatabaseFolder.Path + openedObject.Name;
@@ -154,9 +155,7 @@ namespace ncgmpToolbar
                 default:
                     break;
             }
-            // This doesn't seem to be working for SDE databases.
             openedWorkspace = wsFact.OpenFromFile(pathToOpen, 0);
-
 
             // Check to see if the database is valid NCGMP
             bool isValid = ncgmpChecks.IsWorkspaceMinNCGMPCompliant(openedWorkspace);
