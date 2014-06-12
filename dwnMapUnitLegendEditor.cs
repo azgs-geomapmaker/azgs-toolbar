@@ -2816,8 +2816,11 @@ namespace ncgmpToolbar
             /// Search for the extended attributes record for this map unit
             extAttrAccess.AddExtendedAttributes("OwnerID = '" + mapUnit + "'");
 
-            ExtendedAttributesAccess.ExtendedAttributes anExtendedAttributes = extAttrAccess.ExtendedAttributesDictionary.First().Value;
-            extAttrAccess.DeleteExtendedAttributes(anExtendedAttributes);           
+            if (extAttrAccess.ExtendedAttributesDictionary.Count != 0)
+            {
+                ExtendedAttributesAccess.ExtendedAttributes anExtendedAttributes = extAttrAccess.ExtendedAttributesDictionary.First().Value;
+                extAttrAccess.DeleteExtendedAttributes(anExtendedAttributes);
+            }
         }
 
         #region Change the focus of listboxes
