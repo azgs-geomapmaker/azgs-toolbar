@@ -125,6 +125,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Config.esriaddinx</DependentUpon>
     </Compile>
+    <Compile Include="btnReportIssue.cs" />
     <Compile Include="dwnMapUnitLegendEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -269,7 +270,7 @@
     <AddInContent Include="Images\btnShowMapUnitLegendEditor.png" />
   </ItemGroup>
   <ItemGroup>
-    <AddInContent Include="Images\btnTheTestingButton.png" />
+    <AddInContent Include="Images\github.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="dwnMapUnitLegendEditor.resx">
@@ -328,6 +329,7 @@
     <AddInContent Include="Images\tlDrawPolygonLegend.png" />
     <AddInContent Include="Images\tlDrawPolygonLegend.cur" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <ZipFileExtension>esriAddIn</ZipFileExtension>
     <AddInTargetProduct>Desktop</AddInTargetProduct>
