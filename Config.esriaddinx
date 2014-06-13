@@ -6,7 +6,7 @@
   <Image>Images\ncgmpToolbar.png</Image>
   <Author>Ryan Clark, Genhan Chan, Janel Day, Jessica Good</Author>
   <Company>Arizona Geological Survey</Company>
-  <Date>6/13double.Parse/2014</Date>
+  <Date>6/13/2014</Date>
   <Targets>
     <Target name="Desktop" version="10.2" />
   </Targets>
