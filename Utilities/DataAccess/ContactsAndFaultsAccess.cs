@@ -75,7 +75,8 @@ namespace ncgmpToolbar.Utilities.DataAccess
                 anContactsAndFault.ContactsAndFaults_ID = theFeature.get_Value(idFld).ToString();
                 anContactsAndFault.Type = theFeature.get_Value(typeFld).ToString();
                 bool result = int.TryParse(theFeature.get_Value(concFld).ToString(), out anContactsAndFault.IsConcealed);
-                anContactsAndFault.LocationConfidenceMeters = double.Parse(theFeature.get_Value(locConfFld).ToString());
+                string locConfFldStr = theFeature.get_Value(locConfFld).ToString();
+                anContactsAndFault.LocationConfidenceMeters = double.Parse(string.IsNullOrEmpty(locConfFldStr) ? "-9999" : locConfFldStr);
                 anContactsAndFault.ExistenceConfidence = theFeature.get_Value(exConfFld).ToString();
                 anContactsAndFault.IdentityConfidence = theFeature.get_Value(idConfFld).ToString();
                 anContactsAndFault.Symbol = theFeature.get_Value(symbFld).ToString();
