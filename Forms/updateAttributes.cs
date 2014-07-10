@@ -95,6 +95,7 @@ namespace ncgmpToolbar.Forms
         {
             // Will be building SQL Where Clauses for each possible selected thing
             string MapUnitPolysSearch = "MapUnitPolys_ID = '";
+            string DataSourcePolysSearch = "DataSourcePolys_ID = '";
             string OtherPolysSearch = "OtherPolys_ID = '";
             string ContactsAndFaultsSearch = "ContactsAndFaults_ID = '";
             string GeologicLinesSearch = "GeologicLines_ID = '";
@@ -133,6 +134,9 @@ namespace ncgmpToolbar.Forms
                     case "MapUnitPolys":
                         MapUnitPolysSearch += thisFeature.get_Value(thisFeature.Table.FindField("MapUnitPolys_ID")) + "' OR MapUnitPolys_ID = '";
                         break;
+                    case "DataSourcePolys":
+                        DataSourcePolysSearch += thisFeature.get_Value(thisFeature.Table.FindField("DataSourcePolys_ID")) + "' OR DataSourcePolys_ID = '";
+                        break;
                     case "OtherPolys":
                         OtherPolysSearch += thisFeature.get_Value(thisFeature.Table.FindField("OtherPolys_ID")) + "' OR OtherPolys_ID = '";
                         break;
@@ -167,6 +171,14 @@ namespace ncgmpToolbar.Forms
                 MapUnitPolysAccess MapUnitPolysRecords = new MapUnitPolysAccess(m_theWorkspace);
                 MapUnitPolysRecords.AddMapUnitPolys(MapUnitPolysSearch);
                 dataAccessClasses.Add("MapUnitPolys", MapUnitPolysRecords);
+            }
+
+            if (DataSourcePolysSearch != "DataSourcePolys_ID = '")
+            {
+                DataSourcePolysSearch = DataSourcePolysSearch.Remove(DataSourcePolysSearch.Length - 25);
+                DataSourcePolysAccess DataSourcePolysRecords = new DataSourcePolysAccess(m_theWorkspace);
+                DataSourcePolysRecords.AddDataSourcePolys(DataSourcePolysSearch);
+                dataAccessClasses.Add("DataSourcePolys", DataSourcePolysRecords);
             }
 
             // OtherPolys
@@ -330,6 +342,7 @@ namespace ncgmpToolbar.Forms
 
             // Get DataAccess Classes to perform updates
             MapUnitPolysAccess mapUnitPolysAccess = new MapUnitPolysAccess(m_theWorkspace);
+            DataSourcePolysAccess dataSourcePolysAccess = new DataSourcePolysAccess(m_theWorkspace);
             OtherPolysAccess OtherPolysAccess = new OtherPolysAccess(m_theWorkspace);
             ContactsAndFaultsAccess ContactsAndFaultsAccess = new ContactsAndFaultsAccess(m_theWorkspace);
             GeologicLinesAccess GeologicLinesAccess = new GeologicLinesAccess(m_theWorkspace);
@@ -355,6 +368,17 @@ namespace ncgmpToolbar.Forms
                             mapUnitPolysAccess.UpdateMapUnitPoly(thisMapUnitPoly);
                         }
                         mapUnitPolysAccess.SaveMapUnitPolys();
+                        break;
+                    case "DataSourcePolys":
+                        // Loop through the records in the data access object that comes in
+                        DataSourcePolysAccess thisDataSourcePolysAccess = (DataSourcePolysAccess)anEntry.Value;
+                        foreach (KeyValuePair<string, DataSourcePolysAccess.DataSourcePoly> DataSourcePolysToUpdate in thisDataSourcePolysAccess.DataSourcePolysDictionary)
+                        {
+                            DataSourcePolysAccess.DataSourcePoly thisDataSourcePoly = (DataSourcePolysAccess.DataSourcePoly)DataSourcePolysToUpdate.Value;
+                            thisDataSourcePoly.DataSourceID = dataSourceID;
+                            dataSourcePolysAccess.UpdateDataSourcePoly(thisDataSourcePoly);
+                        }
+                        dataSourcePolysAccess.SaveDataSourcePolys();
                         break;
                     case "OtherPolys":
                         OtherPolysAccess thisOtherPolysAccess = (OtherPolysAccess)anEntry.Value;

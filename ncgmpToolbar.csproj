@@ -191,6 +191,7 @@
     <Compile Include="tlDrawPolygonLegend.cs" />
     <Compile Include="Utilities\commonFunctions.cs" />
     <Compile Include="Utilities\DataAccess\ContactsAndFaultsAccess.cs" />
+    <Compile Include="Utilities\DataAccess\DataSourcePolysAccess.cs" />
     <Compile Include="Utilities\DataAccess\DataSourcesAccess.cs" />
     <Compile Include="Utilities\DataAccess\DescriptionOfMapUnitsAccess.cs" />
     <Compile Include="Utilities\DataAccess\ExtendedAttributesAccess.cs" />
