@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using ncgmpToolbar.Utilities;
+using ncgmpToolbar.Forms;
 using ESRI.ArcGIS.ArcMapUI;
 using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Framework;
@@ -96,6 +97,7 @@ namespace ncgmpToolbar
         }
 
         private void DrawLegend(IEnvelope Envelope) {
+           
             // BOX DIMENSIONS AND UNIFORM SYMBOL ITEMS
             double BoxX = 0.4; //Width
             double BoxY = 0.3; //Height
@@ -137,6 +139,17 @@ namespace ncgmpToolbar
             IGeometry Geo = null;
             string LabelText = "";
             ESRI.ArcGIS.Geometry.IPoint LabelPoint = new ESRI.ArcGIS.Geometry.PointClass();
+
+            // Get the transparency of the MapUnitPolys Layer
+            double transparency = 100;
+            try
+            {
+                IFeatureLayer polyLayer = commonFunctions.FindFeatureLayer(ArcMap.Editor.EditWorkspace, "MapUnitPolys");
+                ILayerEffects layerEffects = polyLayer as ILayerEffects;
+                transparency = layerEffects.Transparency;
+            }
+            catch { }
+
             #endregion
 
             // Get a reference to the DescriptionOfMapUnits entries
@@ -245,6 +258,7 @@ namespace ncgmpToolbar
 
                     // Get the color of the box
                     BoxColr = new RgbColorClass();
+
                     if (aDescription.AreaFillRGB == null) 
                     {
                         BoxColr.Red = 255;
@@ -257,6 +271,11 @@ namespace ncgmpToolbar
                         BoxColr.Green = int.Parse(aDescription.AreaFillRGB.Split(';')[1]);
                         BoxColr.Blue = int.Parse(aDescription.AreaFillRGB.Split(';')[2]);
                     }
+
+                    // Set the transparency for the legend color boxes
+                    BoxColr.Red = (int)((255 - BoxColr.Red) * transparency/100 + BoxColr.Red);
+                    BoxColr.Green = (int)((255 - BoxColr.Green) * transparency / 100 + BoxColr.Green);
+                    BoxColr.Blue = (int)((255 - BoxColr.Blue) * transparency / 100 + BoxColr.Blue);
 
                     // Draw the fill
                     FillSym = new SimpleFillSymbolClass();
