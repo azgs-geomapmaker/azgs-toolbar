@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using ncgmpToolbar.Utilities;
-using ncgmpToolbar.Forms;
 using ESRI.ArcGIS.ArcMapUI;
 using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Framework;
@@ -96,8 +95,8 @@ namespace ncgmpToolbar
             return theOutput;
         }
 
-        private void DrawLegend(IEnvelope Envelope) {
-           
+        private void DrawLegend(IEnvelope Envelope) 
+        {
             // BOX DIMENSIONS AND UNIFORM SYMBOL ITEMS
             double BoxX = 0.4; //Width
             double BoxY = 0.3; //Height
@@ -258,7 +257,6 @@ namespace ncgmpToolbar
 
                     // Get the color of the box
                     BoxColr = new RgbColorClass();
-
                     if (aDescription.AreaFillRGB == null) 
                     {
                         BoxColr.Red = 255;
