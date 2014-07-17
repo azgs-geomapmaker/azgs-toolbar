@@ -734,9 +734,19 @@ namespace ncgmpToolbar
 
         private void tlsbtnSaveMapUnit_Click(object sender, EventArgs e)
         {
-            saveAge();
-            saveLithology();
-            saveMapUnit();
+            var confirmResult = MessageBox.Show("Reconcile and post do not work with Legend Editor. Save anyway?",
+                "Confirm Save!!",
+                MessageBoxButtons.YesNo);
+            if (confirmResult == DialogResult.Yes)
+            {
+                saveAge();
+                saveLithology();
+                saveMapUnit();
+            }
+            else
+            {
+                tlsbtnCancel_Click(sender, e);
+            }
             
         }
 
