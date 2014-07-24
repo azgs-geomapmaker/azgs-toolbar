@@ -21,6 +21,12 @@ namespace ncgmpToolbar.Utilities.DataAccess
             m_theWorkspace = theWorkspace;
         }
 
+        public MapUnitPolysAccess(IWorkspace theWorkspace, string mupLayerName)
+        {
+            m_MapUnitPolysFC = commonFunctions.OpenFeatureClass(theWorkspace, mupLayerName);
+            m_theWorkspace = theWorkspace;
+        }
+
         public struct MapUnitPoly
         {
             public string MapUnitPolys_ID;
@@ -47,7 +53,16 @@ namespace ncgmpToolbar.Utilities.DataAccess
 
         public void AddMapUnitPolys(string SqlWhereClause)
         {
-            int idFld = m_MapUnitPolysFC.FindField("MapUnitPolys_ID");
+            // Figure out the MapUnitPolys_ID field. It could be one of the following.
+            string[] mupIdFields = { "MapUnitPolys_ID", "CMUMapUnitPolys_ID", "CSAMapUnitPolys_ID", "CSBMapUnitPolys_ID", "CSCMapUnitPolys_ID", "CSDMapUnitPolys_ID", "CSEMapUnitPolys_ID", "CSFMapUnitPolys_ID" };
+            string mupIdField = "";
+            int idFld = -1;
+            for (int i = 0; i < mupIdFields.Length; i++)
+                if (idFld == -1)
+                {
+                    mupIdField = mupIdFields[i];
+                    idFld = m_MapUnitPolysFC.FindField(mupIdField);
+                }
             int unitFld = m_MapUnitPolysFC.FindField("MapUnit");
             int idConfFld = m_MapUnitPolysFC.FindField("IdentityConfidence");
             int lblFld = m_MapUnitPolysFC.FindField("Label");
@@ -113,7 +128,16 @@ namespace ncgmpToolbar.Utilities.DataAccess
 
         public void SaveMapUnitPolys()
         {
-            int idFld = m_MapUnitPolysFC.FindField("MapUnitPolys_ID");
+            // Figure out the MapUnitPolys_ID field. It could be one of the following.
+            string[] mupIdFields = { "MapUnitPolys_ID", "CMUMapUnitPolys_ID", "CSAMapUnitPolys_ID", "CSBMapUnitPolys_ID", "CSCMapUnitPolys_ID", "CSDMapUnitPolys_ID", "CSEMapUnitPolys_ID", "CSFMapUnitPolys_ID" };
+            string mupIdField = "";
+            int idFld = -1;
+            for (int i = 0; i < mupIdFields.Length; i++)
+                if (idFld == -1)
+                {
+                    mupIdField = mupIdFields[i];
+                    idFld = m_MapUnitPolysFC.FindField(mupIdField);
+                }
             int unitFld = m_MapUnitPolysFC.FindField("MapUnit");
             int idConfFld = m_MapUnitPolysFC.FindField("IdentityConfidence");
             int lblFld = m_MapUnitPolysFC.FindField("Label");
@@ -127,7 +151,7 @@ namespace ncgmpToolbar.Utilities.DataAccess
 
             try
             {
-                string updateWhereClause = "MapUnitPolys_ID = '";
+                string updateWhereClause = mupIdField + " = '";
                 IFeatureCursor insertCursor = m_MapUnitPolysFC.Insert(true);
 
                 foreach (KeyValuePair<string, MapUnitPoly> aDictionaryEntry in m_MapUnitPolysDictionary)
@@ -136,7 +160,7 @@ namespace ncgmpToolbar.Utilities.DataAccess
                     switch (thisMapUnitPoly.RequiresUpdate)
                     {
                         case true:
-                            updateWhereClause += thisMapUnitPoly.MapUnitPolys_ID + "' OR MapUnitPolys_ID = '";
+                            updateWhereClause += thisMapUnitPoly.MapUnitPolys_ID + "' OR " + mupIdField + " = '";
                             break;
 
                         case false:
@@ -158,10 +182,10 @@ namespace ncgmpToolbar.Utilities.DataAccess
                 System.Runtime.InteropServices.Marshal.ReleaseComObject(insertCursor);
                 theEditor.StopOperation("Insert MapUnitPolys");
 
-                if (updateWhereClause == "MapUnitPolys_ID = '") { return; }
+                if (updateWhereClause == mupIdField + " = '") { return; }
 
                 theEditor.StartOperation();
-                updateWhereClause = updateWhereClause.Remove(updateWhereClause.Length - 23);
+                updateWhereClause = updateWhereClause.Remove(updateWhereClause.Length - (" OR " + mupIdField + " = '").Length);
 
                 IQueryFilter QF = new QueryFilterClass();
                 QF.WhereClause = updateWhereClause;

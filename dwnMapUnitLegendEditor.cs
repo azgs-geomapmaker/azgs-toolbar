@@ -51,11 +51,11 @@ namespace ncgmpToolbar
             if (theEditor.EditState == esriEditState.esriStateEditing)
             {
                 m_theWorkspace = theEditor.EditWorkspace;
-                if (ncgmpChecks.IsWorkspaceMinNCGMPCompliant(m_theWorkspace) == true) 
+                if (ncgmpChecks.IsWorkspaceMinNCGMPCompliant(m_theWorkspace) == true)
                 {
                     sysInfo SysInfoTable = new sysInfo(m_theWorkspace);
                     this.tlslblLegendName.Text = SysInfoTable.ProjName;
-                    PopulateMainLegendTree(); 
+                    PopulateMainLegendTree();
                 }
                 else
                 {
@@ -95,8 +95,8 @@ namespace ncgmpToolbar
             private dwnMapUnitLegendEditor m_windowUI;
 
             public AddinImpl()
-            {         
-                
+            {
+
             }
 
             protected override IntPtr OnCreateChild()
@@ -114,7 +114,7 @@ namespace ncgmpToolbar
             }
         }
 
-    #region "Copying from existing legends"
+        #region "Copying from existing legends"
 
         private void tlsbtnShowCopyPanel_Click(object sender, EventArgs e)
         {
@@ -174,7 +174,7 @@ namespace ncgmpToolbar
             //    }
             //}
             #endregion
-            
+
             // Show the copy form
             sourceLegendItemSelection sourceForm = new sourceLegendItemSelection(openedWorkspace);
             sourceForm.ShowDialog();
@@ -207,9 +207,9 @@ namespace ncgmpToolbar
                 DescriptionOfMapUnitsAccess.DescriptionOfMapUnit sourceDmuEntry = sourceEntry.Value;
                 string thisHierachyKey = newValue.ToString().PadLeft(4, '0');
 
-                targetDmu.NewDescriptionOfMapUnit(sourceDmuEntry.MapUnit, sourceDmuEntry.Name, sourceDmuEntry.FullName, sourceDmuEntry.Label, 
-                    sourceDmuEntry.Age, sourceDmuEntry.Description, thisHierachyKey, 
-                    sourceDmuEntry.ParagraphStyle, sourceDmuEntry.AreaFillRGB, sourceDmuEntry.AreaFillPatternDescription, 
+                targetDmu.NewDescriptionOfMapUnit(sourceDmuEntry.MapUnit, sourceDmuEntry.Name, sourceDmuEntry.FullName, sourceDmuEntry.Label,
+                    sourceDmuEntry.Age, sourceDmuEntry.Description, thisHierachyKey,
+                    sourceDmuEntry.ParagraphStyle, sourceDmuEntry.AreaFillRGB, sourceDmuEntry.AreaFillPatternDescription,
                     commonFunctions.GetCurrentDataSourceID(), sourceDmuEntry.GeneralLithology, sourceDmuEntry.GeneralLithologyConfidence);
 
                 newValue++;
@@ -223,11 +223,11 @@ namespace ncgmpToolbar
             PopulateMainLegendTree();
         }
 
-        private void tlsbtnCloseCopy_Click(object sender, EventArgs e) {}
-     
-    #endregion
+        private void tlsbtnCloseCopy_Click(object sender, EventArgs e) { }
 
-    #region "Main Legend Treeview"
+        #endregion
+
+        #region "Main Legend Treeview"
 
         public void PopulateMainLegendTree()
         {
@@ -244,7 +244,7 @@ namespace ncgmpToolbar
 
             // Build ID lookup Dictionary
             var hierarchyDmuDictionary = BuildIDLookupFromHierarchy(sortedDmuEntries);
-            
+
             // Setup variables that will be needed during legend population
             System.Drawing.Font BoldFont = new System.Drawing.Font("FGDCGeoAge", 8, FontStyle.Bold, GraphicsUnit.Point);
             TreeNode thisNode;
@@ -254,7 +254,7 @@ namespace ncgmpToolbar
             trvLegendItems.BeginUpdate();
 
             foreach (KeyValuePair<string, DescriptionOfMapUnitsAccess.DescriptionOfMapUnit> aDictionaryEntry in sortedDmuEntries)
-            {                
+            {
                 // Grab the DMU object itself
                 DescriptionOfMapUnitsAccess.DescriptionOfMapUnit aDescription = aDictionaryEntry.Value;
 
@@ -267,7 +267,7 @@ namespace ncgmpToolbar
 
                 // HierarchyKey will tell me if this is a top-level node or not.
                 string thisHierarchyKey = aDescription.HierarchyKey;
-                if (thisHierarchyKey.Length <= 4) 
+                if (thisHierarchyKey.Length <= 4)
                 {
                     // Add this node to the top level
                     trvLegendItems.Nodes.Add(aDescription.DescriptionOfMapUnits_ID, nodeLabel);
@@ -276,19 +276,19 @@ namespace ncgmpToolbar
                 {
                     // Lookup the parent's ID given it's hierarchy key. Parent's Hierarchy Key can be determined by stripping characters off the child
                     string parentHierarchyKey = thisHierarchyKey.Remove(thisHierarchyKey.Length - 5);
-                    string parentID = hierarchyDmuDictionary[parentHierarchyKey];    
-                
+                    string parentID = hierarchyDmuDictionary[parentHierarchyKey];
+
                     // Find the parent node in the tree, add this node as a child to it
                     nodeArray = trvLegendItems.Nodes.Find(parentID, true);
                     nodeArray[0].Nodes.Add(aDescription.DescriptionOfMapUnits_ID, nodeLabel);
-                }              
+                }
 
                 // Change the Font if it is a heading
                 if (isHeading == true)
                 {
                     thisNode = trvLegendItems.Nodes.Find(aDescription.DescriptionOfMapUnits_ID, true)[0];
                     thisNode.NodeFont = BoldFont;
-                }     
+                }
             }
 
             // Expand all nodes - this calls a self-iterating function that expands all children
@@ -331,7 +331,7 @@ namespace ncgmpToolbar
 
             // Make sure that something is selected
             if (e.Node == null) { return; }
-            
+
 
             // Get the selected DMU entry
             DescriptionOfMapUnitsAccess dmuAccess = new DescriptionOfMapUnitsAccess(m_theWorkspace);
@@ -362,7 +362,7 @@ namespace ncgmpToolbar
             initAgeTab(txtMapUnitAbbreviation.Text);
         }
 
-    #region "Drag and Drop Stuff"
+        #region "Drag and Drop Stuff"
 
         private void trvLegendItems_ItemDrag(object sender, System.Windows.Forms.ItemDragEventArgs e)
         {
@@ -422,7 +422,7 @@ namespace ncgmpToolbar
 
             // Get the dropped item's DMU entry
             dmuFinder.AddDescriptionOfMapUnits("DescriptionOfMapUnits_ID = '" + destinationNode.Name + "'");
-            DescriptionOfMapUnitsAccess.DescriptionOfMapUnit destinationDmuEntry = dmuFinder.DescriptionOfMapUnitsDictionary[destinationNode.Name];                        
+            DescriptionOfMapUnitsAccess.DescriptionOfMapUnit destinationDmuEntry = dmuFinder.DescriptionOfMapUnitsDictionary[destinationNode.Name];
 
             // Next, insert the node in the new location
             string newHierarchyKey = "";
@@ -442,7 +442,7 @@ namespace ncgmpToolbar
                     {
                         case true:
                             // Drop below
-                            newKeyValue = int.Parse(destinationDmuEntry.HierarchyKey.Substring(destinationDmuEntry.HierarchyKey.Length - 4)) + 1;                            
+                            newKeyValue = int.Parse(destinationDmuEntry.HierarchyKey.Substring(destinationDmuEntry.HierarchyKey.Length - 4)) + 1;
                             break;
 
                         case false:
@@ -456,7 +456,7 @@ namespace ncgmpToolbar
                     else { newHierarchyKey = destinationDmuEntry.HierarchyKey.Remove(destinationDmuEntry.HierarchyKey.Length - 5) + "." + newKeyValue.ToString().PadLeft(4, '0'); }
                     break;
             }
-                        
+
             // Take care of rebuilding the hierarchy due to the insert
             //  I need to pass in these children because after making any adjustments to the hierarchy
             //  (RemoveFromHierarchy call above), I cannot rely on hierarchy keys to be truthful as to
@@ -470,7 +470,7 @@ namespace ncgmpToolbar
             PopulateMainLegendTree();
         }
 
-        private void ClearHighlights(TreeNodeCollection  theNodeCollection)
+        private void ClearHighlights(TreeNodeCollection theNodeCollection)
         {
             // Cycle through the tree, set colors appropriately - recursive.
             foreach (TreeNode thisNode in theNodeCollection)
@@ -492,11 +492,11 @@ namespace ncgmpToolbar
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         private static extern int SendMessage(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam);
 
-    #endregion
+        #endregion
 
-    #endregion
+        #endregion
 
-    #region "Input Controls"
+        #region "Input Controls"
 
         private void PopulateInputControls(DescriptionOfMapUnitsAccess.DescriptionOfMapUnit thisDmuEntry)
         {
@@ -516,24 +516,24 @@ namespace ncgmpToolbar
 
             // Set update flag
             m_ThisIsAnUpdate = true;
-            
+
             if (isHeading == true)
             {
                 // This is a heading
                 chkIsHeading.Checked = true;
                 txtUnitName.Text = thisDmuEntry.Name;
-                txtMapUnitDescription.Text = thisDmuEntry.Description;                
+                txtMapUnitDescription.Text = thisDmuEntry.Description;
                 pnlColor.BackColor = Color.White;
             }
             else
             {
                 // This is a MapUnit
                 chkIsHeading.Checked = false;
-                txtUnitName.Text = thisDmuEntry.Name;                
+                txtUnitName.Text = thisDmuEntry.Name;
                 txtMapUnitAbbreviation.Text = thisDmuEntry.MapUnit;
                 txtMapUnitAge.Text = thisDmuEntry.Age;
                 txtMapUnitFullName.Text = thisDmuEntry.FullName;
-                txtMapUnitDescription.Text = thisDmuEntry.Description;                
+                txtMapUnitDescription.Text = thisDmuEntry.Description;
 
                 // This variable will hang onto the old MapUnitName in case it gets changed
                 m_theOldMapUnitName = thisDmuEntry.MapUnit;
@@ -542,13 +542,13 @@ namespace ncgmpToolbar
                 string rgbString = thisDmuEntry.AreaFillRGB;
                 string[] rgbValues = rgbString.Split(';');
 
-                if (rgbValues.Length < 3) 
-                { 
+                if (rgbValues.Length < 3)
+                {
                     pnlColor.BackColor = Color.White;
                     colorDialog.Color = Color.White;
                 }
-                else 
-                { 
+                else
+                {
                     pnlColor.BackColor = Color.FromArgb(int.Parse(rgbValues[0]), int.Parse(rgbValues[1]), int.Parse(rgbValues[2]));
                     colorDialog.Color = pnlColor.BackColor;
                 }
@@ -564,7 +564,7 @@ namespace ncgmpToolbar
                     txtMapUnitAbbreviation.Enabled = false;
                     txtMapUnitAge.Enabled = false;
                     txtMapUnitFullName.Enabled = false;
-                    txtMapUnitFullName.ReadOnly = true;                    
+                    txtMapUnitFullName.ReadOnly = true;
                     txtMapUnitDescription.Enabled = true;
                     btnColorChooser.Enabled = false;
                     tlsbtnAssignUnit.Enabled = false;
@@ -577,7 +577,7 @@ namespace ncgmpToolbar
                     txtUnitName.Enabled = true;
                     txtMapUnitAbbreviation.Enabled = true;
                     txtMapUnitAge.Enabled = true;
-                    txtMapUnitFullName.Enabled = true;                                   
+                    txtMapUnitFullName.Enabled = true;
                     txtMapUnitDescription.Enabled = true;
                     btnColorChooser.Enabled = true;
                     tlsbtnAssignUnit.Enabled = true;
@@ -594,10 +594,10 @@ namespace ncgmpToolbar
                             btnEditFullName.Enabled = false;
                             txtMapUnitFullName.ReadOnly = false;
                             break;
-                    }                         
+                    }
                     break;
             }
-        }    
+        }
 
         private void ClearMapUnitInput()
         {
@@ -626,7 +626,7 @@ namespace ncgmpToolbar
 
             // Set Update Flag
             m_ThisIsAnUpdate = false;
-            
+
             // Clear the old MapUnit variable
             m_theOldMapUnitName = null;
         }
@@ -668,7 +668,7 @@ namespace ncgmpToolbar
 
         private void txtMapUnitAbbreviation_TextChanged(object sender, EventArgs e)
         {
-            EnableSaveButton();           
+            EnableSaveButton();
         }
 
         private void txtMapUnitAge_TextChanged(object sender, EventArgs e)
@@ -728,9 +728,9 @@ namespace ncgmpToolbar
             }
         }
 
-    #endregion        
+        #endregion
 
-    #region "Save/Cancel Functionality"
+        #region "Save/Cancel Functionality"
 
         private void tlsbtnSaveMapUnit_Click(object sender, EventArgs e)
         {
@@ -747,7 +747,7 @@ namespace ncgmpToolbar
             {
                 tlsbtnCancel_Click(sender, e);
             }
-            
+
         }
 
         private void saveMapUnit()
@@ -838,7 +838,7 @@ namespace ncgmpToolbar
             if ((m_ThisIsAnUpdate == true) && (m_theOldMapUnitName != null)) { UpdatePolygons(m_theOldMapUnitName, dmuEntry); }
 
             // Clear Inputs
-            ClearMapUnitInput(); 
+            ClearMapUnitInput();
         }
 
         private void tlsbtnCancel_Click(object sender, EventArgs e)
@@ -855,9 +855,9 @@ namespace ncgmpToolbar
             trvLegendItems.SelectedNode = null;
         }
 
-    #endregion
+        #endregion
 
-    #region "Add/Remove Legend Item Buttons"
+        #region "Add/Remove Legend Item Buttons"
 
         private void tlsbtnNewLegendItem_Click(object sender, EventArgs e)
         {
@@ -872,7 +872,7 @@ namespace ncgmpToolbar
 
             // Set the Update flag
             m_ThisIsAnUpdate = false;
-            
+
             // Enable controls - in this case I need to explicitly disable the Remove and assign buttons
             EnableControls(false, true);
             tlsbtnRemoveLegendItem.Enabled = false;
@@ -960,11 +960,11 @@ namespace ncgmpToolbar
             }
         }
 
-    #endregion
+        #endregion
 
-    #region "Hierarchy Control"
+        #region "Hierarchy Control"
 
-        private void InsertItemIntoHierarchy(DescriptionOfMapUnitsAccess.DescriptionOfMapUnit theInsertedDmuEntry, string theNewHierarchyKey, 
+        private void InsertItemIntoHierarchy(DescriptionOfMapUnitsAccess.DescriptionOfMapUnit theInsertedDmuEntry, string theNewHierarchyKey,
             IOrderedEnumerable<KeyValuePair<string, DescriptionOfMapUnitsAccess.DescriptionOfMapUnit>> thisItemsChildren)
         {
             // Get the insert location parent Hierarchy Key
@@ -978,7 +978,7 @@ namespace ncgmpToolbar
             var sortedChildren = GetSortedChildren(parentKey);
 
             // Get a DMU Access object to perform an update
-            DescriptionOfMapUnitsAccess DmuAccess = new DescriptionOfMapUnitsAccess(m_theWorkspace);            
+            DescriptionOfMapUnitsAccess DmuAccess = new DescriptionOfMapUnitsAccess(m_theWorkspace);
 
             // I need to have each of the entry's children gathered before I start updating them.
             // What a fucking mess.
@@ -1052,7 +1052,7 @@ namespace ncgmpToolbar
                 if (thisKeyValue > removedKeyValue)
                 {
                     string newKey;
-                    if (parentKey == null) { newKey = (thisKeyValue -1).ToString().PadLeft(4, '0'); }
+                    if (parentKey == null) { newKey = (thisKeyValue - 1).ToString().PadLeft(4, '0'); }
                     else { newKey = parentKey + "." + (thisKeyValue - 1).ToString().PadLeft(4, '0'); }
 
                     // Get the DMU entry for this entry
@@ -1128,11 +1128,11 @@ namespace ncgmpToolbar
             if (parentKey != null) { newHierarchyKey += parentKey + "."; }
             newHierarchyKey += newLastKeyValue;
 
-            return newHierarchyKey;            
+            return newHierarchyKey;
         }
 
         private string GetLastHierarchyKey(string parentKey = null)
-        {            
+        {
             // Get Sorted DmuEntries - parentKey will limit this list to children of a specific parent
             var sortedDmuEntries = GetSortedChildren(parentKey);
 
@@ -1163,12 +1163,12 @@ namespace ncgmpToolbar
         {
             // Get All DescriptionOfMapUnits.
             DescriptionOfMapUnitsAccess DmuAccess = new DescriptionOfMapUnitsAccess(m_theWorkspace);
-            DmuAccess.AddDescriptionOfMapUnits();                           
+            DmuAccess.AddDescriptionOfMapUnits();
 
             // Sort using Linq syntax
             var sortedDmuEntries = (
                 from entry in DmuAccess.DescriptionOfMapUnitsDictionary
-                orderby ((DescriptionOfMapUnitsAccess.DescriptionOfMapUnit)entry.Value).HierarchyKey ascending 
+                orderby ((DescriptionOfMapUnitsAccess.DescriptionOfMapUnit)entry.Value).HierarchyKey ascending
                 select entry);
 
             return sortedDmuEntries;
@@ -1209,7 +1209,7 @@ namespace ncgmpToolbar
         private Dictionary<string, string> BuildIDLookupFromHierarchy(IOrderedEnumerable<KeyValuePair<string, DescriptionOfMapUnitsAccess.DescriptionOfMapUnit>> dmuEntries)
         {
             // Pass these records into a new Dictionary correlating ID to HierarchyKey
-            Dictionary<string, string> hierarchyDmuDictionary = new Dictionary<string,string>();
+            Dictionary<string, string> hierarchyDmuDictionary = new Dictionary<string, string>();
             foreach (KeyValuePair<string, DescriptionOfMapUnitsAccess.DescriptionOfMapUnit> aDictionaryEntry in dmuEntries)
             {
                 DescriptionOfMapUnitsAccess.DescriptionOfMapUnit thisDmuEntry = (DescriptionOfMapUnitsAccess.DescriptionOfMapUnit)aDictionaryEntry.Value;
@@ -1219,9 +1219,9 @@ namespace ncgmpToolbar
             return hierarchyDmuDictionary;
         }
 
-    #endregion
+        #endregion
 
-    #region "Attribute Polygons, Maintain Attribution"
+        #region "Attribute Polygons, Maintain Attribution"
 
         private void tlsbtnAssignUnit_Click(object sender, EventArgs e)
         {
@@ -1233,40 +1233,55 @@ namespace ncgmpToolbar
             dmuAccess.AddDescriptionOfMapUnits("DescriptionOfMapUnits_ID = '" + dmuID + "'");
             DescriptionOfMapUnitsAccess.DescriptionOfMapUnit dmuEntry = dmuAccess.DescriptionOfMapUnitsDictionary[dmuID];
 
-            // Get selected polygons
-            IFeatureLayer mapUnitPolysLayer = commonFunctions.FindFeatureLayer(m_theWorkspace, "MapUnitPolys");
+            // Layers that can have Map Units Assigned
+            string[] polyLayers = { "MapUnitPolys", "CMUMapUnitPolys", "CSAMapUnitPolys", "CSBMapUnitPolys", "CSCMapUnitPolys", "CSDMapUnitPolys", "CSEMapUnitPolys", "CSFMapUnitPolys" };
 
-            // Find out if there are selected features
-            IFeatureSelection featureSelection = (IFeatureSelection)mapUnitPolysLayer;
-            ISelectionSet theSelection = featureSelection.SelectionSet;
+            // Loop through each layer which can have Map Units Assigned
+            for (int i = 0; i < polyLayers.Length; i++)
+            {
+                try
+                {
+                    // Get selected polygons
+                    IFeatureLayer mapUnitPolysLayer = commonFunctions.FindFeatureLayer(m_theWorkspace, polyLayers[i]);
 
-            // Bail if nothing was selected
-            if (theSelection.Count == 0) { return; }
+                    // Find out if there are selected features
+                    IFeatureSelection featureSelection = (IFeatureSelection)mapUnitPolysLayer;
+                    ISelectionSet theSelection = featureSelection.SelectionSet;
 
+                    if (theSelection.Count != 0)
+                        assignMapUnit(theSelection, mapUnitPolysLayer, dmuEntry);
+                }
+                catch { }
+            }
+        }
+
+        private void assignMapUnit(ISelectionSet theSelection, IFeatureLayer mapUnitPolysLayer, DescriptionOfMapUnitsAccess.DescriptionOfMapUnit dmuEntry)
+        {
             // Pass the selected features into a cursor that we can iterate through
             ICursor theCursor;
             theSelection.Search(null, false, out theCursor);
-            int IdFld = theCursor.FindField("MapUnitPolys_ID");
+            string mupIdField = mapUnitPolysLayer.DisplayField;
+            int IdFld = theCursor.FindField(mupIdField);
 
             // Build the Where Clause to get these features by looping through the cursor
-            string sqlWhereClause = "MapUnitPolys_ID = '";
+            string sqlWhereClause = mupIdField + " = '";
             IRow theRow = theCursor.NextRow();
             while (theRow != null)
             {
-                sqlWhereClause += theRow.get_Value(IdFld) + "' OR MapUnitPolys_ID = '";
+                sqlWhereClause += theRow.get_Value(IdFld) + "' OR " + mupIdField + " = '";
                 theRow = theCursor.NextRow();
             }
 
             System.Runtime.InteropServices.Marshal.ReleaseComObject(theCursor);
 
             // If we didn't add anything to the where clause, bail
-            if (sqlWhereClause == "MapUnitPolys_ID = '") { return; }
+            if (sqlWhereClause == mupIdField + " = '") { return; }
 
             // Cleanup the where clause
-            sqlWhereClause = sqlWhereClause.Remove(sqlWhereClause.Length - 23);
+            sqlWhereClause = sqlWhereClause.Remove(sqlWhereClause.Length - (" OR " + mupIdField + " = '").Length);
 
             // Get the MapUnitPolys
-            MapUnitPolysAccess polysAccess = new MapUnitPolysAccess(m_theWorkspace);
+            MapUnitPolysAccess polysAccess = new MapUnitPolysAccess(m_theWorkspace, mapUnitPolysLayer.Name);
             polysAccess.AddMapUnitPolys(sqlWhereClause);
 
             //---------------------------------------------------------------------------------
@@ -1280,17 +1295,17 @@ namespace ncgmpToolbar
 
             // Sort using Linq syntax
             var sortedPolys = (
-                from entry in polysAccess.MapUnitPolysDictionary                
+                from entry in polysAccess.MapUnitPolysDictionary
                 select entry);
-            
-                MapUnitPolysAccess secondPolysAccess = new MapUnitPolysAccess(m_theWorkspace);
+
+            MapUnitPolysAccess secondPolysAccess = new MapUnitPolysAccess(m_theWorkspace, mapUnitPolysLayer.Name);
             try
             {
                 // Cycle through the MapUnitPolys and update the MapUnit and Label  attributes
                 foreach (KeyValuePair<string, MapUnitPolysAccess.MapUnitPoly> anEntry in sortedPolys)
                 {
                     // Get the MapUnitPoly object                    
-                    secondPolysAccess.AddMapUnitPolys("MapUnitPolys_ID = '" + anEntry.Value.MapUnitPolys_ID + "'");
+                    secondPolysAccess.AddMapUnitPolys(mupIdField + " = '" + anEntry.Value.MapUnitPolys_ID + "'");
                     MapUnitPolysAccess.MapUnitPoly aPoly = secondPolysAccess.MapUnitPolysDictionary[anEntry.Value.MapUnitPolys_ID];
 
                     // Change the appropriate values
@@ -1344,15 +1359,15 @@ namespace ncgmpToolbar
                 IFeatureLayer mapUnitPolysLayer = commonFunctions.FindFeatureLayer(m_theWorkspace, "MapUnitPolys");
                 ArcMap.Document.ActiveView.PartialRefresh(esriViewDrawPhase.esriViewGeography, mapUnitPolysLayer, null);
             }
-            catch (Exception err) { MessageBox.Show(err.Message); }            
+            catch (Exception err) { MessageBox.Show(err.Message); }
         }
 
-    #endregion
+        #endregion
 
-    #endregion
+        #endregion
 
 
-    #region "Lithology Controls by Genhan"
+        #region "Lithology Controls by Genhan"
 
         bool m_isLithUpdate = false;
 
@@ -1395,7 +1410,7 @@ namespace ncgmpToolbar
 
                 m_StandardLithologyDictionary.Add(aKey, aDictionaryValue);
             }
-            
+
 
         }
 
@@ -1452,14 +1467,14 @@ namespace ncgmpToolbar
                     liLith.Items.Add(thisLith.Lithology);
                 }
 
-                ClearLithologyInput();           
+                ClearLithologyInput();
             }
 
         }
 
         private void liLith_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (m_theWorkspace != null && m_StandardLithologyDictionary.Count != 0) 
+            if (m_theWorkspace != null && m_StandardLithologyDictionary.Count != 0)
             {
                 if (liLith.SelectedIndex != -1)
                 {
@@ -1513,7 +1528,7 @@ namespace ncgmpToolbar
             }
         }
 
-        private double getPropValue (string propTerm) 
+        private double getPropValue(string propTerm)
         {
             switch (propTerm)
             {
@@ -1565,7 +1580,7 @@ namespace ncgmpToolbar
             }
 
             updateLithology4MapUnit();
-            string mapUnit = txtMapUnitAbbreviation.Text;          
+            string mapUnit = txtMapUnitAbbreviation.Text;
 
             StandardLithologyAccess lithAccess = new StandardLithologyAccess(m_theWorkspace);
             lithAccess.AddStandardLithology("MapUnit = '" + mapUnit + "'");
@@ -1646,9 +1661,9 @@ namespace ncgmpToolbar
             }
         }
 
-    #endregion
+        #endregion
 
-    #region "Age Controls by Genhan"
+        #region "Age Controls by Genhan"
         private Dictionary<string, GeologicEventsAccess.GeologicEvents> m_GeologicEventsDictionary = new Dictionary<string, GeologicEventsAccess.GeologicEvents>();
         private Dictionary<string, ExtendedAttributesAccess.ExtendedAttributes> m_ExtendedAttributesDictionary = new Dictionary<string, ExtendedAttributesAccess.ExtendedAttributes>();
         //private ExtendedAttributesAccess.ExtendedAttributes m_ExtendedAttributes = new ExtendedAttributesAccess.ExtendedAttributes();
@@ -1664,9 +1679,10 @@ namespace ncgmpToolbar
             if (liEvts.Items.Count == 0) { initAgeEventsListbox(); }
 
             if (mapUnit == null || mapUnit == "") { initEmptyAgeEventTab(); }
-            else {
+            else
+            {
                 initEmptyAgeEventTab();
-                initAgeEventTab(mapUnit); 
+                initAgeEventTab(mapUnit);
             }
         }
 
@@ -1745,178 +1761,178 @@ namespace ncgmpToolbar
         }
 
         #region "Initialize the empty tabs"
-            private void initEmptyAgeEventTab()
-            {
-                liEvts4ThisUnit.Items.Clear();
-                liEvts.SelectedIndex = -1;
+        private void initEmptyAgeEventTab()
+        {
+            liEvts4ThisUnit.Items.Clear();
+            liEvts.SelectedIndex = -1;
 
-                initEmptyEventTab();
-            }
+            initEmptyEventTab();
+        }
 
-            private void initEmptyEventTab()
-            {
-                txtAgeDisplay.Clear();
-                cboEventType.SelectedIndex = 0;
-                cboEvt.SelectedIndex = -1;
-                txtNotes.Clear();
+        private void initEmptyEventTab()
+        {
+            txtAgeDisplay.Clear();
+            cboEventType.SelectedIndex = 0;
+            cboEvt.SelectedIndex = -1;
+            txtNotes.Clear();
 
-                initEmptySingleTimeScale();
-                initEmptyRangeTimeScale();
+            initEmptySingleTimeScale();
+            initEmptyRangeTimeScale();
 
-                isUpdate4AgeEvent = false;
-            }
+            isUpdate4AgeEvent = false;
+        }
 
-            private void initEmptySingleTimeScale()
-            {
-                cboSEra.SelectedIndex = -1;
-                txtSOlderAge.Clear();
-                txtSYoungerAge.Clear();
-            }
+        private void initEmptySingleTimeScale()
+        {
+            cboSEra.SelectedIndex = -1;
+            txtSOlderAge.Clear();
+            txtSYoungerAge.Clear();
+        }
 
-            private void initEmptyRangeTimeScale()
-            {
-                cboROlderEra.SelectedIndex = -1;
-                cboRYoungerEra.SelectedIndex = -1;
-                txtRYoungerAge.Clear();
-                txtROlderAge.Clear();
-            }
+        private void initEmptyRangeTimeScale()
+        {
+            cboROlderEra.SelectedIndex = -1;
+            cboRYoungerEra.SelectedIndex = -1;
+            txtRYoungerAge.Clear();
+            txtROlderAge.Clear();
+        }
         #endregion
 
         #region "Functions in age and event list tab by Genhan"
-            private void btnAgeAdd_Click(object sender, EventArgs e)
-            {
-                tabEvtEditor.SelectedTab = tabAgeEvent;
-                initEmptyEventTab();
-                isUpdate4AgeEvent = false;
-                liEvts.SelectedIndex = -1;
-            }
+        private void btnAgeAdd_Click(object sender, EventArgs e)
+        {
+            tabEvtEditor.SelectedTab = tabAgeEvent;
+            initEmptyEventTab();
+            isUpdate4AgeEvent = false;
+            liEvts.SelectedIndex = -1;
+        }
 
-            private void btnAgeChangeAccept_Click(object sender, EventArgs e)
+        private void btnAgeChangeAccept_Click(object sender, EventArgs e)
+        {
+            if (liEvts.SelectedIndex == -1) { return; }
+            if (m_theWorkspace == null) { return; }
+            if (liEvts4ThisUnit.Items.Contains(liEvts.SelectedItem.ToString())) { return; }
+
+            liEvts4ThisUnit.Items.Add(liEvts.SelectedItem.ToString());
+            string ownerId = m_EvtListDictionary[liEvts.SelectedItem.ToString()];
+
+            /// Generate a new Extended Attribute record
+            ExtendedAttributesAccess extAttrAccess = new ExtendedAttributesAccess(m_theWorkspace);
+            string thisExtAttrId = extAttrAccess.NewExtendedAttributes(m_initMapUnit, null, null, null, ownerId, null, commonFunctions.GetCurrentDataSourceID(), null);
+            ExtendedAttributesAccess.ExtendedAttributes thisExtAttr = extAttrAccess.ExtendedAttributesDictionary.First().Value;
+            m_ExtendedAttributesDictionary.Add(thisExtAttrId, thisExtAttr);
+
+        }
+
+        private void btnAgeDelete_Click(object sender, EventArgs e)
+        {
+            if (liEvts.Focused)
             {
                 if (liEvts.SelectedIndex == -1) { return; }
-                if (m_theWorkspace == null) { return; }
-                if (liEvts4ThisUnit.Items.Contains(liEvts.SelectedItem.ToString())) { return; }
 
-                liEvts4ThisUnit.Items.Add(liEvts.SelectedItem.ToString());
-                string ownerId = m_EvtListDictionary[liEvts.SelectedItem.ToString()];
+                string selectedString = liEvts.SelectedItem.ToString();
+                /// Remove the selected item from the event list box
+                liEvts.Items.Remove(liEvts.SelectedItem);
 
-                /// Generate a new Extended Attribute record
-                ExtendedAttributesAccess extAttrAccess = new ExtendedAttributesAccess(m_theWorkspace);
-                string thisExtAttrId = extAttrAccess.NewExtendedAttributes(m_initMapUnit, null, null, null, ownerId, null, commonFunctions.GetCurrentDataSourceID(), null);
-                ExtendedAttributesAccess.ExtendedAttributes thisExtAttr = extAttrAccess.ExtendedAttributesDictionary.First().Value;
-                m_ExtendedAttributesDictionary.Add(thisExtAttrId, thisExtAttr);
+                /// Remove the selected item from the list box dictionary
+                string valueLinkId = m_EvtListDictionary[selectedString];
+                m_GeologicEventsDictionary.Remove(valueLinkId);
+                m_EvtListDictionary.Remove(selectedString);
 
-            }
-
-            private void btnAgeDelete_Click(object sender, EventArgs e)
-            {
-                if (liEvts.Focused)
+                /// Remove the related extended attribute record
+                foreach (KeyValuePair<string, ExtendedAttributesAccess.ExtendedAttributes> anExtAttrEntry in m_ExtendedAttributesDictionary)
                 {
-                    if (liEvts.SelectedIndex == -1) { return; }
-
-                    string selectedString = liEvts.SelectedItem.ToString();
-                    /// Remove the selected item from the event list box
-                    liEvts.Items.Remove(liEvts.SelectedItem);
-
-                    /// Remove the selected item from the list box dictionary
-                    string valueLinkId = m_EvtListDictionary[selectedString];
-                    m_GeologicEventsDictionary.Remove(valueLinkId);
-                    m_EvtListDictionary.Remove(selectedString);
-
-                    /// Remove the related extended attribute record
-                    foreach (KeyValuePair<string, ExtendedAttributesAccess.ExtendedAttributes> anExtAttrEntry in m_ExtendedAttributesDictionary)
+                    ExtendedAttributesAccess.ExtendedAttributes thisExtAttr = anExtAttrEntry.Value;
+                    if (thisExtAttr.ValueLinkID == valueLinkId)
                     {
-                        ExtendedAttributesAccess.ExtendedAttributes thisExtAttr = anExtAttrEntry.Value;
-                        if (thisExtAttr.ValueLinkID == valueLinkId)
-                        {
-                            m_ExtendedAttributesDictionary.Remove(anExtAttrEntry.Key);
-                            liEvts4ThisUnit.Items.Remove(selectedString);
-                            return;
-                        }
+                        m_ExtendedAttributesDictionary.Remove(anExtAttrEntry.Key);
+                        liEvts4ThisUnit.Items.Remove(selectedString);
+                        return;
                     }
-
-                    isUpdate4AgeEvent = false;
                 }
 
-                if (liEvts4ThisUnit.Focused)
+                isUpdate4AgeEvent = false;
+            }
+
+            if (liEvts4ThisUnit.Focused)
+            {
+                if (liEvts4ThisUnit.SelectedIndex == -1) { return; }
+
+                string selectedString = liEvts4ThisUnit.SelectedItem.ToString();
+                liEvts4ThisUnit.Items.Remove(selectedString);
+
+                /// Remove the selected item from this map unit events dictionary
+                foreach (KeyValuePair<string, ExtendedAttributesAccess.ExtendedAttributes> anExtAttrEntry in m_ExtendedAttributesDictionary)
                 {
-                    if (liEvts4ThisUnit.SelectedIndex == -1) { return; }
-
-                    string selectedString = liEvts4ThisUnit.SelectedItem.ToString();
-                    liEvts4ThisUnit.Items.Remove(selectedString);
-
-                    /// Remove the selected item from this map unit events dictionary
-                    foreach (KeyValuePair<string, ExtendedAttributesAccess.ExtendedAttributes> anExtAttrEntry in m_ExtendedAttributesDictionary)
+                    ExtendedAttributesAccess.ExtendedAttributes thisExtAttr = anExtAttrEntry.Value;
+                    if (thisExtAttr.ValueLinkID == m_EvtListDictionary[selectedString])
                     {
-                        ExtendedAttributesAccess.ExtendedAttributes thisExtAttr = anExtAttrEntry.Value;
-                        if (thisExtAttr.ValueLinkID == m_EvtListDictionary[selectedString])
-                        {
-                            m_ExtendedAttributesDictionary.Remove(anExtAttrEntry.Key);
-                            return;
-                        }
+                        m_ExtendedAttributesDictionary.Remove(anExtAttrEntry.Key);
+                        return;
                     }
                 }
             }
+        }
 
-            private void liEvts_SelectedIndexChanged(object sender, EventArgs e)
+        private void liEvts_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (liEvts.SelectedIndex == -1)
             {
-                if (liEvts.SelectedIndex == -1)
-                {
-                    if (isUpdate4AgeEvent) { return; }
-                    initEmptyEventTab();
-                }
-                else
-                {
-                    setAgeEventTabContent(m_EvtListDictionary[liEvts.SelectedItem.ToString()]);
-                    isUpdate4AgeEvent = true;
-                }
-
+                if (isUpdate4AgeEvent) { return; }
+                initEmptyEventTab();
             }
-            
-            /// <summary>
-            /// Display the attributtes of the selected item on the event tab
-            /// </summary>
-            /// <param name="eventId">The selected event item's id</param>
-            private void setAgeEventTabContent(string eventId)
+            else
             {
-                GeologicEventsAccess.GeologicEvents thisGeologicEvents = m_GeologicEventsDictionary[eventId];
-
-                txtAgeDisplay.Text = thisGeologicEvents.AgeDisplay;
-                cboEvt.SelectedItem = thisGeologicEvents.Event;
-                txtNotes.Text = thisGeologicEvents.Notes;
-
-                /// Identify if this event is single age event or age range event
-                if (thisGeologicEvents.AgeOlderTerm == thisGeologicEvents.AgeYoungerTerm)
-                {
-                    cboEventType.SelectedItem = "Single Age Event";
-                    cboSEra.SelectedItem = thisGeologicEvents.AgeOlderTerm;
-                    txtSOlderAge.Text = thisGeologicEvents.AgeYoungerValue;
-                    txtSYoungerAge.Text = thisGeologicEvents.AgeOlderValue;
-                }
-                else
-                {
-                    cboEventType.SelectedItem = "Age Range Event";
-                    cboRYoungerEra.SelectedItem = thisGeologicEvents.AgeYoungerTerm;
-                    cboROlderEra.SelectedItem = thisGeologicEvents.AgeOlderTerm;
-                    txtROlderAge.Text = thisGeologicEvents.AgeYoungerValue;
-                    txtRYoungerAge.Text = thisGeologicEvents.AgeOlderValue;
-                }
-
+                setAgeEventTabContent(m_EvtListDictionary[liEvts.SelectedItem.ToString()]);
+                isUpdate4AgeEvent = true;
             }
+
+        }
+
+        /// <summary>
+        /// Display the attributtes of the selected item on the event tab
+        /// </summary>
+        /// <param name="eventId">The selected event item's id</param>
+        private void setAgeEventTabContent(string eventId)
+        {
+            GeologicEventsAccess.GeologicEvents thisGeologicEvents = m_GeologicEventsDictionary[eventId];
+
+            txtAgeDisplay.Text = thisGeologicEvents.AgeDisplay;
+            cboEvt.SelectedItem = thisGeologicEvents.Event;
+            txtNotes.Text = thisGeologicEvents.Notes;
+
+            /// Identify if this event is single age event or age range event
+            if (thisGeologicEvents.AgeOlderTerm == thisGeologicEvents.AgeYoungerTerm)
+            {
+                cboEventType.SelectedItem = "Single Age Event";
+                cboSEra.SelectedItem = thisGeologicEvents.AgeOlderTerm;
+                txtSOlderAge.Text = thisGeologicEvents.AgeYoungerValue;
+                txtSYoungerAge.Text = thisGeologicEvents.AgeOlderValue;
+            }
+            else
+            {
+                cboEventType.SelectedItem = "Age Range Event";
+                cboRYoungerEra.SelectedItem = thisGeologicEvents.AgeYoungerTerm;
+                cboROlderEra.SelectedItem = thisGeologicEvents.AgeOlderTerm;
+                txtROlderAge.Text = thisGeologicEvents.AgeYoungerValue;
+                txtRYoungerAge.Text = thisGeologicEvents.AgeOlderValue;
+            }
+
+        }
         #endregion
-        
+
         #region "Functions in event details tab by Genhan"
-            private struct TimeScale
-            {
-                public string label;
-                public double startTime;
-                public double endTime;
-            }
-            private Dictionary<string, TimeScale> m_TimeScaleDictionary = new Dictionary<string, TimeScale>();  /// Timescale dictionary with era term, start time and end time    
-            private void initTimeScaleDictionary()
-            {
-                if (m_TimeScaleDictionary.Count != 0) { return; }
-                string[] labels = {"Holocene Epoch",
+        private struct TimeScale
+        {
+            public string label;
+            public double startTime;
+            public double endTime;
+        }
+        private Dictionary<string, TimeScale> m_TimeScaleDictionary = new Dictionary<string, TimeScale>();  /// Timescale dictionary with era term, start time and end time    
+        private void initTimeScaleDictionary()
+        {
+            if (m_TimeScaleDictionary.Count != 0) { return; }
+            string[] labels = {"Holocene Epoch",
                                     "Quaternary Period",
                                     "Cainozoic Era",
                                     "Cenozoic Era",
@@ -2093,7 +2109,7 @@ namespace ncgmpToolbar
                                     "Eoarchaean Era",
                                     "Hadean Eon"
                                     };
-                double[] startTimes = {0.0117,
+            double[] startTimes = {0.0117,
                                         2.588,
                                         65.5,
                                         65.5,
@@ -2269,7 +2285,7 @@ namespace ncgmpToolbar
                                         3600,
                                         4000,
                                         9999.9999};
-                double[] endTimes = {0,
+            double[] endTimes = {0,
                                         0,
                                         0,
                                         0,
@@ -2446,248 +2462,250 @@ namespace ncgmpToolbar
                                         3600,
                                         4000};
 
-                for (int i = 0; i < labels.Length; i++)
-                {
-                    TimeScale aTimeScale = new TimeScale();
-                    aTimeScale.label = labels[i];
-                    aTimeScale.startTime = startTimes[i];
-                    aTimeScale.endTime = endTimes[i];
-
-                    m_TimeScaleDictionary.Add(aTimeScale.label, aTimeScale);
-                }
-            } 
-
-            /// <summary>
-            /// Add/update geologic event in m_GeologicEventsDictionary and events list box
-            /// </summary>
-            private void btnEvtAccept_Click(object sender, EventArgs e)
+            for (int i = 0; i < labels.Length; i++)
             {
-                /// <start> Validate the event inputs before save
-                if (m_theWorkspace == null) {
-                    MessageBox.Show("Please open a working space!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return; 
-                }
-                if (!validateEvtInputs()) { return; } 
+                TimeScale aTimeScale = new TimeScale();
+                aTimeScale.label = labels[i];
+                aTimeScale.startTime = startTimes[i];
+                aTimeScale.endTime = endTimes[i];
 
-                if (txtAgeDisplay.Text == "") {
-                    MessageBox.Show("Please input Age Display value!", "Invalid Inputs", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                /// <end>
+                m_TimeScaleDictionary.Add(aTimeScale.label, aTimeScale);
+            }
+        }
+
+        /// <summary>
+        /// Add/update geologic event in m_GeologicEventsDictionary and events list box
+        /// </summary>
+        private void btnEvtAccept_Click(object sender, EventArgs e)
+        {
+            /// <start> Validate the event inputs before save
+            if (m_theWorkspace == null)
+            {
+                MessageBox.Show("Please open a working space!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (!validateEvtInputs()) { return; }
+
+            if (txtAgeDisplay.Text == "")
+            {
+                MessageBox.Show("Please input Age Display value!", "Invalid Inputs", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            /// <end>
 
 
-                GeologicEventsAccess thisGeologicEventsAccess = new GeologicEventsAccess(m_theWorkspace);
-                string dataSrcID = commonFunctions.GetCurrentDataSourceID();
-                string thisKey;
-                GeologicEventsAccess.GeologicEvents thisGeologicEvents = new GeologicEventsAccess.GeologicEvents();
+            GeologicEventsAccess thisGeologicEventsAccess = new GeologicEventsAccess(m_theWorkspace);
+            string dataSrcID = commonFunctions.GetCurrentDataSourceID();
+            string thisKey;
+            GeologicEventsAccess.GeologicEvents thisGeologicEvents = new GeologicEventsAccess.GeologicEvents();
 
-                if (isUpdate4AgeEvent)
+            if (isUpdate4AgeEvent)
+            {
+                GeologicEventsAccess.GeologicEvents selectedEvent = m_GeologicEventsDictionary[m_EvtListDictionary[liEvts.SelectedItem.ToString()]];
+
+                /// Remove the old age display text from the age tab
+                liEvts.Items.Remove(selectedEvent.AgeDisplay);
+
+                /// Remove item from the evet list for this map unit
+                if (liEvts4ThisUnit.Items.Contains(selectedEvent.AgeDisplay))
                 {
-                    GeologicEventsAccess.GeologicEvents selectedEvent = m_GeologicEventsDictionary[m_EvtListDictionary[liEvts.SelectedItem.ToString()]];
-                    
-                    /// Remove the old age display text from the age tab
-                    liEvts.Items.Remove(selectedEvent.AgeDisplay);
+                    liEvts4ThisUnit.Items.Remove(selectedEvent.AgeDisplay);
+                    string thisGeoEvtID = m_EvtListDictionary[selectedEvent.AgeDisplay];
 
-                    /// Remove item from the evet list for this map unit
-                    if (liEvts4ThisUnit.Items.Contains(selectedEvent.AgeDisplay))
+                    List<string> listIds = new List<string>();
+                    foreach (KeyValuePair<string, ExtendedAttributesAccess.ExtendedAttributes> anExtAttrEntry in m_ExtendedAttributesDictionary)
                     {
-                        liEvts4ThisUnit.Items.Remove(selectedEvent.AgeDisplay);
-                        string thisGeoEvtID = m_EvtListDictionary[selectedEvent.AgeDisplay];
-
-                        List<string> listIds = new List<string>();
-                        foreach (KeyValuePair<string, ExtendedAttributesAccess.ExtendedAttributes> anExtAttrEntry in m_ExtendedAttributesDictionary)
+                        ExtendedAttributesAccess.ExtendedAttributes thisExtAttr = anExtAttrEntry.Value;
+                        if (thisExtAttr.ValueLinkID == thisGeoEvtID)
                         {
-                            ExtendedAttributesAccess.ExtendedAttributes thisExtAttr = anExtAttrEntry.Value;
-                            if (thisExtAttr.ValueLinkID == thisGeoEvtID)
-                            {
-                                string thisID = anExtAttrEntry.Key;                               
-                                listIds.Add(thisID);
-                            }
+                            string thisID = anExtAttrEntry.Key;
+                            listIds.Add(thisID);
                         }
-
-                        for (int i = 0; i < listIds.Count; i++) { m_ExtendedAttributesDictionary.Remove(listIds[i]); }
                     }
 
-                    /// Remove the old connection between list item and age
-                    m_EvtListDictionary.Remove(selectedEvent.AgeDisplay);
+                    for (int i = 0; i < listIds.Count; i++) { m_ExtendedAttributesDictionary.Remove(listIds[i]); }
+                }
 
-                    selectedEvent.AgeDisplay = txtAgeDisplay.Text;
-                    selectedEvent.Event = cboEvt.SelectedItem.ToString();
-                    selectedEvent.TimeScale = "http://resource.geosciml.org/classifierscheme/ics/ischart/2009";
-                    selectedEvent.Notes = txtNotes.Text;
-                    selectedEvent.DataSourceID = commonFunctions.GetCurrentDataSourceID();
+                /// Remove the old connection between list item and age
+                m_EvtListDictionary.Remove(selectedEvent.AgeDisplay);
 
-                    switch (cboEventType.SelectedItem.ToString())
-                    {
-                        case "Single Age Event":
-                            selectedEvent.AgeYoungerTerm = cboSEra.SelectedItem.ToString();
-                            selectedEvent.AgeOlderTerm = cboSEra.SelectedItem.ToString();
-                            selectedEvent.AgeYoungerValue = txtSOlderAge.Text;
-                            selectedEvent.AgeOlderValue = txtSYoungerAge.Text;
-                            break;
-                        case "Age Range Event":
-                            selectedEvent.AgeYoungerTerm = cboRYoungerEra.SelectedItem.ToString();
-                            selectedEvent.AgeOlderTerm = cboROlderEra.SelectedItem.ToString();
-                            selectedEvent.AgeYoungerValue = txtROlderAge.Text;
-                            selectedEvent.AgeOlderValue = txtRYoungerAge.Text;
-                            break;
-                    }
+                selectedEvent.AgeDisplay = txtAgeDisplay.Text;
+                selectedEvent.Event = cboEvt.SelectedItem.ToString();
+                selectedEvent.TimeScale = "http://resource.geosciml.org/classifierscheme/ics/ischart/2009";
+                selectedEvent.Notes = txtNotes.Text;
+                selectedEvent.DataSourceID = commonFunctions.GetCurrentDataSourceID();
 
-                    m_GeologicEventsDictionary.Remove(selectedEvent.GeologicEvents_ID);
-                    m_GeologicEventsDictionary.Add(selectedEvent.GeologicEvents_ID, selectedEvent);
+                switch (cboEventType.SelectedItem.ToString())
+                {
+                    case "Single Age Event":
+                        selectedEvent.AgeYoungerTerm = cboSEra.SelectedItem.ToString();
+                        selectedEvent.AgeOlderTerm = cboSEra.SelectedItem.ToString();
+                        selectedEvent.AgeYoungerValue = txtSOlderAge.Text;
+                        selectedEvent.AgeOlderValue = txtSYoungerAge.Text;
+                        break;
+                    case "Age Range Event":
+                        selectedEvent.AgeYoungerTerm = cboRYoungerEra.SelectedItem.ToString();
+                        selectedEvent.AgeOlderTerm = cboROlderEra.SelectedItem.ToString();
+                        selectedEvent.AgeYoungerValue = txtROlderAge.Text;
+                        selectedEvent.AgeOlderValue = txtRYoungerAge.Text;
+                        break;
+                }
 
-                    if (m_EvtListDictionary.ContainsKey(txtAgeDisplay.Text))
-                    {
-                        MessageBox.Show("This age display already exists!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    else
-                    {
-                        /// Add text item into event list box
-                        liEvts.Items.Add(selectedEvent.AgeDisplay);
-                        /// Add the new item into list box dictionary
-                        m_EvtListDictionary.Add(selectedEvent.AgeDisplay, selectedEvent.GeologicEvents_ID);
-                    }
+                m_GeologicEventsDictionary.Remove(selectedEvent.GeologicEvents_ID);
+                m_GeologicEventsDictionary.Add(selectedEvent.GeologicEvents_ID, selectedEvent);
+
+                if (m_EvtListDictionary.ContainsKey(txtAgeDisplay.Text))
+                {
+                    MessageBox.Show("This age display already exists!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {
-                    switch (cboEventType.SelectedItem.ToString())
-                    {
-                        case "Single Age Event":
-                            thisGeologicEventsAccess.NewGeologicEvents(cboEvt.SelectedItem.ToString(), txtAgeDisplay.Text, cboSEra.SelectedItem.ToString(), cboSEra.SelectedItem.ToString(),
-                                "http://resource.geosciml.org/classifierscheme/ics/ischart/2009", txtSOlderAge.Text, txtSYoungerAge.Text, dataSrcID, txtNotes.Text);
-                            thisKey = thisGeologicEventsAccess.GeologicEventsDictionary.First().Key;
-                            thisGeologicEvents = thisGeologicEventsAccess.GeologicEventsDictionary.First().Value;
-                            /// Add the new event into the dictionary
-                            m_GeologicEventsDictionary.Add(thisKey, thisGeologicEvents);
-                            break;
-                        case "Age Range Event":
-                            thisGeologicEventsAccess.NewGeologicEvents(cboEvt.SelectedItem.ToString(), txtAgeDisplay.Text, cboRYoungerEra.SelectedItem.ToString(), cboROlderEra.SelectedItem.ToString(),
-                                "http://resource.geosciml.org/classifierscheme/ics/ischart/2009", txtROlderAge.Text, txtRYoungerAge.Text, dataSrcID, txtNotes.Text);
-                            thisKey = thisGeologicEventsAccess.GeologicEventsDictionary.First().Key;
-                            thisGeologicEvents = thisGeologicEventsAccess.GeologicEventsDictionary.First().Value;
-                            /// Add the new event into the dictionary
-                            m_GeologicEventsDictionary.Add(thisKey, thisGeologicEvents);
-                            break;
-                    }
-
-                    if (m_EvtListDictionary.ContainsKey(txtAgeDisplay.Text))
-                    {
-                        MessageBox.Show("This age display already exists!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    else
-                    {
-                        /// Add text item into event list box
-                        liEvts.Items.Add(txtAgeDisplay.Text);
-                        /// Add the new item into list box dictionary
-                        m_EvtListDictionary.Add(txtAgeDisplay.Text, thisGeologicEvents.GeologicEvents_ID);
-                    }
-                }
-
-                /// Switch into event list tab
-                tabEvtEditor.SelectedTab = tabAgeList;
-                /// Clear the event editing tab
-                initEmptyEventTab();
-            }
-
-            private void cboEventType_SelectedIndexChanged(object sender, EventArgs e)
-            {
-                switch (cboEventType.SelectedIndex)
-                {
-                    case 0:
-                        grpSingleTimeScale.Show();
-                        grpRangeTimeScale.Hide();
-                        initEmptyRangeTimeScale();
-                        break;
-                    case 1:
-                        grpSingleTimeScale.Hide();
-                        grpRangeTimeScale.Show();
-                        initEmptySingleTimeScale();
-                        break;
+                    /// Add text item into event list box
+                    liEvts.Items.Add(selectedEvent.AgeDisplay);
+                    /// Add the new item into list box dictionary
+                    m_EvtListDictionary.Add(selectedEvent.AgeDisplay, selectedEvent.GeologicEvents_ID);
                 }
             }
-
-            private void cboSEra_SelectedIndexChanged(object sender, EventArgs e)
+            else
             {
-                if (cboSEra.SelectedIndex == -1) { return; }
-
-                string thisEra = cboSEra.SelectedItem.ToString();
-                TimeScale thisTimeScale = m_TimeScaleDictionary[thisEra];
-                txtSOlderAge.Text = thisTimeScale.startTime.ToString();
-                txtSYoungerAge.Text = thisTimeScale.endTime.ToString();
-            }      
-
-            private void cboRYoungerEra_SelectedIndexChanged(object sender, EventArgs e)
-            {
-                if (cboRYoungerEra.SelectedIndex == -1) { return; }
-
-                string thisYoungerEra = cboRYoungerEra.SelectedItem.ToString();
-                TimeScale thisYoungerTimeScale = m_TimeScaleDictionary[thisYoungerEra];
-                txtRYoungerAge.Text = thisYoungerTimeScale.endTime.ToString();
-            }
-
-            private void cboROlderEra_SelectedIndexChanged(object sender, EventArgs e)
-            {
-                if (cboROlderEra.SelectedIndex == -1) { return; }
-
-                string thisOlderEra = cboROlderEra.SelectedItem.ToString();
-                TimeScale thisOlderTimeScale = m_TimeScaleDictionary[thisOlderEra];
-                txtROlderAge.Text = thisOlderTimeScale.startTime.ToString();
-            }
-            
-            /// <summary>
-            /// Generate the Age Display string in the event tab
-            /// </summary>
-            private void btnAgeGen_Click(object sender, EventArgs e)
-            {
-                if (!validateEvtInputs()) { return; }
-
-                txtAgeDisplay.Text = cboEvt.SelectedItem.ToString() + "-" + cboEventType.SelectedItem.ToString();
-                string evtTerm = cboEvt.SelectedItem.ToString();
-
                 switch (cboEventType.SelectedItem.ToString())
                 {
                     case "Single Age Event":
-                        txtAgeDisplay.Text = evtTerm + "; " 
-                            + cboSEra.SelectedItem.ToString() + ","
-                            + txtSOlderAge.Text + "Ma - " 
-                            + txtSYoungerAge.Text + "Ma";
+                        thisGeologicEventsAccess.NewGeologicEvents(cboEvt.SelectedItem.ToString(), txtAgeDisplay.Text, cboSEra.SelectedItem.ToString(), cboSEra.SelectedItem.ToString(),
+                            "http://resource.geosciml.org/classifierscheme/ics/ischart/2009", txtSOlderAge.Text, txtSYoungerAge.Text, dataSrcID, txtNotes.Text);
+                        thisKey = thisGeologicEventsAccess.GeologicEventsDictionary.First().Key;
+                        thisGeologicEvents = thisGeologicEventsAccess.GeologicEventsDictionary.First().Value;
+                        /// Add the new event into the dictionary
+                        m_GeologicEventsDictionary.Add(thisKey, thisGeologicEvents);
                         break;
                     case "Age Range Event":
-                        txtAgeDisplay.Text = evtTerm + "; "
-                            + cboRYoungerEra.SelectedItem.ToString() + "," + txtROlderAge.Text + "Ma - "
-                            + cboROlderEra.SelectedItem.ToString() + "," + txtRYoungerAge.Text + "Ma";
+                        thisGeologicEventsAccess.NewGeologicEvents(cboEvt.SelectedItem.ToString(), txtAgeDisplay.Text, cboRYoungerEra.SelectedItem.ToString(), cboROlderEra.SelectedItem.ToString(),
+                            "http://resource.geosciml.org/classifierscheme/ics/ischart/2009", txtROlderAge.Text, txtRYoungerAge.Text, dataSrcID, txtNotes.Text);
+                        thisKey = thisGeologicEventsAccess.GeologicEventsDictionary.First().Key;
+                        thisGeologicEvents = thisGeologicEventsAccess.GeologicEventsDictionary.First().Value;
+                        /// Add the new event into the dictionary
+                        m_GeologicEventsDictionary.Add(thisKey, thisGeologicEvents);
                         break;
+                }
+
+                if (m_EvtListDictionary.ContainsKey(txtAgeDisplay.Text))
+                {
+                    MessageBox.Show("This age display already exists!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    /// Add text item into event list box
+                    liEvts.Items.Add(txtAgeDisplay.Text);
+                    /// Add the new item into list box dictionary
+                    m_EvtListDictionary.Add(txtAgeDisplay.Text, thisGeologicEvents.GeologicEvents_ID);
                 }
             }
 
-            /// <summary> 
-            /// Validate the inputs
-            /// Return bool value to identify if the inputs are valid or not
-            /// <summary>
-            private bool validateEvtInputs()
-            {                
-                double youngerAge = 0.0, olderAge = 0.0;
-                switch (cboEventType.SelectedItem.ToString())
-                {
-                    case "Single Age Event":
-                        if (txtSYoungerAge.Text == "" || txtSOlderAge.Text == "") { return false; }
-                        youngerAge = double.Parse(txtSYoungerAge.Text);
-                        olderAge = double.Parse(txtSOlderAge.Text);
-                        break;
-                    case "Age Range Event":
-                        if (txtRYoungerAge.Text == "" || txtROlderAge.Text == "") { return false; }
-                        youngerAge = double.Parse(txtRYoungerAge.Text);
-                        olderAge = double.Parse(txtROlderAge.Text);
-                        break;
-                }
-                if (youngerAge > olderAge)
-                {
-                    MessageBox.Show("Max Age cannot be younger than min age!", "Invalid Inputs", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return false;
-                }
+            /// Switch into event list tab
+            tabEvtEditor.SelectedTab = tabAgeList;
+            /// Clear the event editing tab
+            initEmptyEventTab();
+        }
 
-                return true;
+        private void cboEventType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (cboEventType.SelectedIndex)
+            {
+                case 0:
+                    grpSingleTimeScale.Show();
+                    grpRangeTimeScale.Hide();
+                    initEmptyRangeTimeScale();
+                    break;
+                case 1:
+                    grpSingleTimeScale.Hide();
+                    grpRangeTimeScale.Show();
+                    initEmptySingleTimeScale();
+                    break;
             }
+        }
+
+        private void cboSEra_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cboSEra.SelectedIndex == -1) { return; }
+
+            string thisEra = cboSEra.SelectedItem.ToString();
+            TimeScale thisTimeScale = m_TimeScaleDictionary[thisEra];
+            txtSOlderAge.Text = thisTimeScale.startTime.ToString();
+            txtSYoungerAge.Text = thisTimeScale.endTime.ToString();
+        }
+
+        private void cboRYoungerEra_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cboRYoungerEra.SelectedIndex == -1) { return; }
+
+            string thisYoungerEra = cboRYoungerEra.SelectedItem.ToString();
+            TimeScale thisYoungerTimeScale = m_TimeScaleDictionary[thisYoungerEra];
+            txtRYoungerAge.Text = thisYoungerTimeScale.endTime.ToString();
+        }
+
+        private void cboROlderEra_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cboROlderEra.SelectedIndex == -1) { return; }
+
+            string thisOlderEra = cboROlderEra.SelectedItem.ToString();
+            TimeScale thisOlderTimeScale = m_TimeScaleDictionary[thisOlderEra];
+            txtROlderAge.Text = thisOlderTimeScale.startTime.ToString();
+        }
+
+        /// <summary>
+        /// Generate the Age Display string in the event tab
+        /// </summary>
+        private void btnAgeGen_Click(object sender, EventArgs e)
+        {
+            if (!validateEvtInputs()) { return; }
+
+            txtAgeDisplay.Text = cboEvt.SelectedItem.ToString() + "-" + cboEventType.SelectedItem.ToString();
+            string evtTerm = cboEvt.SelectedItem.ToString();
+
+            switch (cboEventType.SelectedItem.ToString())
+            {
+                case "Single Age Event":
+                    txtAgeDisplay.Text = evtTerm + "; "
+                        + cboSEra.SelectedItem.ToString() + ","
+                        + txtSOlderAge.Text + "Ma - "
+                        + txtSYoungerAge.Text + "Ma";
+                    break;
+                case "Age Range Event":
+                    txtAgeDisplay.Text = evtTerm + "; "
+                        + cboRYoungerEra.SelectedItem.ToString() + "," + txtROlderAge.Text + "Ma - "
+                        + cboROlderEra.SelectedItem.ToString() + "," + txtRYoungerAge.Text + "Ma";
+                    break;
+            }
+        }
+
+        /// <summary> 
+        /// Validate the inputs
+        /// Return bool value to identify if the inputs are valid or not
+        /// <summary>
+        private bool validateEvtInputs()
+        {
+            double youngerAge = 0.0, olderAge = 0.0;
+            switch (cboEventType.SelectedItem.ToString())
+            {
+                case "Single Age Event":
+                    if (txtSYoungerAge.Text == "" || txtSOlderAge.Text == "") { return false; }
+                    youngerAge = double.Parse(txtSYoungerAge.Text);
+                    olderAge = double.Parse(txtSOlderAge.Text);
+                    break;
+                case "Age Range Event":
+                    if (txtRYoungerAge.Text == "" || txtROlderAge.Text == "") { return false; }
+                    youngerAge = double.Parse(txtRYoungerAge.Text);
+                    olderAge = double.Parse(txtROlderAge.Text);
+                    break;
+            }
+            if (youngerAge > olderAge)
+            {
+                MessageBox.Show("Max Age cannot be younger than min age!", "Invalid Inputs", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            return true;
+        }
         #endregion
 
         private void btnSaveAge_Click(object sender, EventArgs e)
@@ -2761,7 +2779,7 @@ namespace ncgmpToolbar
             {
                 m_EvtListDictionary.Add(aGeologicEventsEntry.Value.AgeDisplay, aGeologicEventsEntry.Key);
             }
-            
+
             /// <end> ---------------------------------------------------------------------------------------------------
             /// ---------------------------------------------------------------------------------------------------------
 
@@ -2783,7 +2801,7 @@ namespace ncgmpToolbar
 
             foreach (KeyValuePair<string, ExtendedAttributesAccess.ExtendedAttributes> anDeleteExtendedAttributesEntry in deleteExtendedAttributesDictionary)
             {
-                ExtendedAttributesAccess.ExtendedAttributes thisExtAttr = anDeleteExtendedAttributesEntry.Value;      
+                ExtendedAttributesAccess.ExtendedAttributes thisExtAttr = anDeleteExtendedAttributesEntry.Value;
                 extAttrAccess.DeleteExtendedAttributes(thisExtAttr);
             }
 
@@ -2837,10 +2855,10 @@ namespace ncgmpToolbar
 
         private void liEvts4ThisUnit_Click(object sender, EventArgs e)
         {
-            if (!liEvts.Focused) 
+            if (!liEvts.Focused)
             {
                 isUpdate4AgeEvent = false;
-                liEvts.SelectedIndex = -1;               
+                liEvts.SelectedIndex = -1;
             }
         }
 
@@ -2850,8 +2868,8 @@ namespace ncgmpToolbar
         }
 
         #endregion
-        
-    #endregion
+
+        #endregion
 
 
 
