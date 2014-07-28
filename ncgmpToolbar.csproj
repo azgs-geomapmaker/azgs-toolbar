@@ -121,6 +121,8 @@
     <Compile Include="btnOpenNcgmpDatabase.cs" />
     <Compile Include="btnShowMapUnitLegendEditor.cs" />
     <Compile Include="btnTheTestingButton.cs" />
+    <Compile Include="tlDrawStratCorDiagram.cs" />
+    <Compile Include="Utilities\drawMapUnits.cs" />
     <Compile Include="Config.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Config.esriaddinx</DependentUpon>
@@ -329,6 +331,7 @@
     <Content Include="Images\SibDrop.jpg" />
     <AddInContent Include="Images\tlDrawPolygonLegend.png" />
     <AddInContent Include="Images\tlDrawPolygonLegend.cur" />
+    <AddInContent Include="Images\tlDrawStratCorDiagram.png" />
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>

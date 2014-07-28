@@ -7,9 +7,9 @@ using ESRI.ArcGIS.Geometry;
 
 namespace ncgmpToolbar
 {
-    public class tlDrawPolygonLegend : ESRI.ArcGIS.Desktop.AddIns.Tool
+    public class tlDrawStratCorDiagram : ESRI.ArcGIS.Desktop.AddIns.Tool
     {
-        public tlDrawPolygonLegend()
+        public tlDrawStratCorDiagram()
         {
         }
 
@@ -71,7 +71,7 @@ namespace ncgmpToolbar
             {
                 IEnvelope Env = m_Feedback.Stop();
                 m_Feedback = null;
-                drawMapUnits.DrawLegend(Env);
+                drawMapUnits.DrawStratCorDiagram(Env);
             }
             base.OnMouseUp(arg);
         }
