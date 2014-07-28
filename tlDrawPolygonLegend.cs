@@ -428,7 +428,11 @@ namespace ncgmpToolbar
                 }
             }
 
-            strFinalString = strFinalString + Environment.NewLine + hangingIndent + "    " + strGoodWidth;
+            // Don't indent if there is only one line
+            if (strGoodWidth == strTextContent)
+                strFinalString = strFinalString + Environment.NewLine + strGoodWidth;
+            else
+                strFinalString = strFinalString + Environment.NewLine + hangingIndent + "    " + strGoodWidth;
             pAppDisplay.FinishDrawing();
 
             //return strFinalString.Substring(2);
