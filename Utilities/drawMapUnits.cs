@@ -321,22 +321,6 @@ namespace ncgmpToolbar
             // Setup the Text Symbol
             pTextSymbol.Font = pTextFont;
 
-            // Setup spacing string for hanging indent
-            int pSpaces, i3;
-            string hangingIndent;
-            pAppDisplay.StartDrawing(pAppDisplay.hDC, 0);
-            hangingIndent = ""; //minimum hanging indent
-            if (hanging > 0)
-            {
-                pTextSymbol.GetTextSize(pAppDisplay.hDC, pTransformation, " ", out dblXSize, out dblYSize);
-                pSpaces = (int)System.Math.Round(hanging / dblXSize);
-                for (i3 = 0; i3 == pSpaces; i3++)
-                {
-                    hangingIndent = hangingIndent + " ";
-                }
-            } // do nothing if hanging is 0
-            pAppDisplay.FinishDrawing(); // done setting up the hanging indent
-
             // Add each word into the test string and test for width
             pAppDisplay.StartDrawing(pAppDisplay.hDC, 0);
             long linesAdded = 0;
@@ -344,23 +328,12 @@ namespace ncgmpToolbar
             for (i = 0; i <= (int)varWordArray.GetUpperBound(0); i++)
             {
                 if (strGoodWidth != "")
-                {
                     strTestString = strGoodWidth + " " + varWordArray.GetValue(i);
-                }
                 else
-                {
                     strTestString = varWordArray.GetValue(i).ToString();
-                }
 
                 // Get the TextSize
-                if (linesAdded == 0)
-                {
-                    pTextSymbol.GetTextSize(pAppDisplay.hDC, pTransformation, strTestString, out dblXSize, out dblYSize);
-                }
-                else
-                {
-                    pTextSymbol.GetTextSize(pAppDisplay.hDC, pTransformation, "    " + strTestString, out dblXSize, out dblYSize);
-                }
+                pTextSymbol.GetTextSize(pAppDisplay.hDC, pTransformation, strTestString, out dblXSize, out dblYSize);
 
                 // If the word added is < max width keep adding to the line, else make a new one
                 if (dblXSize < sngMaxWidthInPoints)
@@ -370,26 +343,17 @@ namespace ncgmpToolbar
                 else
                 {
                     if (linesAdded == 0)
-                    {
-                        strFinalString = hangingIndent + strGoodWidth;
-                    }
+                        strFinalString = strGoodWidth;
                     else
-                    {
-                        strFinalString = strFinalString + Environment.NewLine + hangingIndent + "    " + strGoodWidth;
-                    }
+                        strFinalString = strFinalString + Environment.NewLine + strGoodWidth;
                     linesAdded = linesAdded + 1;
                     strGoodWidth = varWordArray.GetValue(i).ToString();
                 }
             }
 
-            // Don't indent if there is only one line
-            if (strGoodWidth == strTextContent)
-                strFinalString = strFinalString + Environment.NewLine + strGoodWidth;
-            else
-                strFinalString = strFinalString + Environment.NewLine + hangingIndent + "    " + strGoodWidth;
+            strFinalString = strFinalString + Environment.NewLine + strGoodWidth;
             pAppDisplay.FinishDrawing();
 
-            //return strFinalString.Substring(2);
             return strFinalString;
         }
 
