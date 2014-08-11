@@ -178,9 +178,12 @@ namespace ncgmpToolbar
                 else
                 {
                     // Set the DataSourceID value
-                    if (parsedTableName == "Glossary") { theRow.set_Value(theTable.FindField("DefinitionSourceID"), globalVariables.currentDataSource); }
-                    else if (parsedTableName == "DescriptionOfMapUnits") { theRow.set_Value(theTable.FindField("DescriptionSourceID"), globalVariables.currentDataSource); }
-                    else { theRow.set_Value(theTable.FindField("DataSourceID"), globalVariables.currentDataSource); }
+                    if (parsedTableName == "Glossary")
+                        theRow.set_Value(theTable.FindField("DefinitionSourceID"), globalVariables.currentDataSource);
+                    else if (parsedTableName == "DescriptionOfMapUnits") 
+                        theRow.set_Value(theTable.FindField("DescriptionSourceID"), globalVariables.currentDataSource);
+                    else if (obj.get_Value(theTable.FindField("DataSourceID")).ToString() == "")
+                        theRow.set_Value(theTable.FindField("DataSourceID"), globalVariables.currentDataSource);
                 }
             }
             #endregion
