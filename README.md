@@ -1,4 +1,4 @@
-#AZGS NCGMP Toolbar
+﻿#AZGS NCGMP Toolbar
 
 This toolbar was developed by the Arizona Geological Survey (AZGS) for use in geologic map production using the NCGMP09 database schema and ESRI ArcGIS software. It is an ArcGIS AddIn for ArcMap. The AddIn presents the user with a toolbar that the geologist can use to perform various geologic map compilation functions.
 
@@ -46,6 +46,7 @@ Prerequisties: **ArcObjects SDK** (from the ArcGIS installation disc) and **Visu
 2. Open the project by double-clicking **ncgmpToolbar.sln**
 3. Configure a Debug session to open ArcMap automatically
  - In the **Solution Explorer** panel right click ncgmpToolbar
+ - Click **Properties**
  - Under **Debug**, select **Start Action**, **Start external program**
  - Browse to the **ArcMap** executable
 4. Run **Build**, **Clean Solution** (This will clear the **/bin/Debug** folder)
