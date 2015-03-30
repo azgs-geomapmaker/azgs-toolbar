@@ -680,6 +680,41 @@ namespace ncgmpToolbar.Utilities
                 newTemplate.SetDefaultValue("Label", dmuEntry.Label, false);
                 newTemplate.SetDefaultValue("IdentityConfidence", "certain", false);
 
+                // Set defaults for landslide types
+                switch (anEntry.Value.Name)
+                { 
+                    case "Rock Fall":
+                        newTemplate.SetDefaultValue("MoveType", "Fall", false);
+                        newTemplate.SetDefaultValue("MoveClass", "Rock Fall", false);
+                        newTemplate.SetDefaultValue("MoveCode", "RF", false);
+                        break;
+                    case "Earth Fall":
+                        newTemplate.SetDefaultValue("MoveType", "Fall", false);
+                        newTemplate.SetDefaultValue("MoveClass", "Earth Fall", false);
+                        newTemplate.SetDefaultValue("MoveCode", "EF", false);
+                        break;
+                    case "Debris Fall":
+                        newTemplate.SetDefaultValue("MoveType", "Fall", false);
+                        newTemplate.SetDefaultValue("MoveClass", "Debris Fall", false);
+                        newTemplate.SetDefaultValue("MoveCode", "DF", false);
+                        break;
+                    case "Rock Flow":
+                        newTemplate.SetDefaultValue("MoveType", "Flow", false);
+                        newTemplate.SetDefaultValue("MoveClass", "Rock Flow", false);
+                        newTemplate.SetDefaultValue("MoveCode", "RFL", false);
+                        break;
+                    case "Earth Flow":
+                        newTemplate.SetDefaultValue("MoveType", "Flow", false);
+                        newTemplate.SetDefaultValue("MoveClass", "Earth Flow", false);
+                        newTemplate.SetDefaultValue("MoveCode", "EFL", false);
+                        break;
+                    case "Debris Flow":
+                        newTemplate.SetDefaultValue("MoveType", "Flow", false);
+                        newTemplate.SetDefaultValue("MoveClass", "Debris Flow", false);
+                        newTemplate.SetDefaultValue("MoveCode", "DFL", false);
+                        break;
+                }
+
                 // Add the template to the array
                 templateArray.Add(newTemplate);
             }
