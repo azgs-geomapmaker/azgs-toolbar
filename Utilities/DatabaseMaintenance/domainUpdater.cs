@@ -21,7 +21,19 @@ namespace ncgmpToolbar.Utilities.DatabaseMaintenance
 
             // Update StationIDs if the database has that capability
             //if (ncgmpChecks.IsAzgsStationAddinPresent(theWorkspace) == true) { 
-            UpdateCodedValueDomain(theWorkspace, "d_StationIDs", "Stations", "Stations_ID", "FieldID"); //}          
+            UpdateCodedValueDomain(theWorkspace, "d_StationIDs", "Stations", "Stations_ID", "FieldID"); //}   
+
+            IWorkspace2 theWorkspace2 = (IWorkspace2)theWorkspace;
+            if (theWorkspace2.get_NameExists(esriDatasetType.esriDTFeatureDataset, commonFunctions.QualifyClassName(theWorkspace, "Landslide")) == true)
+            {
+                UpdateCodedValueDomain(theWorkspace, "d_Landslides", "Landslides", "LandslideID", "LandslideName");
+            }
+
+            
+            if (theWorkspace2.get_NameExists(esriDatasetType.esriDTFeatureDataset, commonFunctions.QualifyClassName(theWorkspace, "Cost")) == true)
+            {
+                UpdateCodedValueDomain(theWorkspace, "d_Costs", "Costs", "CostID", "Damage");
+            }
         }
 
         private static void UpdateCodedValueDomain(IWorkspace theWorkspace, string DomainName, string SourceClassName, string CodeFieldName, string ValueFieldName)
