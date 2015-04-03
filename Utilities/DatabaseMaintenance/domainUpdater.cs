@@ -24,15 +24,15 @@ namespace ncgmpToolbar.Utilities.DatabaseMaintenance
             UpdateCodedValueDomain(theWorkspace, "d_StationIDs", "Stations", "Stations_ID", "FieldID"); //}   
 
             IWorkspace2 theWorkspace2 = (IWorkspace2)theWorkspace;
-            if (theWorkspace2.get_NameExists(esriDatasetType.esriDTFeatureDataset, commonFunctions.QualifyClassName(theWorkspace, "Landslide")) == true)
+            if (theWorkspace2.get_NameExists(esriDatasetType.esriDTTable, commonFunctions.QualifyClassName(theWorkspace, "Landslides")) == true)
             {
-                UpdateCodedValueDomain(theWorkspace, "d_Landslides", "Landslides", "LandslideID", "LandslideName");
+                UpdateCodedValueDomain(theWorkspace, "d_LandslideIDs", "Landslides", "LandslideID", "Name");
             }
 
-            
-            if (theWorkspace2.get_NameExists(esriDatasetType.esriDTFeatureDataset, commonFunctions.QualifyClassName(theWorkspace, "Cost")) == true)
+
+            if (theWorkspace2.get_NameExists(esriDatasetType.esriDTTable, commonFunctions.QualifyClassName(theWorkspace, "Costs")) == true)
             {
-                UpdateCodedValueDomain(theWorkspace, "d_Costs", "Costs", "CostID", "Damage");
+                UpdateCodedValueDomain(theWorkspace, "d_CostIDs", "Costs", "CostID", "Damage");
             }
         }
 
