@@ -354,6 +354,56 @@ namespace ncgmpToolbar.Utilities
                     newTemplate.SetDefaultValue("LocationConfidenceMeters", 0, false);
                     newTemplate.SetDefaultValue("RuleID", 289, false);
                     templateArray.Add(newTemplate);
+
+                    // Accurate landslide
+                    newTemplate = templateFactory.Create("landslide, Accurate", FeatureClassLayer);
+                    newTemplate.SetDefaultValue("Type", "landslide", false);
+                    newTemplate.SetDefaultValue("IsConcealed", "N", false);
+                    newTemplate.SetDefaultValue("ExistenceConfidence", "certain", false);
+                    newTemplate.SetDefaultValue("IdentityConfidence", "certain", false);
+                    newTemplate.SetDefaultValue("LocationConfidenceMeters", 0, false);
+                    newTemplate.SetDefaultValue("RuleID", 307, false);
+                    templateArray.Add(newTemplate);
+
+                    // Approximate landslide
+                    newTemplate = templateFactory.Create("landslide, Approximate", FeatureClassLayer);
+                    newTemplate.SetDefaultValue("Type", "landslide", false);
+                    newTemplate.SetDefaultValue("IsConcealed", "N", false);
+                    newTemplate.SetDefaultValue("ExistenceConfidence", "certain", false);
+                    newTemplate.SetDefaultValue("IdentityConfidence", "certain", false);
+                    newTemplate.SetDefaultValue("LocationConfidenceMeters", 0, false);
+                    newTemplate.SetDefaultValue("RuleID", 309, false);
+                    templateArray.Add(newTemplate);
+
+                    // Questionable landslide
+                    newTemplate = templateFactory.Create("landslide, questionable", FeatureClassLayer);
+                    newTemplate.SetDefaultValue("Type", "landslide", false);
+                    newTemplate.SetDefaultValue("IsConcealed", "N", false);
+                    newTemplate.SetDefaultValue("ExistenceConfidence", "questionable", false);
+                    newTemplate.SetDefaultValue("IdentityConfidence", "questionable", false);
+                    newTemplate.SetDefaultValue("LocationConfidenceMeters", 0, false);
+                    newTemplate.SetDefaultValue("RuleID", 308, false);
+                    templateArray.Add(newTemplate);
+
+                    // Concealed, landslide
+                    newTemplate = templateFactory.Create("landslide, Concealed", FeatureClassLayer);
+                    newTemplate.SetDefaultValue("Type", "landslide", false);
+                    newTemplate.SetDefaultValue("IsConcealed", "y", false);
+                    newTemplate.SetDefaultValue("ExistenceConfidence", "certain", false);
+                    newTemplate.SetDefaultValue("IdentityConfidence", "certain", false);
+                    newTemplate.SetDefaultValue("LocationConfidenceMeters", 0, false);
+                    newTemplate.SetDefaultValue("RuleID", 313, false);
+                    templateArray.Add(newTemplate);
+
+                    // Concealed questionable, landslide
+                    newTemplate = templateFactory.Create("landslide, Concealed questionable", FeatureClassLayer);
+                    newTemplate.SetDefaultValue("Type", "landslide", false);
+                    newTemplate.SetDefaultValue("IsConcealed", "y", false);
+                    newTemplate.SetDefaultValue("ExistenceConfidence", "questionable", false);
+                    newTemplate.SetDefaultValue("IdentityConfidence", "questionable", false);
+                    newTemplate.SetDefaultValue("LocationConfidenceMeters", 0, false);
+                    newTemplate.SetDefaultValue("RuleID", 314, false);
+                    templateArray.Add(newTemplate);
                     break;
 
                 case "GeologicLines":
@@ -679,6 +729,91 @@ namespace ncgmpToolbar.Utilities
                 newTemplate.SetDefaultValue("MapUnit", dmuEntry.MapUnit, false);
                 newTemplate.SetDefaultValue("Label", dmuEntry.Label, false);
                 newTemplate.SetDefaultValue("IdentityConfidence", "certain", false);
+
+                // Set defaults for landslide types
+                switch (anEntry.Value.Name)
+                { 
+                    case "Rock Fall":
+                        newTemplate.SetDefaultValue("MoveType", "Fall", false);
+                        newTemplate.SetDefaultValue("MoveClass", "Rock Fall", false);
+                        newTemplate.SetDefaultValue("MoveCode", "RF", false);
+                        break;
+                    case "Earth Fall":
+                        newTemplate.SetDefaultValue("MoveType", "Fall", false);
+                        newTemplate.SetDefaultValue("MoveClass", "Earth Fall", false);
+                        newTemplate.SetDefaultValue("MoveCode", "EF", false);
+                        break;
+                    case "Debris Fall":
+                        newTemplate.SetDefaultValue("MoveType", "Fall", false);
+                        newTemplate.SetDefaultValue("MoveClass", "Debris Fall", false);
+                        newTemplate.SetDefaultValue("MoveCode", "DF", false);
+                        break;
+                    case "Rock Flow":
+                        newTemplate.SetDefaultValue("MoveType", "Flow", false);
+                        newTemplate.SetDefaultValue("MoveClass", "Rock Flow", false);
+                        newTemplate.SetDefaultValue("MoveCode", "RFL", false);
+                        break;
+                    case "Earth Flow":
+                        newTemplate.SetDefaultValue("MoveType", "Flow", false);
+                        newTemplate.SetDefaultValue("MoveClass", "Earth Flow", false);
+                        newTemplate.SetDefaultValue("MoveCode", "EFL", false);
+                        break;
+                    case "Debris Flow":
+                        newTemplate.SetDefaultValue("MoveType", "Flow", false);
+                        newTemplate.SetDefaultValue("MoveClass", "Debris Flow", false);
+                        newTemplate.SetDefaultValue("MoveCode", "DFL", false);
+                        break;
+                    case "Rock Topple":
+                        newTemplate.SetDefaultValue("MoveType", "Topple", false);
+                        newTemplate.SetDefaultValue("MoveClass", "Rock Topple", false);
+                        newTemplate.SetDefaultValue("MoveCode", "RT", false);
+                        break;
+                    case "Debris Topple":
+                        newTemplate.SetDefaultValue("MoveType", "Topple", false);
+                        newTemplate.SetDefaultValue("MoveClass", "Debris Topple", false);
+                        newTemplate.SetDefaultValue("MoveCode", "ET", false);
+                        break;
+                    case "Earth Topple":
+                        newTemplate.SetDefaultValue("MoveType", "Topple", false);
+                        newTemplate.SetDefaultValue("MoveClass", "Earth Topple", false);
+                        newTemplate.SetDefaultValue("MoveCode", "ET", false);
+                        break;
+                    case "Rock Slide-rotational":
+                        newTemplate.SetDefaultValue("MoveType", "Slide-rotational", false);
+                        newTemplate.SetDefaultValue("MoveClass", "Rock Slide-rotational", false);
+                        newTemplate.SetDefaultValue("MoveCode", "RS-R", false);
+                        break;
+                    case "Debris Slide-rotational":
+                        newTemplate.SetDefaultValue("MoveType", "Slide-rotational", false);
+                        newTemplate.SetDefaultValue("MoveClass", "Debris Slide-rotational", false);
+                        newTemplate.SetDefaultValue("MoveCode", "DS-R", false);
+                        break;
+                    case "Earth Slide-rotational":
+                        newTemplate.SetDefaultValue("MoveType", "Slide-rotational", false);
+                        newTemplate.SetDefaultValue("MoveClass", "Earth Slide-rotational", false);
+                        newTemplate.SetDefaultValue("MoveCode", "ES-R", false);
+                        break;
+                    case "Rock Slide-translational":
+                        newTemplate.SetDefaultValue("MoveType", "Slide-translational", false);
+                        newTemplate.SetDefaultValue("MoveClass", "Rock Slide-translational", false);
+                        newTemplate.SetDefaultValue("MoveCode", "RS-T", false);
+                        break;
+                    case "Debris Slide-translational":
+                        newTemplate.SetDefaultValue("MoveType", "Slide-translational", false);
+                        newTemplate.SetDefaultValue("MoveClass", "Debris Slide-translational", false);
+                        newTemplate.SetDefaultValue("MoveCode", "DS-T", false);
+                        break;
+                    case "Earth Slide-translational":
+                        newTemplate.SetDefaultValue("MoveType", "Slide-translational", false);
+                        newTemplate.SetDefaultValue("MoveClass", "Earth Slide-translational", false);
+                        newTemplate.SetDefaultValue("MoveCode", "ES-T", false);
+                        break;
+                    case "Complex":
+                        newTemplate.SetDefaultValue("MoveType", "Complex", false);
+                        newTemplate.SetDefaultValue("MoveClass", "Complex, see notes", false);
+                        newTemplate.SetDefaultValue("MoveCode", "Complex", false);
+                        break;
+                }
 
                 // Add the template to the array
                 templateArray.Add(newTemplate);
