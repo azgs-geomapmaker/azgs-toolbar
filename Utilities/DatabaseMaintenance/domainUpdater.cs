@@ -26,7 +26,7 @@ namespace ncgmpToolbar.Utilities.DatabaseMaintenance
             IWorkspace2 theWorkspace2 = (IWorkspace2)theWorkspace;
             if (theWorkspace2.get_NameExists(esriDatasetType.esriDTTable, commonFunctions.QualifyClassName(theWorkspace, "Landslides")) == true)
             {
-                UpdateCodedValueDomain(theWorkspace, "d_LandslideIDs", "Landslides", "LandslideID", "Name");
+                UpdateCodedValueDomain(theWorkspace, "d_LandslideIDs", "Landslides", "LandslideID", "LandslideID");
             }
 
 
