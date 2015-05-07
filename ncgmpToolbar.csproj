@@ -297,9 +297,11 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\sqlOrFileChooser.resx">
       <DependentUpon>sqlOrFileChooser.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\updateAttributes.resx">
       <DependentUpon>updateAttributes.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
