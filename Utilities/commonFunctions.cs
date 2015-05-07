@@ -813,6 +813,11 @@ namespace ncgmpToolbar.Utilities
                         newTemplate.SetDefaultValue("MoveClass", "Complex, see notes", false);
                         newTemplate.SetDefaultValue("MoveCode", "Complex", false);
                         break;
+                    case "Earth Slide-general":
+                        newTemplate.SetDefaultValue("MoveType", "Slide-general", false);
+                        newTemplate.SetDefaultValue("MoveClass", "Earth Slide-general", false);
+                        newTemplate.SetDefaultValue("MoveCode", "ES-G", false);
+                        break;
                 }
 
                 // Add the template to the array
